@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.2.2
   dio: ^5.7.0
+  animated_background: ^2.0.0
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
