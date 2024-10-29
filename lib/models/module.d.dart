@@ -7,6 +7,7 @@ class Module {
   Module({this.id, this.name, this.route, this.image});
 
   factory Module.fromMap(Map<String, dynamic> e) {
-    return Module(name: e['name']);
+    return Module(
+        id: e['id'], image: e['image'], name: e['name'], route: e['route']);
   }
 }
