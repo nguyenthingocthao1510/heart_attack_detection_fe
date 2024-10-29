@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Login/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Register/index.dart';
+import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 
 void main() {
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         login: (context) => const Login(),
         homePage: (context) => const HomePage(),
         registerRoute: (context) => const Register(),
+        notFoundRoute: (context) => const Error404Screen(),
       },
     );
   }

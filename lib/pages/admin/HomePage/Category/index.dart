@@ -1,5 +1,7 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/ModuleSection/index.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/SliderSection/index.dart';
 
 class CatergoryPage extends StatefulWidget {
   const CatergoryPage({super.key});
@@ -25,8 +27,11 @@ class _CatergoryPageState extends State<CatergoryPage>
       vsync: this,
       child: SingleChildScrollView(
         child: Column(
-            // children: [SliderSection()],
-            ),
+          children: [
+            SliderSection(),
+            ModuleSection(),
+          ],
+        ),
       ),
     );
   }

@@ -12,11 +12,11 @@ class _SliderSectionState extends State<SliderSection> {
   final CarouselController b = CarouselController();
 
   final List<String> imgList = [
-    'https://www.globalsign.com/application/files/4716/4187/7830/IoT_Banner_IoTinHealthcare_3_APAC_2022_01_06.jpg',
-    'https://www.karexpert.com/wp-content/uploads/2022/06/22.png',
-    'https://www.tigahealth.com/wp-content/uploads/2021/06/iot-tech-tools.jpg',
+    // 'https://www.globalsign.com/application/files/4716/4187/7830/IoT_Banner_IoTinHealthcare_3_APAC_2022_01_06.jpg',
+    // 'https://www.karexpert.com/wp-content/uploads/2022/06/22.png',
+    // 'https://www.tigahealth.com/wp-content/uploads/2021/06/iot-tech-tools.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUqtjh8FvQ3HvzKrrNo6Swi8pnx_Dz3Q0yxWGGWnxRUCY_UqMBeS0yMFQSi0-5c7DXA-o&usqp=CAU',
-    'https://imageio.forbes.com/specials-images/imageserve/651bbeb1c78cc403f92a6abd/The-10-Biggest-Trends-Revolutionizing-Healthcare-In-2024/0x0.jpg?crop=2500,1405,x0,y0,safe&height=399&width=711&fit=bounds',
+    // 'https://imageio.forbes.com/specials-images/imageserve/651bbeb1c78cc403f92a6abd/The-10-Biggest-Trends-Revolutionizing-Healthcare-In-2024/0x0.jpg?crop=2500,1405,x0,y0,safe&height=399&width=711&fit=bounds',
     'https://www.opentext.com/assets/images/products-solutions/solution-industry-category/opentext-image-ov-healthcare-en.jpg'
   ];
 
