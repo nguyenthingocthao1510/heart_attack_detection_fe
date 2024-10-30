@@ -1,5 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/LatestNewsSection/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/ModuleSection/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/SliderSection/index.dart';
 
@@ -27,10 +28,7 @@ class _CatergoryPageState extends State<CatergoryPage>
       vsync: this,
       child: SingleChildScrollView(
         child: Column(
-          children: [
-            SliderSection(),
-            ModuleSection(),
-          ],
+          children: [SliderSection(), ModuleSection(), LatestNewsSection()],
         ),
       ),
     );
