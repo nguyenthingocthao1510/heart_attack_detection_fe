@@ -1,6 +1,7 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/index.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/SideBar/index.dart';
 
 class HomePage extends StatefulWidget {
@@ -64,6 +65,11 @@ class _HomePageState extends State<HomePage>
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        width: MediaQuery.of(context).size.width,
+        child: FooterSection(),
       ),
     );
   }

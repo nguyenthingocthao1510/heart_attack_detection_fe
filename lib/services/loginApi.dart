@@ -8,12 +8,11 @@ class LoginAPI {
         'username': username,
         'password': password,
       };
-
       final response =
           await dio.post('http://127.0.0.1:5000/api/login', data: payload);
-      // Use for phone
-      // final response =
-      // await dio.post('http://10.0.2.2:5000/api/login', data: payload);
+      // final response = await dio.post(
+      //     'https://heart-attack-detection-be.onrender.com/api/login',
+      //     data: payload);
       return response;
     } on DioError catch (e) {
       if (e.response != null) {
