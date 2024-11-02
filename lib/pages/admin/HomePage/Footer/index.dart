@@ -27,7 +27,7 @@ class _FooterSectionState extends State<FooterSection> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60, // Set a height constraint for the footer
+      height: 60,
       child: Scaffold(
         body: PageView(
           controller: _pageController,
@@ -76,7 +76,6 @@ class _FooterSectionState extends State<FooterSection> {
               backgroundColor: Colors.blue,
             ),
           ],
-          // fabLocation: StylishBarFabLocation.end,
           hasNotch: true,
           currentIndex: selected,
           onTap: (index) {

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/models/module.d.dart';
-import 'package:heart_attack_detection_fe/services/moduleApi.dart';
+import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
+import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
+import 'package:heart_attack_detection_fe/services/moduleAuthorization.dart';
+import 'package:provider/provider.dart';
 
 class SideBar extends StatefulWidget {
   final bool isSidebarOpen;
@@ -32,8 +35,8 @@ class _SideBarState extends State<SideBar> {
     return Column(
       children: [
         Expanded(
-          child: FutureBuilder<List<Module>>(
-            future: fetchAllModule(),
+          child: FutureBuilder<List<ModuleRole>>(
+            future: getAllModuleInRole(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -49,35 +52,45 @@ class _SideBarState extends State<SideBar> {
                 itemBuilder: (context, index) {
                   final module = modules[index];
                   final name = module.name ?? 'Unnamed Module';
+                  final route = module.route;
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisAlignment: widget.isSidebarOpen
-                          ? MainAxisAlignment.start
-                          : MainAxisAlignment.center,
-                      children: [
-                        if (widget.isSidebarOpen)
-                          Expanded(
-                            child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        if (route != null) {
+                          Navigator.pushNamed(context, route);
+                        } else {
+                          Navigator.pushNamed(context, notFoundRoute);
+                        }
+                      },
+                      child: Row(
+                        mainAxisAlignment: widget.isSidebarOpen
+                            ? MainAxisAlignment.start
+                            : MainAxisAlignment.center,
+                        children: [
+                          if (widget.isSidebarOpen)
+                            Expanded(
+                              child: Center(
+                                child: Icon(Icons.grid_view),
+                              ),
+                            )
+                          else
+                            Center(
                               child: Icon(Icons.grid_view),
                             ),
-                          )
-                        else
-                          Center(
-                            child: Icon(Icons.grid_view),
-                          ),
-                        if (widget.isSidebarOpen) const SizedBox(width: 8.0),
-                        if (widget.isSidebarOpen)
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              name,
-                              style: const TextStyle(fontSize: 16.0),
-                              overflow: TextOverflow.ellipsis,
+                          if (widget.isSidebarOpen) const SizedBox(width: 8.0),
+                          if (widget.isSidebarOpen)
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                name,
+                                style: const TextStyle(fontSize: 16.0),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -114,10 +127,12 @@ class _SideBarState extends State<SideBar> {
     );
   }
 
-  Future<List<Module>> fetchAllModule() async {
+  Future<List<ModuleRole>> getAllModuleInRole() async {
     if (!mounted) return [];
     try {
-      return await ModuleAPI.fetchAllModule();
+      final roleId =
+          int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
+      return await ModuleRoleAPI.getAllModuleInRole(roleId);
     } catch (error) {
       return [];
     }

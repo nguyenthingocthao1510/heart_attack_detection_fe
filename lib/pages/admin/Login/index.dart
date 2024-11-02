@@ -25,18 +25,18 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Login',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+      appBar: AppBar(
+        title: Text(
+          'Login',
+          style: TextStyle(
+            color: Colors.white,
           ),
-          backgroundColor: Colors.blue,
         ),
-        body: AnimatedBackground(
-          behaviour: RandomParticleBehaviour(
-              options: ParticleOptions(
+        backgroundColor: Colors.blue,
+      ),
+      body: AnimatedBackground(
+        behaviour: RandomParticleBehaviour(
+          options: ParticleOptions(
             spawnOpacity: 0.1,
             spawnMinSpeed: 150.0,
             spawnMinRadius: 1.0,
@@ -45,144 +45,148 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             minOpacity: 0.1,
             maxOpacity: 0.1,
             baseColor: Colors.blue,
-          )),
-          vsync: this,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  margin: EdgeInsets.only(top: 100, bottom: 20),
-                  child: Image.asset(healthCareIcon),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft, // Aligns text to the left
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Username:',
-                      ),
-                      SizedBox(height: 8),
-                      TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            hintText: 'Enter username',
-                          ),
-                          onChanged: (usernamevalue) {
-                            setState(() {
-                              username = usernamevalue;
-                            });
-                          }),
-                    ],
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft, // Aligns text to the left
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  margin: EdgeInsets.only(top: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Password:',
-                      ),
-                      SizedBox(height: 8),
-                      TextField(
-                        obscureText: !passwordVisible,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                              icon: Icon(passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off),
-                              onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
-                              }),
-                          alignLabelWithHint: false,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          hintText: 'Enter Password',
+          ),
+        ),
+        vsync: this,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 150,
+                width: 150,
+                margin: EdgeInsets.only(top: 100, bottom: 20),
+                child: Image.asset(healthCareIcon),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Username:'),
+                    SizedBox(height: 8),
+                    TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        keyboardType: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.done,
-                        onChanged: (passwordValue) {
-                          setState(() {
-                            password = passwordValue;
-                          });
-                        },
+                        hintText: 'Enter username',
                       ),
-                    ],
+                      onChanged: (usernameValue) {
+                        setState(() {
+                          username = usernameValue;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                margin: EdgeInsets.only(top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Password:'),
+                    SizedBox(height: 8),
+                    TextField(
+                      obscureText: !passwordVisible,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              passwordVisible = !passwordVisible;
+                            });
+                          },
+                        ),
+                        alignLabelWithHint: false,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        hintText: 'Enter Password',
+                      ),
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      onChanged: (passwordValue) {
+                        setState(() {
+                          password = passwordValue;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 5),
+                child: TextButton(
+                  onPressed: onForgetPassword,
+                  child: Text(
+                    'Forget password',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 5),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 3),
+                child: SizedBox(
+                  width: 300,
                   child: TextButton(
-                      onPressed: onForgetPassword,
-                      child: Text(
-                        'Forget password',
-                        style: TextStyle(color: Colors.blue),
+                    onPressed: () {
+                      if (username == null ||
+                          username!.isEmpty ||
+                          password == null ||
+                          password!.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text('Please enter both username and password'),
+                          ),
+                        );
+                      } else {
+                        onLogin(username!, password!);
+                      }
+                    },
+                    child: Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                       ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                      )),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 3),
-                  child: SizedBox(
-                    width: 300,
-                    child: TextButton(
-                      onPressed: () => {
-                        if (username == null ||
-                            username!.isEmpty ||
-                            password == null ||
-                            password!.isEmpty)
-                          {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content: Text(
-                                      'Please enter both username and password')),
-                            )
-                          }
-                        else
-                          {onLogin(username!, password!)}
-                      },
-                      child: Text(
-                        'Login',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ))),
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
-  Future<void> onLogin(String? username, String? password) async {
+  Future<void> onLogin(String username, String password) async {
     try {
-      final response = await LoginAPI.login(username!, password);
-      if (response.statusCode == 200) {
+      final response = await LoginAPI.login(username, password);
+      if (response != null) {
+        String roleId = response['roleId'];
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login success')),
         );
-        Navigator.pushNamed(context, homePage);
+        Navigator.pushNamed(context, homePage, arguments: roleId);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login fail')),
@@ -195,5 +199,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     }
   }
 
-  void onForgetPassword() {}
+  void onForgetPassword() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Forget password functionality not implemented')),
+    );
+  }
 }

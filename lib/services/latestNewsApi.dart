@@ -10,10 +10,7 @@ class LatestNewsAPI {
     final resData = response.data['articles'];
     final results = resData as List<dynamic>? ?? [];
 
-    final latestNews = results
-        // .where((e) => e['source'] != null && e['source']['id'] != null)
-        .map((e) => LatestNews.fromMap(e))
-        .toList();
+    final latestNews = results.map((e) => LatestNews.fromMap(e)).toList();
 
     return latestNews;
   }
