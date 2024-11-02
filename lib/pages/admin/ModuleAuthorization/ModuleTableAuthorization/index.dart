@@ -42,8 +42,6 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
     final roleId = int.parse(widget.roleId!);
     final response = await ModuleRoleAPI.getAllModuleNotInRole(roleId);
 
-    print('Modules not in role response: $response');
-
     setState(() {
       moduleNotInRoles = response;
     });
@@ -52,8 +50,6 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
   Future<void> getAllModuleInRole() async {
     final roleId = int.parse(widget.roleId!);
     final response = await ModuleRoleAPI.getAllModuleInRole(roleId);
-
-    print('Modules in role response: $response');
 
     setState(() {
       moduleInRoles = response;
@@ -269,7 +265,7 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Module added successfully.')),
         );
-        await fetchData(); // Refresh the data
+        await fetchData();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to add module.')),
@@ -298,7 +294,7 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Module remove successfully.')),
         );
-        await fetchData(); // Refresh the data
+        await fetchData();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to remove module.')),

@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage>
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Sidebar
               AnimatedContainer(
                 width: isSidebarOpen ? 170 : 50,
                 duration: Duration(milliseconds: 300),
@@ -59,7 +58,6 @@ class _HomePageState extends State<HomePage>
                   },
                 ),
               ),
-              // Main content - Category Page
               Expanded(
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 300),

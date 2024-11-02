@@ -47,7 +47,7 @@ class _ModuleSectionState extends State<ModuleSection> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Align(
-              alignment: Alignment.centerLeft, // Aligns text to the left
+              alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text('Menu:',

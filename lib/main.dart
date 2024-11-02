@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (context) => RoleProvider(), // Tạo RoleProvider
+      create: (context) => RoleProvider(),
       child: const MyApp(),
     ),
   );

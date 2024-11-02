@@ -7,7 +7,6 @@ class RoleAPI {
     final url = 'http://127.0.0.1:5000/api/roles';
     final response = await dio.get(url);
     final resData = response.data['data'];
-    print('Resdata: $resData');
     final results = resData as List<dynamic>;
     final roles = results.map((e) {
       return Role.fromMap(e);

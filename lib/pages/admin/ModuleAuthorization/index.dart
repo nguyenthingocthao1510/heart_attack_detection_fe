@@ -13,7 +13,6 @@ class _ModuleAuthorizationState extends State<ModuleAuthorization> {
   String? selectedRoleId;
 
   void setFilters(String? roleId) {
-    print("Selected roleId: $roleId");
     setState(() {
       selectedRoleId = roleId;
     });

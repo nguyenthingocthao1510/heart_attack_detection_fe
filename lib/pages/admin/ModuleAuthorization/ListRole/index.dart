@@ -46,7 +46,6 @@ class _ListRoleState extends State<ListRole> {
       accountName = response?['name'] ?? 'No role';
     });
     final roleId = response?['id'];
-    print('RoleId-listRole: $roleId');
     widget.setFilters(roleId);
   }
 
