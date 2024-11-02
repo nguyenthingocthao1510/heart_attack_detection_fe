@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/SideBar/index.dart';
+import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,10 +15,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  String? roleId;
   bool isSidebarOpen = true;
 
   @override
   Widget build(BuildContext context) {
+    roleId = ModalRoute.of(context)?.settings.arguments as String?;
+    final roleProvider = Provider.of<RoleProvider>(context);
+
+    roleProvider.setRoleId(roleId);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Homepage'),
@@ -40,13 +48,13 @@ class _HomePageState extends State<HomePage>
             children: <Widget>[
               // Sidebar
               AnimatedContainer(
-                width: isSidebarOpen ? 170 : 50, // Sidebar width transitions
+                width: isSidebarOpen ? 170 : 50,
                 duration: Duration(milliseconds: 300),
                 child: SideBar(
                   isSidebarOpen: isSidebarOpen,
                   onToggle: () {
                     setState(() {
-                      isSidebarOpen = !isSidebarOpen; // Toggle sidebar state
+                      isSidebarOpen = !isSidebarOpen;
                     });
                   },
                 ),
@@ -57,7 +65,6 @@ class _HomePageState extends State<HomePage>
                   duration: Duration(milliseconds: 300),
                   width: MediaQuery.of(context).size.width -
                       (isSidebarOpen ? 170 : 50),
-                  // Adjust width based on sidebar
                   color: Color(0xFFF5F6FA),
                   child: const CatergoryPage(),
                 ),
