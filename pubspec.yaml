@@ -44,6 +44,9 @@ dependencies:
   dropdown_button2: ^2.3.9
   provider: ^6.1.2
   data_table_2: ^2.5.15
+  easy_stepper: ^0.8.5+1
+  quickalert: ^1.1.0
+
 
 
 dev_dependencies:
