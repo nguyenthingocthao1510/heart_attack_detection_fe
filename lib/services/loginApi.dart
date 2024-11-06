@@ -14,14 +14,14 @@ class LoginAPI {
       //     'https://heart-attack-detection-be.onrender.com/api/login',
       //     data: payload);
       return response;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response != null) {
         print(e.response?.statusCode);
         print('Response data: ${e.response?.data}');
       } else {
         print('Error sending request: ${e.message}');
       }
-      throw e;
+      rethrow;
     } catch (e) {
       print('Error: $e');
       throw Exception('Failed to login: $e');

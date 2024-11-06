@@ -7,10 +7,10 @@ class SideBar extends StatefulWidget {
   final VoidCallback onToggle;
 
   const SideBar({
-    Key? key,
+    super.key,
     required this.isSidebarOpen,
     required this.onToggle,
-  }) : super(key: key);
+  });
 
   @override
   _SideBarState createState() => _SideBarState();
@@ -58,13 +58,13 @@ class _SideBarState extends State<SideBar> {
                           : MainAxisAlignment.center,
                       children: [
                         if (widget.isSidebarOpen)
-                          Expanded(
+                          const Expanded(
                             child: Center(
                               child: Icon(Icons.grid_view),
                             ),
                           )
                         else
-                          Center(
+                          const Center(
                             child: Icon(Icons.grid_view),
                           ),
                         if (widget.isSidebarOpen) const SizedBox(width: 8.0),
@@ -100,8 +100,8 @@ class _SideBarState extends State<SideBar> {
               onPressed: widget.onToggle,
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.grey[100]!),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    WidgetStateProperty.all<Color>(Colors.grey[100]!),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0),
                   ),

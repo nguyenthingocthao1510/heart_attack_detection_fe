@@ -29,7 +29,7 @@ class _ModuleSectionState extends State<ModuleSection> {
   void _scrollToIndex(int index) {
     _scrollController.animateTo(
       index * 220.0,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
   }
@@ -44,10 +44,10 @@ class _ModuleSectionState extends State<ModuleSection> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Align(
+            const Align(
               alignment: Alignment.centerLeft, // Aligns text to the left
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Text('Menu:',
                     style: TextStyle(
                         color: Colors.blue,
@@ -60,7 +60,7 @@ class _ModuleSectionState extends State<ModuleSection> {
               child: Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
+                    icon: const Icon(Icons.arrow_back_ios),
                     onPressed: () {
                       int currentIndex =
                           (_scrollController.offset / 220).floor();
@@ -68,7 +68,7 @@ class _ModuleSectionState extends State<ModuleSection> {
                         _scrollToIndex(currentIndex - 1);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Cannot go back further')),
+                          const SnackBar(content: Text('Cannot go back further')),
                         );
                       }
                     },
@@ -84,7 +84,7 @@ class _ModuleSectionState extends State<ModuleSection> {
                         controller: _scrollController,
                         itemCount: modules.length,
                         scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           final module = modules[index];
                           final name = module.name;
@@ -101,14 +101,14 @@ class _ModuleSectionState extends State<ModuleSection> {
                                   if (route == null) {
                                     Navigator.pushNamed(context, notFoundRoute);
                                   } else {
-                                    Navigator.pushNamed(context, route!);
+                                    Navigator.pushNamed(context, route);
                                   }
                                 },
                                 child: Card(
                                   color: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                       color: Colors.blue,
                                       width: 1.0,
                                     ),
@@ -117,7 +117,7 @@ class _ModuleSectionState extends State<ModuleSection> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Container(
-                                        padding: EdgeInsets.only(
+                                        padding: const EdgeInsets.only(
                                             left: 15.0, right: 15.0),
                                         decoration: BoxDecoration(
                                           border: Border.all(
@@ -128,10 +128,10 @@ class _ModuleSectionState extends State<ModuleSection> {
                                         child: Image.network(image!,
                                             width: 80, height: 100),
                                       ),
-                                      SizedBox(height: 8),
+                                      const SizedBox(height: 8),
                                       Text(
                                         name!,
-                                        style: TextStyle(color: Colors.black),
+                                        style: const TextStyle(color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -144,7 +144,7 @@ class _ModuleSectionState extends State<ModuleSection> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.arrow_forward_ios),
+                    icon: const Icon(Icons.arrow_forward_ios),
                     onPressed: () {
                       int currentIndex =
                           (_scrollController.offset / 220).floor();
@@ -152,7 +152,7 @@ class _ModuleSectionState extends State<ModuleSection> {
                         _scrollToIndex(currentIndex + 1);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Can't move forward")),
+                          const SnackBar(content: Text("Can't move forward")),
                         );
                       }
                     },

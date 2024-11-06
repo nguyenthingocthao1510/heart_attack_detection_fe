@@ -26,7 +26,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Login',
             style: TextStyle(
               color: Colors.white,
@@ -36,7 +36,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         ),
         body: AnimatedBackground(
           behaviour: RandomParticleBehaviour(
-              options: ParticleOptions(
+              options: const ParticleOptions(
             spawnOpacity: 0.1,
             spawnMinSpeed: 150.0,
             spawnMinRadius: 1.0,
@@ -53,19 +53,19 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 Container(
                   height: 150,
                   width: 150,
-                  margin: EdgeInsets.only(top: 100, bottom: 20),
+                  margin: const EdgeInsets.only(top: 100, bottom: 20),
                   child: Image.asset(healthCareIcon),
                 ),
                 Container(
                   alignment: Alignment.centerLeft, // Aligns text to the left
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Username:',
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -83,15 +83,15 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft, // Aligns text to the left
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  margin: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  margin: const EdgeInsets.only(top: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Password:',
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       TextField(
                         obscureText: !passwordVisible,
                         decoration: InputDecoration(
@@ -122,20 +122,20 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 5),
+                  margin: const EdgeInsets.only(top: 5),
                   child: TextButton(
                       onPressed: onForgetPassword,
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.all<Color>(Colors.white),
+                      ),
                       child: Text(
                         'Forget password',
                         style: TextStyle(color: Colors.blue),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
                       )),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 3),
+                  margin: const EdgeInsets.only(top: 3),
                   child: SizedBox(
                     width: 300,
                     child: TextButton(
@@ -146,7 +146,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                             password!.isEmpty)
                           {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                   content: Text(
                                       'Please enter both username and password')),
                             )
@@ -154,18 +154,18 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         else
                           {onLogin(username!, password!)}
                       },
+                      style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStateProperty.all<Color>(Colors.blue),
+                          shape:
+                              WidgetStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ))),
                       child: Text(
                         'Login',
                         style: TextStyle(color: Colors.white),
                       ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ))),
                     ),
                   ),
                 )
@@ -180,12 +180,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       final response = await LoginAPI.login(username!, password);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login success')),
+          const SnackBar(content: Text('Login success')),
         );
         Navigator.pushNamed(context, homePage);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login fail')),
+          const SnackBar(content: Text('Login fail')),
         );
       }
     } catch (e) {
