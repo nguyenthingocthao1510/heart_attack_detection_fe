@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class FooterSection extends StatefulWidget {
@@ -59,9 +60,7 @@ class _FooterSectionState extends State<FooterSection> {
               backgroundColor: Colors.blue,
             ),
             BottomBarItem(
-              icon: const Icon(
-                Icons.health_and_safety,
-              ),
+              icon: const Icon(Icons.health_and_safety),
               title: const Text('Predict'),
               backgroundColor: Colors.blue,
             ),
@@ -82,7 +81,12 @@ class _FooterSectionState extends State<FooterSection> {
             setState(() {
               selected = index;
             });
-            _pageController.jumpToPage(index);
+            if (index == 1) {
+              Navigator.pushNamed(
+                  context, dashboard); // Navigate to dashboard page
+            } else {
+              _pageController.jumpToPage(index); // Switch between other pages
+            }
           },
         ),
       ),

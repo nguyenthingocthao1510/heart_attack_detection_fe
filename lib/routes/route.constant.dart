@@ -4,3 +4,4 @@ const String registerRoute = '/create-account';
 const String homePage = '/home-page';
 const String moduleAuthorization = '/module-authorization';
 const String notFoundRoute = '/not-found';
+const String dashboard = '/dashboard';
