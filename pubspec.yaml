@@ -46,6 +46,11 @@ dependencies:
   data_table_2: ^2.5.15
   easy_stepper: ^0.8.5+1
   quickalert: ^1.1.0
+  syncfusion_flutter_gauges: ^27.1.57
+  fl_chart: ^0.69.0
+  intl: ^0.18.1
+
+
 
 
 

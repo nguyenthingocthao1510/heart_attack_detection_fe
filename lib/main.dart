@@ -4,6 +4,7 @@ import 'package:heart_attack_detection_fe/pages/admin/Login/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/ModuleAuthorization/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Register/index.dart';
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         homePage: (context) => const HomePage(),
         registerRoute: (context) => const Register(),
         moduleAuthorization: (context) => const ModuleAuthorization(),
+        dashboard: (context) => const Dashboard(),
         notFoundRoute: (context) => const Error404Screen(),
       },
     );
