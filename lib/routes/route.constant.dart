@@ -5,3 +5,4 @@ const String homePage = '/home-page';
 const String moduleAuthorization = '/module-authorization';
 const String notFoundRoute = '/not-found';
 const String dashboard = '/dashboard';
+const String userInformation = '/user';
