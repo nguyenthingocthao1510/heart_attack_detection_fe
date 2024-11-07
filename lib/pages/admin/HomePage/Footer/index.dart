@@ -84,6 +84,8 @@ class _FooterSectionState extends State<FooterSection> {
             if (index == 1) {
               Navigator.pushNamed(
                   context, dashboard); // Navigate to dashboard page
+            } else if (index == 4) {
+              Navigator.pushNamed(context, userInformation);
             } else {
               _pageController.jumpToPage(index); // Switch between other pages
             }
