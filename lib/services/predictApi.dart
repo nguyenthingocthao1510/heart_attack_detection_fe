@@ -1,4 +1,3 @@
-// lib/services/predictApi.dart
 import 'package:dio/dio.dart';
 import '../models/diagnosis.d.dart';
 

@@ -41,6 +41,7 @@ dependencies:
   carousel_slider: ^5.0.0
   url_launcher: ^6.0.20
   stylish_bottom_bar: ^1.1.0
+  flutter_animate: ^4.5.0
 
 
 dev_dependencies:
