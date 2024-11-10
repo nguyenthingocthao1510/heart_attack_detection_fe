@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:heart_attack_detection_fe/models/role.dart';
 
 class RoleAPI {
-  static Future<dynamic> getAllRole() async {
+  static Future<List<Role>> getAllRole() async {
     final dio = Dio();
     final url = 'http://127.0.0.1:5000/api/roles';
     final response = await dio.get(url);
