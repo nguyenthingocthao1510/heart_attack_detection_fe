@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Login/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/ModuleAuthorization/index.dart';
+import 'package:heart_attack_detection_fe/pages/admin/PermissionAuthorization/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Register/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/UserFooter/index.dart';
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         moduleAuthorization: (context) => const ModuleAuthorization(),
         dashboard: (context) => const Dashboard(),
         userInformation: (context) => const UserFooterSection(),
+        permissionAuthorization: (context) => const PermissionAuthorization(),
         notFoundRoute: (context) => const Error404Screen(),
       },
     );
