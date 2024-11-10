@@ -10,7 +10,16 @@ class EnteringInformation extends StatelessWidget {
   final cholController = TextEditingController();
   final thalachhController = TextEditingController();
   final oldpeakController = TextEditingController();
-  final sexController = TextEditingController();
+
+  String sex = 'Male';
+  String exng = 'No';
+  String caa = '0';
+  String cp = '0';
+  String fbs = 'No';
+  String restecg = '0';
+  String slp = '0';
+  String thall = '0';
+
   final exngController = TextEditingController();
   final caaController = TextEditingController();
   final cpController = TextEditingController();
@@ -43,7 +52,11 @@ class EnteringInformation extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-              ),
+              ).animate()
+                .slide(
+                  duration: const Duration(seconds: 1),
+                  begin: const Offset(1, 0)
+                ),
               Container(
                 height: 300,
                 width: 300,
@@ -55,11 +68,22 @@ class EnteringInformation extends StatelessWidget {
                 child: Image.asset(
                   heartImage,
                   fit: BoxFit.contain
-                ).animate()
+                ).animate(
+                    onComplete: (controller) => controller.repeat()
+                  )
                   .scale(
                     duration: const Duration(milliseconds: 500),
+                    begin: const Offset(1.0, 1.0),
+                    end: const Offset(1.2, 1.2),
+                    curve: Curves.easeInOut,
                   )
-                ,
+                  .then(delay: const Duration(milliseconds: 100))
+                  .scale(
+                    duration: const Duration(milliseconds: 500),
+                    begin: const Offset(1.2, 1.2),
+                    end: const Offset(1.0, 1.0),
+                    curve: Curves.easeInOut,
+                  ),
               ),
               Container(
                 height: 100,
@@ -67,16 +91,19 @@ class EnteringInformation extends StatelessWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16),
                 child: const Text(
-                  "Fill out information below",
+                  "Please answer questions below to start diagnosing...",
                   style: TextStyle(
-                    fontSize: 30, 
+                    fontSize: 20, 
                     fontWeight: FontWeight.bold
                   ),
                   textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
-
+                ).animate()
+                  .slide(
+                    delay: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
+                    begin: const Offset(3, 0)
+                  )
+                ,
               ),
               Container(
                 padding: const EdgeInsets.all(16),
@@ -111,10 +138,18 @@ class EnteringInformation extends StatelessWidget {
                       decoration: InputDecoration(labelText: 'Oldpeak'),
                       keyboardType: TextInputType.number,
                     ),
-                    TextField(
-                      controller: sexController,
-                      decoration: InputDecoration(labelText: 'Sex (0 or 1)'),
-                      keyboardType: TextInputType.number,
+                    DropdownButtonFormField<String>(
+                      value: sex,
+                      items: ['Male', 'Female','None'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        sex = newValue!;
+                      },
+                      decoration: InputDecoration(labelText: 'Sex'),
                     ),
                     TextField(
                       controller: exngController,
@@ -154,7 +189,12 @@ class EnteringInformation extends StatelessWidget {
                     SizedBox(height: 16.0),
                   ],
                 )
-              ),
+              ).animate()
+              .slide(
+                duration: const Duration(seconds: 3),
+                begin: const Offset(4, 0),
+              )
+              ,
               ElevatedButton(
                 onPressed: () {
                   try {
@@ -164,7 +204,7 @@ class EnteringInformation extends StatelessWidget {
                       'chol': int.tryParse(cholController.text) ?? 0,
                       'thalachh': int.tryParse(thalachhController.text) ?? 0,
                       'oldpeak': double.tryParse(oldpeakController.text) ?? 0.0,
-                      'sex': int.tryParse(sexController.text) ?? 0,
+                      'sex': int.tryParse(sex) ?? 0,
                       'exng': int.tryParse(exngController.text) ?? 0,
                       'caa': int.tryParse(caaController.text) ?? 0,
                       'cp': int.tryParse(cpController.text) ?? 0,
