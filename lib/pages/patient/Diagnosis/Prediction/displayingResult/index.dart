@@ -1,4 +1,3 @@
-// lib/pages/result_display_widget.dart
 import 'package:flutter/material.dart';
 
 class DisplayingResult extends StatelessWidget {

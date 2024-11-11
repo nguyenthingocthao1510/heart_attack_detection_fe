@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget heartConditionInput(
+Widget textFieldInput(
   TextEditingController textController
   ) {
   return TextField(

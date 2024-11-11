@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/heartConditionInput.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/textFieldInput.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/radioInput.dart';
 
 // ignore: must_be_immutable
 class EnteringInformation extends StatefulWidget {
@@ -107,7 +108,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     SizedBox(
                       height: 64,
-                      child: heartConditionInput(ageController)
+                      child: textFieldInput(ageController)
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
@@ -116,28 +117,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     SizedBox(
                       height: 64,
-                      child: TextField(
-                        controller: trtbpsController,
-                        decoration:  InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Colors.black,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Color.fromARGB(255, 20, 139, 251),
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                    )
+                      child: textFieldInput(trtbpsController)
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
@@ -146,28 +126,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     SizedBox(
                       height: 64,
-                      child: TextField(
-                        controller: cholController,
-                        decoration:  InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Colors.black,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Color.fromARGB(255, 20, 139, 251),
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                    )
+                      child: textFieldInput(cholController)
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
@@ -176,28 +135,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     SizedBox(
                       height: 64,
-                      child: TextField(
-                        controller: thalachhController,
-                        decoration:  InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Colors.black,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Color.fromARGB(255, 20, 139, 251),
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                    )
+                      child: textFieldInput(thalachhController)
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
@@ -206,28 +144,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     SizedBox(
                       height: 64,
-                      child: TextField(
-                        controller: oldpeakController,
-                        decoration:  InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Colors.black,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Color.fromARGB(255, 20, 139, 251),
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                    )
+                      child: textFieldInput(oldpeakController)
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
@@ -237,21 +154,9 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Radio(
-                          value: "Male",
-                          groupValue: sex,
-                          onChanged: (value) {
-                            setState(() {sex = value!;});
-                          },
-                        ),
+                        RadioInput(value: "Male", groupValue: sex),
                         const Text('Male'),
-                        Radio(
-                          value: "Female",
-                          groupValue: sex,
-                          onChanged: (value) {
-                            setState(() {sex = value!;});
-                          },
-                        ),
+                        RadioInput(value: "Female", groupValue: sex),
                         const Text('Female'),
                       ],
                     ),
