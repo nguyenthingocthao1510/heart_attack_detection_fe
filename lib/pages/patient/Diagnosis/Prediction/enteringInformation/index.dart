@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/heartConditionInput.dart';
 
 // ignore: must_be_immutable
 class EnteringInformation extends StatefulWidget {
@@ -106,28 +107,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     SizedBox(
                       height: 64,
-                      child: TextField(
-                        controller: ageController,
-                        decoration:  InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Colors.black,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color:Color.fromARGB(255, 20, 139, 251),
-                              width: 2.0,
-                            ),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                    )
+                      child: heartConditionInput(ageController)
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
