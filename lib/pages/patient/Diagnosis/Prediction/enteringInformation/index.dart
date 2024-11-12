@@ -148,115 +148,78 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
+                      'Fasting blood sugar',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: 64,
+                      child: textFieldInput(fbsController)
+                    ),
+                    const Padding(padding: EdgeInsets.all(12)),
+                    const Text(
                       'Gender',
                       style: TextStyle(fontSize: 16),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        RadioInput(value: "Male", groupValue: sex),
-                        const Text('Male'),
-                        RadioInput(value: "Female", groupValue: sex),
-                        const Text('Female'),
-                      ],
+                    RadioInput(value: "Male", groupValue: sex),
+                    RadioInput(value: "Female", groupValue: sex),
+                    const Padding(padding: EdgeInsets.all(12)),
+                    const Text(
+                      'Exercise induced angina',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    DropdownButtonFormField<String>(
-                      value: exng,
-                      items: ['No','Yes'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        exng = newValue!;
-                      },
-                      decoration: const InputDecoration(labelText: 'Do you have exercise induce angina?'),
+                    RadioInput(value: "No", groupValue: exng),
+                    RadioInput(value: "Yes", groupValue: exng),
+                    const Padding(padding: EdgeInsets.all(12)),
+                    const Text(
+                      'Number of major vessels',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    DropdownButtonFormField<String>(
-                      value: caa,
-                      items: ['0','1','2','3'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        caa = newValue!;
-                      },
-                      decoration: const InputDecoration(labelText: 'How many major vessels?'),
+                    RadioInput(value: 0, groupValue: caa),
+                    RadioInput(value: 1, groupValue: caa),
+                    RadioInput(value: 2, groupValue: caa),
+                    RadioInput(value: 3, groupValue: caa),
+                    const Padding(padding: EdgeInsets.all(12)),
+                    const Text(
+                      'Chest pain type',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    DropdownButtonFormField<String>(
-                      value: cp,
-                      items: ['None',
-                              'Typical angina',
-                              'Atypical angina',
-                              'Non-anginal pain',
-                              'Asymptomatic']
-                              .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        cp = newValue!;
-                      },
-                      decoration: const InputDecoration(labelText: 'What is your chest pain type?'),
+                    RadioInput(value: "None", groupValue: cp),
+                    RadioInput(value: "Typical angina", groupValue: cp),
+                    RadioInput(value: "Atypical angina", groupValue: cp),
+                    RadioInput(value: "Non-anginal pain", groupValue: cp),
+                    RadioInput(value: "Asymptomatic", groupValue: cp),
+                    const Padding(padding: EdgeInsets.all(12)),
+                    const Text(
+                      'Resting Electrocardiographic result',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    TextField(
-                      controller: fbsController,
-                      decoration: const InputDecoration(labelText: 'Fasting Blood Sugar (fbs)'),
-                      keyboardType: TextInputType.number,
+                    RadioInput(value: 0, groupValue: restecg),
+                    RadioInput(value: 1, groupValue: restecg),
+                    RadioInput(value: 2, groupValue: restecg),
+                    RadioInput(value: 3, groupValue: restecg),
+                    const Padding(padding: EdgeInsets.all(12)),
+                    const Text(
+                      'Slope',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    DropdownButtonFormField<String>(
-                      value: restecg,
-                      items: ['0','1','2','3'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        restecg = newValue!;
-                      },
-                      decoration: const InputDecoration(labelText: 'What is your resting electrocardiographic result?'),
+                    RadioInput(value: "None", groupValue: slp),
+                    RadioInput(value: "Upsloping", groupValue: slp),
+                    RadioInput(value: "Flat", groupValue: slp),
+                    RadioInput(value: "Downsloping", groupValue: slp),
+                    const Padding(padding: EdgeInsets.all(12)),
+                    const Text(
+                      'Thalium Stress Test Result',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    DropdownButtonFormField<String>(
-                      value: slp,
-                      items: ['None',
-                              'Upsloping',
-                              'Flat',
-                              'Downsloping']
-                              .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        slp = newValue!;
-                      },
-                      decoration: const InputDecoration(labelText: 'Your slope of the peak exercise ST segment?'),
-                    ),
-                    DropdownButtonFormField<String>(
-                      value: thall,
-                      items: ['None',
-                              'Normal',
-                              'Fixed defect',
-                              'Reversible defect']
-                              .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        thall = newValue!;
-                      },
-                      decoration: const InputDecoration(labelText: 'Your Thalium Stress Test result?'),
-                    ),
+                    RadioInput(value: "None", groupValue: slp),
+                    RadioInput(value: "Normal", groupValue: slp),
+                    RadioInput(value: "Fixed defect", groupValue: slp),
+                    RadioInput(value: "Reversible defect", groupValue: slp),
                     ElevatedButton(
+                      style: const ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 20, 139, 251)),
+                        
+                      ),
                       onPressed: () {
                         try {
                           Map<String, dynamic> inputData = {
@@ -265,9 +228,14 @@ class _EnteringInformationState extends State<EnteringInformation> {
                             'chol': int.tryParse(cholController.text) ?? 0,
                             'thalachh': int.tryParse(thalachhController.text) ?? 0,
                             'oldpeak': double.tryParse(oldpeakController.text) ?? 0.0,
-                            'sex': int.tryParse(sex) ?? 0,
                             'fbs': int.tryParse(fbsController.text) ?? 0,
+                            'sex': sex,
+                            'exng': exng,
+                            'caa': int.tryParse(caa) ?? 0,
+                            'cp': cp,
                             'restecg': int.tryParse(restecg) ?? 0,
+                            'slp': slp,
+                            'thall': thall,
                           };
                           widget.onSubmit(inputData);
                         } catch (e) {

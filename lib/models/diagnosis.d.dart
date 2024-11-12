@@ -4,11 +4,11 @@ class Diagnosis {
   final int chol;
   final int thalachh;
   double oldpeak;
+  final int fbs;
   final String sex;
   final String exng;
   final int caa;
   final String cp;
-  final int fbs;
   final int restecg;
   final String slp;
   final String thall;
@@ -19,11 +19,11 @@ class Diagnosis {
     required this.chol,
     required this.thalachh,
     required this.oldpeak,
+    required this.fbs,
     required this.sex,
     required this.exng,
     required this.caa,
     required this.cp,
-    required this.fbs,
     required this.restecg,
     required this.slp,
     required this.thall,
@@ -36,11 +36,11 @@ class Diagnosis {
       'chol': chol,
       'thalachh': thalachh,
       'oldpeak': oldpeak,
+      'fbs': fbs,
       'sex': sex,
       'exng': exng,
       'caa': caa,
       'cp': cp,
-      'fbs': fbs,
       'restecg': restecg,
       'slp': slp,
       'thall': thall,

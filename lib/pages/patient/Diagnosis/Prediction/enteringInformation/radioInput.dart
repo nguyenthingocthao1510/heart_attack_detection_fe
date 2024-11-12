@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class RadioInput<T> extends StatefulWidget {
-  static var value;
-  static var groupValue;
+  static dynamic value;
+  static dynamic groupValue;
 
   const RadioInput({
     super.key,
-    required String value,
-    required String groupValue,
+    required dynamic value,
+    required dynamic groupValue,
   });
 
   @override
@@ -18,13 +18,18 @@ class _RadioInputState extends State<RadioInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Radio(
-      value: RadioInput.value,
-      groupValue: RadioInput.groupValue,
-      activeColor: const Color.fromARGB(255, 20, 139, 251),
-      onChanged: (value) {
-        setState(() {value = value!;});
-      },
+    return Row(
+      children: [
+        Radio(
+          value: RadioInput.value,
+          groupValue: RadioInput.groupValue,
+          activeColor: const Color.fromARGB(255, 20, 139, 251),
+          onChanged: (value) {
+            setState(() {value = value!;});
+          },
+        ),
+        Text(RadioInput.value)
+      ] 
     );
   }
 }
