@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/InputFormComponent/textFieldInput.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/InputFormComponent/radioInput.dart';
 
