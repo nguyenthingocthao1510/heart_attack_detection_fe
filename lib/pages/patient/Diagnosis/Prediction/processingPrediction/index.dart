@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:heart_attack_detection_fe/assets/icon/index.dart';
+import '../enteringInformation/index.dart';
+
 
 class ProcessingPrediction extends StatelessWidget {
   const ProcessingPrediction({super.key});
@@ -15,14 +17,11 @@ class ProcessingPrediction extends StatelessWidget {
             height: 300,
             width: 300,
             padding: const EdgeInsets.only(top: 50, bottom: 50),
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 225, 225, 225),
-              borderRadius: BorderRadius.circular(300)
-            ),
             child: Image.asset(
               heartImage,
               fit: BoxFit.contain
             ).animate(
+                onInit: (controller) => controller.loop(),
                 onComplete: (controller) => controller.repeat()
               )
               .scale(
@@ -39,6 +38,20 @@ class ProcessingPrediction extends StatelessWidget {
                 curve: Curves.easeInOut,
               ),
           ),
+          ElevatedButton(
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 20, 139, 251)),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }, 
+            child: const Text(
+              "Cancel",
+              style: TextStyle(
+                color: Colors.white
+              ),
+            )
+          )
         ],
       ),
     );

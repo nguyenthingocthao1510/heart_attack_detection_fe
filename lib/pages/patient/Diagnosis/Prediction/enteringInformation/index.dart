@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/textFieldInput.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/radioInput.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/InputFormSection/textFieldInput.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/InputFormSection/radioInput.dart';
 
 // ignore: must_be_immutable
 class EnteringInformation extends StatefulWidget {
@@ -24,14 +24,14 @@ class _EnteringInformationState extends State<EnteringInformation> {
 
   String sex = 'Male';
   String exng = 'No';
-  String caa = '0';
+  int caa = 0;
   String cp = 'None';
-  String restecg = '0';
+  int restecg = 0;
   String slp = 'None';
   String thall = 'None';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext enteringInformation) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 20, 139, 251),
       body: SingleChildScrollView(
@@ -52,16 +52,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-              ).animate(delay: const Duration(milliseconds: 1500))
-                .fade(
-                  duration: const Duration(milliseconds: 1500),
-                  begin: 0.1,
-                  end: 1
-                )
-                .slide(
-                  duration: const Duration(milliseconds: 1100),
-                  begin: const Offset(1, 0)
-                ),
+              ),
               Container(
                 height: 100,
                 width: double.infinity,
@@ -74,16 +65,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     fontWeight: FontWeight.bold
                   ),
                   textAlign: TextAlign.center,
-                ).animate(delay: const Duration(milliseconds: 1500))
-                  .fade(
-                    duration: const Duration(milliseconds: 1500),
-                    begin: 0.1,
-                    end: 1
-                  )
-                  .slide(
-                    duration: const Duration(milliseconds: 1100),
-                    begin: const Offset(1, 0)
-                  ),
+                )
               ),
               Container(
                 padding: const EdgeInsets.only(
@@ -102,123 +84,300 @@ class _EnteringInformationState extends State<EnteringInformation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Age',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 64,
-                      child: textFieldInput(ageController)
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
-                    const Text(
-                      'Resting Blood Pressure',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 64,
-                      child: textFieldInput(trtbpsController)
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
-                    const Text(
-                      'Cholesterol',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 64,
-                      child: textFieldInput(cholController)
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
-                    const Text(
-                      'Heart Rate',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 64,
-                      child: textFieldInput(thalachhController)
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
-                    const Text(
-                      'Old Peak',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 64,
-                      child: textFieldInput(oldpeakController)
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
-                    const Text(
-                      'Fasting blood sugar',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 64,
-                      child: textFieldInput(fbsController)
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
+                    textFieldInput(label: 'Age', controller: ageController),
+                    textFieldInput(label: 'Resting Blood Pressure', controller: trtbpsController),
+                    textFieldInput(label: 'Cholesterol', controller: cholController),
+                    textFieldInput(label: 'Heart Rate', controller: thalachhController),
+                    textFieldInput(label: 'Old Peak', controller: oldpeakController),
+                    textFieldInput(label: 'Fasting Blood Sugar', controller: fbsController),
                     const Text(
                       'Gender',
                       style: TextStyle(fontSize: 16),
                     ),
-                    RadioInput(value: "Male", groupValue: sex),
-                    RadioInput(value: "Female", groupValue: sex),
+                    radioInput(
+                      label: "Male",
+                      value: "Male",
+                      groupValue: sex,
+                      onChanged: (newValue) {
+                        setState(() {
+                          sex = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Female",
+                      value: "Female",
+                      groupValue: sex,
+                      onChanged: (newValue) {
+                        setState(() {
+                          sex = newValue;
+                        });
+                      },
+                    ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
                       'Exercise induced angina',
                       style: TextStyle(fontSize: 16),
                     ),
-                    RadioInput(value: "No", groupValue: exng),
-                    RadioInput(value: "Yes", groupValue: exng),
+                    radioInput(
+                      label: "No",
+                      value: "No",
+                      groupValue: exng,
+                      onChanged: (newValue) {
+                        setState(() {
+                          exng = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Yes",
+                      value: "Yes",
+                      groupValue: exng,
+                      onChanged: (newValue) {
+                        setState(() {
+                          exng = newValue;
+                        });
+                      },
+                    ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
                       'Number of major vessels',
                       style: TextStyle(fontSize: 16),
                     ),
-                    RadioInput(value: 0, groupValue: caa),
-                    RadioInput(value: 1, groupValue: caa),
-                    RadioInput(value: 2, groupValue: caa),
-                    RadioInput(value: 3, groupValue: caa),
+                    radioInput(
+                      label: "0",
+                      value: 0,
+                      groupValue: caa,
+                      onChanged: (newValue) {
+                        setState(() {
+                          caa = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "1",
+                      value: 1,
+                      groupValue: caa,
+                      onChanged: (newValue) {
+                        setState(() {
+                          caa = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "2",
+                      value: 2,
+                      groupValue: caa,
+                      onChanged: (newValue) {
+                        setState(() {
+                          caa = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "3",
+                      value: 3,
+                      groupValue: caa,
+                      onChanged: (newValue) {
+                        setState(() {
+                          caa = newValue;
+                        });
+                      },
+                    ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
                       'Chest pain type',
                       style: TextStyle(fontSize: 16),
                     ),
-                    RadioInput(value: "None", groupValue: cp),
-                    RadioInput(value: "Typical angina", groupValue: cp),
-                    RadioInput(value: "Atypical angina", groupValue: cp),
-                    RadioInput(value: "Non-anginal pain", groupValue: cp),
-                    RadioInput(value: "Asymptomatic", groupValue: cp),
+                    radioInput(
+                      label: "None",
+                      value: "None",
+                      groupValue: cp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          cp = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Typical angina",
+                      value: "Typical angina",
+                      groupValue: cp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          cp = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Atypical angina",
+                      value: "Atypical angina",
+                      groupValue: cp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          cp = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Non-anginal pain",
+                      value: "Non-anginal pain",
+                      groupValue: cp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          cp = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Asymptomatic",
+                      value: "Asymptomatic",
+                      groupValue: cp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          cp = newValue;
+                        });
+                      },
+                    ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
                       'Resting Electrocardiographic result',
                       style: TextStyle(fontSize: 16),
                     ),
-                    RadioInput(value: 0, groupValue: restecg),
-                    RadioInput(value: 1, groupValue: restecg),
-                    RadioInput(value: 2, groupValue: restecg),
-                    RadioInput(value: 3, groupValue: restecg),
+                    radioInput(
+                      label: "0",
+                      value: 0,
+                      groupValue: restecg,
+                      onChanged: (newValue) {
+                        setState(() {
+                          restecg = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "1",
+                      value: 1,
+                      groupValue: restecg,
+                      onChanged: (newValue) {
+                        setState(() {
+                          restecg = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "2",
+                      value: 2,
+                      groupValue: restecg,
+                      onChanged: (newValue) {
+                        setState(() {
+                          restecg = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "3",
+                      value: 3,
+                      groupValue: restecg,
+                      onChanged: (newValue) {
+                        setState(() {
+                          restecg = newValue;
+                        });
+                      },
+                    ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
                       'Slope',
                       style: TextStyle(fontSize: 16),
                     ),
-                    RadioInput(value: "None", groupValue: slp),
-                    RadioInput(value: "Upsloping", groupValue: slp),
-                    RadioInput(value: "Flat", groupValue: slp),
-                    RadioInput(value: "Downsloping", groupValue: slp),
+                    radioInput(
+                      label: "None",
+                      value: "None",
+                      groupValue: slp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          slp = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Upsloping",
+                      value: "Upsloping",
+                      groupValue: slp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          slp = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Flat",
+                      value: "Flat",
+                      groupValue: slp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          slp = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Asymptomatic",
+                      value: "Asymptomatic",
+                      groupValue: slp,
+                      onChanged: (newValue) {
+                        setState(() {
+                          slp = newValue;
+                        });
+                      },
+                    ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
                       'Thalium Stress Test Result',
                       style: TextStyle(fontSize: 16),
                     ),
-                    RadioInput(value: "None", groupValue: slp),
-                    RadioInput(value: "Normal", groupValue: slp),
-                    RadioInput(value: "Fixed defect", groupValue: slp),
-                    RadioInput(value: "Reversible defect", groupValue: slp),
+                    radioInput(
+                      label: "None",
+                      value: "None",
+                      groupValue: thall,
+                      onChanged: (newValue) {
+                        setState(() {
+                          thall = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Normal",
+                      value: "Normal",
+                      groupValue: thall,
+                      onChanged: (newValue) {
+                        setState(() {
+                          thall = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Fixed defect",
+                      value: "Fixed defect",
+                      groupValue: thall,
+                      onChanged: (newValue) {
+                        setState(() {
+                          thall = newValue;
+                        });
+                      },
+                    ),
+                    radioInput(
+                      label: "Reversible defect",
+                      value: "Reversible defect",
+                      groupValue: thall,
+                      onChanged: (newValue) {
+                        setState(() {
+                          thall = newValue;
+                        });
+                      },
+                    ),
+                    const Padding(padding: EdgeInsets.all(12)),
                     ElevatedButton(
                       style: const ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 20, 139, 251)),
-                        
                       ),
                       onPressed: () {
                         try {
@@ -231,9 +390,9 @@ class _EnteringInformationState extends State<EnteringInformation> {
                             'fbs': int.tryParse(fbsController.text) ?? 0,
                             'sex': sex,
                             'exng': exng,
-                            'caa': int.tryParse(caa) ?? 0,
+                            'caa': caa,
                             'cp': cp,
-                            'restecg': int.tryParse(restecg) ?? 0,
+                            'restecg': restecg,
                             'slp': slp,
                             'thall': thall,
                           };
@@ -242,15 +401,16 @@ class _EnteringInformationState extends State<EnteringInformation> {
                           print("Error parsing inputs: $e");
                         }
                       },
-                      child: const Text('Predict'),
+                      child: const Text(
+                        'Predict',
+                        style: TextStyle(
+                          color: Colors.white
+                        ),
+                      ),
                     ),
                   ]
                 )
-              ).animate()
-              .slide(
-                duration: const Duration(seconds: 3),
-                begin: const Offset(4, 0),
-              ),
+              )
             ],
           ),
       )
