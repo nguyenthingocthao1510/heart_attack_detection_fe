@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:heart_attack_detection_fe/assets/icon/index.dart';
-import '../enteringInformation/index.dart';
+import '../index.dart';
 
 
 class ProcessingPrediction extends StatelessWidget {
@@ -9,19 +9,19 @@ class ProcessingPrediction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
+    return Scaffold(
+      backgroundColor:const Color.fromARGB(255, 20, 139, 251),
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          Center(
+          child: Container(
             height: 300,
             width: 300,
-            padding: const EdgeInsets.only(top: 50, bottom: 50),
             child: Image.asset(
               heartImage,
               fit: BoxFit.contain
             ).animate(
-                onInit: (controller) => controller.loop(),
                 onComplete: (controller) => controller.repeat()
               )
               .scale(
@@ -36,19 +36,23 @@ class ProcessingPrediction extends StatelessWidget {
                 begin: const Offset(1.2, 1.2),
                 end: const Offset(1.0, 1.0),
                 curve: Curves.easeInOut,
-              ),
+              )
+          ),
           ),
           ElevatedButton(
             style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 20, 139, 251)),
+              backgroundColor: WidgetStatePropertyAll(Colors.white),
             ),
             onPressed: () {
-              Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Prediction()),
+            );
             }, 
             child: const Text(
               "Cancel",
               style: TextStyle(
-                color: Colors.white
+                color: Colors.black
               ),
             )
           )

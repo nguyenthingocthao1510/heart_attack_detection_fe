@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './ResultSection/resultIsOne.dart';
-import './ResultSection/resultIsZero.dart';
+import 'ResultComponent/resultIsOne.dart';
+import 'ResultComponent/resultIsZero.dart';
+import '../index.dart';
 
 class DisplayingResult extends StatefulWidget {
   final String result;
@@ -23,36 +24,34 @@ class _DisplayingResultState extends State<DisplayingResult> {
     } else if (prediction == 1) {
       resultWidget = const ResultIsOne();
     } else {
-      print(prediction);
       resultWidget = const Text(
         'Error: Invalid result',
         style: TextStyle(color: Colors.red, fontSize: 20),
       );
     }
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+    return Scaffold(
+      body: Column(
+        children: [
         resultWidget,
-        const SizedBox(height: 20),
-        const Text(
-          "Diagnosis Result",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
         const SizedBox(height: 20),
         ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(Color.fromARGB(255, 20, 139, 251)),
+            backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 20, 139, 251)),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Prediction()),
+            );
           },
           child: const Text(
             "Back",
             style: TextStyle(color: Colors.white),
           ),
         ),
-      ],
+        ],
+      ),
     );
   }
 }

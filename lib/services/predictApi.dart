@@ -7,7 +7,7 @@ class PredictAPI {
     try {
       final Map<String, dynamic> payload = input.toJson();
       final response = await dio.post(
-        'http://127.0.0.1:5000/api/patient/diagnosis',
+        'http://10.0.2.2:5000/api/patient/diagnosis',
         data: payload,
       );
 
