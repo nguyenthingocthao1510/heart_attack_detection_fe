@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class FooterSection extends StatefulWidget {
@@ -27,7 +28,7 @@ class _FooterSectionState extends State<FooterSection> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60, // Set a height constraint for the footer
+      height: 60,
       child: Scaffold(
         body: PageView(
           controller: _pageController,
@@ -59,9 +60,7 @@ class _FooterSectionState extends State<FooterSection> {
               backgroundColor: Colors.blue,
             ),
             BottomBarItem(
-              icon: const Icon(
-                Icons.health_and_safety,
-              ),
+              icon: const Icon(Icons.health_and_safety),
               title: const Text('Predict'),
               backgroundColor: Colors.blue,
             ),
@@ -76,14 +75,20 @@ class _FooterSectionState extends State<FooterSection> {
               backgroundColor: Colors.blue,
             ),
           ],
-          // fabLocation: StylishBarFabLocation.end,
           hasNotch: true,
           currentIndex: selected,
           onTap: (index) {
             setState(() {
               selected = index;
             });
-            _pageController.jumpToPage(index);
+            if (index == 1) {
+              Navigator.pushNamed(
+                  context, dashboard); // Navigate to dashboard page
+            } else if (index == 4) {
+              Navigator.pushNamed(context, userInformation);
+            } else {
+              _pageController.jumpToPage(index); // Switch between other pages
+            }
           },
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/models/module.d.dart';
+import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
+import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
-import 'package:heart_attack_detection_fe/services/moduleApi.dart';
+import 'package:heart_attack_detection_fe/services/moduleAuthorization.dart';
+import 'package:provider/provider.dart';
 
 class ModuleSection extends StatefulWidget {
   const ModuleSection({super.key});
@@ -11,7 +13,7 @@ class ModuleSection extends StatefulWidget {
 }
 
 class _ModuleSectionState extends State<ModuleSection> {
-  List<Module> modules = [];
+  List<ModuleRole> modules = [];
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -44,8 +46,8 @@ class _ModuleSectionState extends State<ModuleSection> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Align(
-              alignment: Alignment.centerLeft, // Aligns text to the left
+            Align(
+              alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text('Menu:',
@@ -171,7 +173,9 @@ class _ModuleSectionState extends State<ModuleSection> {
   }
 
   Future<void> fetchAllModule() async {
-    final response = await ModuleAPI.fetchAllModule();
+    final roleId =
+        int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
+    final response = await ModuleRoleAPI.getAllModuleInRole(roleId);
     setState(() {
       modules = response;
     });

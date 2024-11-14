@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
-import 'package:heart_attack_detection_fe/pages/admin/ModuleAuthorization/ModuleTableAuthorization/ModuleTable/index.dart';
-import 'package:heart_attack_detection_fe/services/moduleAuthorization.dart';
+import 'package:heart_attack_detection_fe/models/permissionAuthorization.dart';
+import 'package:heart_attack_detection_fe/pages/admin/PermissionAuthorization/PermissionTableAuthorization/PermisisonTable/index.dart';
+import 'package:heart_attack_detection_fe/services/permissionAuthorization.dart';
 
-class ModuleTableAuthorization extends StatefulWidget {
+class PermissionTableAuthorization extends StatefulWidget {
   final String? roleId;
+  final String? moduleId;
 
-  const ModuleTableAuthorization({super.key, required this.roleId});
+  const PermissionTableAuthorization(
+      {super.key, required this.roleId, required this.moduleId});
 
   @override
-  State<ModuleTableAuthorization> createState() =>
-      _ModuleTableAuthorizationState();
+  State<PermissionTableAuthorization> createState() =>
+      _PermissionTableAuthorizationState();
 }
 
-class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
-  List<ModuleRole> moduleInRoles = [];
-  List<ModuleRole> moduleNotInRoles = [];
-  List<int> selectedKeysNotInRole = [];
-  List<int> selectedKeysInRole = [];
+class _PermissionTableAuthorizationState
+    extends State<PermissionTableAuthorization> {
+  List<PermissionAuthorization> permissionNotInRoleModule = [];
+  List<int> selectedPermissionNotInRole = [];
+  List<PermissionAuthorization> permissionInRoleModule = [];
+  List<int> selectedPermissionInRole = [];
 
   @override
   void initState() {
@@ -26,80 +29,85 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
   }
 
   @override
-  void didUpdateWidget(covariant ModuleTableAuthorization oldWidget) {
+  void didUpdateWidget(covariant PermissionTableAuthorization oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.roleId != oldWidget.roleId) {
+    if (widget.roleId != oldWidget.roleId ||
+        widget.moduleId != oldWidget.moduleId) {
       fetchData();
     }
   }
 
   Future<void> fetchData() async {
-    await getAllModuleNotInRole();
-    await getAllModuleInRole();
+    await getAllPermissionNotInModuleRole();
+    await getAllPermissionInModuleRole();
   }
 
-  Future<void> getAllModuleNotInRole() async {
+  Future<void> getAllPermissionNotInModuleRole() async {
     final roleId = int.parse(widget.roleId!);
-    final response = await ModuleRoleAPI.getAllModuleNotInRole(roleId);
-
+    final moduleId = int.parse(widget.moduleId!);
+    final response =
+        await PermissionAuthorizationAPI.getAllPermissionNotInModuleRole(
+            roleId, moduleId);
     setState(() {
-      moduleNotInRoles = response;
+      permissionNotInRoleModule = response;
     });
   }
 
-  Future<void> getAllModuleInRole() async {
+  Future<void> getAllPermissionInModuleRole() async {
     final roleId = int.parse(widget.roleId!);
-    final response = await ModuleRoleAPI.getAllModuleInRole(roleId);
-
+    final moduleId = int.parse(widget.moduleId!);
+    final response =
+        await PermissionAuthorizationAPI.getAllPermissionInModuleRole(
+            roleId, moduleId);
     setState(() {
-      moduleInRoles = response;
+      permissionInRoleModule = response;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 8),
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Module not in role',
+                    child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          'Permission not in role',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.red),
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 180,
-                          child: Expanded(
-                            child: ModuleTable(
-                              modules: moduleNotInRoles,
-                              onSelectedModulesChange: (selectedKey) {
-                                setState(() {
-                                  selectedKeysNotInRole =
-                                      selectedKey.cast<int>();
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 180,
+                        child: Expanded(
+                            child: PermissionTable(
+                                permissions: permissionNotInRoleModule,
+                                onSelectedPermissionChange: (selectedKey) {
+                                  setState(() {
+                                    selectedPermissionNotInRole =
+                                        selectedKey.cast<int>();
+                                  });
+                                })),
+                      )
+                    ],
                   ),
-                ),
+                )),
                 SizedBox(
                     height: 180,
                     width: 100,
                     child: Padding(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 12.5),
                       child: Table(
                         border: TableBorder.all(
                             color: Colors.grey,
@@ -167,9 +175,10 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
                                                   side: BorderSide(
                                                       color: Colors
                                                           .transparent)))),
-                                      onPressed: () => onAddModule(
-                                        selectedKeysNotInRole,
-                                        widget.roleId,
+                                      onPressed: () => onAddPermission(
+                                        selectedPermissionNotInRole,
+                                        int.parse(widget.roleId!),
+                                        int.parse(widget.moduleId!),
                                       ),
                                       child: Icon(
                                         Icons.keyboard_double_arrow_right,
@@ -196,9 +205,10 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
                                                   side: BorderSide(
                                                       color: Colors
                                                           .transparent)))),
-                                      onPressed: () => onRemoveModule(
-                                        selectedKeysInRole,
+                                      onPressed: () => onRemovePermission(
+                                        selectedPermissionInRole,
                                         int.parse(widget.roleId!),
+                                        int.parse(widget.moduleId!),
                                       ),
                                       child: Icon(
                                         Icons.keyboard_double_arrow_left,
@@ -214,97 +224,88 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
                       ),
                     )),
                 Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Module in role',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 180,
-                      child: Expanded(
-                        child: ModuleTable(
-                          modules: moduleInRoles,
-                          onSelectedModulesChange: (selectedKey) {
-                            setState(() {
-                              selectedKeysInRole = selectedKey.cast<int>();
-                            });
-                          },
+                    child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          'Permission in role',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.red),
                         ),
                       ),
-                    )
-                  ],
-                ))
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 180,
+                        child: Expanded(
+                            child: PermissionTable(
+                                permissions: permissionInRoleModule,
+                                onSelectedPermissionChange: (selectedKey) {
+                                  setState(() {
+                                    selectedPermissionInRole =
+                                        selectedKey.cast<int>();
+                                  });
+                                })),
+                      )
+                    ],
+                  ),
+                )),
               ],
-            ),
-          ),
-        );
-      },
-    );
+            )),
+      );
+    });
   }
 
-  void onAddModule(List<int> selectedModuleIds, String? roleId) async {
-    if (selectedModuleIds.isEmpty) {
+  void onAddPermission(
+      List<int> selectedPermissionIds, int roleId, int moduleId) async {
+    if (selectedPermissionIds.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select a module to add.')),
-      );
+          SnackBar(content: Text('Please select a permisison to add')));
       return;
     }
-
-    final int parsedRoleId = int.parse(roleId!);
-
     try {
-      final response =
-          await ModuleRoleAPI.addModule(selectedModuleIds, parsedRoleId);
+      final response = await PermissionAuthorizationAPI.addPermission(
+          selectedPermissionIds, roleId, moduleId);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Module added successfully.')),
-        );
+            SnackBar(content: Text('Permission add successfully')));
         await fetchData();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add module.')),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Permission add failed')));
       }
     } catch (e) {
-      print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
-      );
+      print('Error: $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
-  void onRemoveModule(List<int> selectedModuleIds, int roleId) async {
-    if (selectedModuleIds.isEmpty) {
+  void onRemovePermission(
+      List<int> selectedPermissionIds, int roleId, int moduleId) async {
+    if (selectedPermissionIds.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select a module to remove.')),
-      );
+          SnackBar(content: Text('Please select a permisison to remove')));
       return;
     }
-
     try {
-      final response =
-          await ModuleRoleAPI.removeModule(selectedModuleIds, roleId);
+      final response = await PermissionAuthorizationAPI.removePermission(
+          selectedPermissionIds, roleId, moduleId);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Module remove successfully.')),
-        );
+            SnackBar(content: Text('Permission remove successfully')));
         await fetchData();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to remove module.')),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Permission remove failed')));
       }
     } catch (e) {
-      print(e);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
-      );
+      print('Error: $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 }
