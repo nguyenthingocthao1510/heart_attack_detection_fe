@@ -184,12 +184,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         String roleId = response['roleId'];
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login success')),
+          const SnackBar(content: Text('Login success')),
         );
         Navigator.pushNamed(context, homePage, arguments: roleId);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login fail')),
+          const SnackBar(content: Text('Login fail')),
         );
       }
     } catch (e) {

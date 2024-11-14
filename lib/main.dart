@@ -6,6 +6,7 @@ import 'package:heart_attack_detection_fe/pages/admin/PermissionAuthorization/in
 import 'package:heart_attack_detection_fe/pages/admin/Register/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/UserFooter/index.dart';
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         userInformation: (context) => const UserFooterSection(),
         permissionAuthorization: (context) => const PermissionAuthorization(),
         notFoundRoute: (context) => const Error404Screen(),
+        diagnosisRoute: (context) => const Prediction(),
       },
     );
   }

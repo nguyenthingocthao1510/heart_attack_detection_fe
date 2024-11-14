@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage>
         child: AnimatedBackground(
           vsync: this,
           behaviour: BubblesBehaviour(
-            options: BubbleOptions(
+            options: const BubbleOptions(
               popRate: 1,
               minTargetRadius: 1.0,
               bubbleCount: 30,
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage>
               ),
               Expanded(
                 child: AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   width: MediaQuery.of(context).size.width -
                       (isSidebarOpen ? 170 : 50),
                   color: Color(0xFFF5F6FA),
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage>
       bottomNavigationBar: SizedBox(
         height: 50,
         width: MediaQuery.of(context).size.width,
-        child: FooterSection(),
+        child: const FooterSection(),
       ),
     );
   }

@@ -23,7 +23,7 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Card(
@@ -45,7 +45,7 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
                 itemCount: latestnews.length,
                 itemBuilder: (context, index) {
                   final latestnew = latestnews[index];
-                  final image_url = latestnew.urlToImage ?? nullImageUrl;
+                  final imageUrl = latestnew.urlToImage ?? nullImageUrl;
                   final url = latestnew.url;
                   final title = latestnew.title;
                   final author = latestnew.author;
@@ -64,7 +64,7 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
                     child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
-                          side: BorderSide(
+                          side: const BorderSide(
                             color: Colors.grey,
                             width: 1.0,
                           )),
@@ -73,13 +73,13 @@ class _LatestNewsSectionState extends State<LatestNewsSection> {
                           vertical: 4, horizontal: 8),
                       child: ListTile(
                         leading: Image.network(
-                          image_url != null ? image_url : nullImageUrl,
+                          imageUrl != null ? imageUrl : nullImageUrl,
                           height: 100,
                           width: 100,
                         ),
                         title: Text(
                           '$title by $author',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                           maxLines: 1,
