@@ -46,6 +46,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                 child: const Text(
                   "Welcome to diagnosis section",
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: 50, 
                     fontWeight: FontWeight.bold
                   ),
@@ -60,6 +61,7 @@ class _EnteringInformationState extends State<EnteringInformation> {
                 child: const Text(
                   "Fill in information to start diagnosing:",
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: 20, 
                     fontWeight: FontWeight.bold
                   ),

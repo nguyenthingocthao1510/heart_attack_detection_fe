@@ -25,19 +25,24 @@ class ProcessingPrediction extends StatelessWidget {
                 onComplete: (controller) => controller.repeat()
               )
               .scale(
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 400),
                 begin: const Offset(1.0, 1.0),
                 end: const Offset(1.2, 1.2),
                 curve: Curves.easeInOut,
               )
-              .then(delay: const Duration(milliseconds: 100))
+              .then(delay: const Duration(milliseconds: 200))
               .scale(
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 400),
                 begin: const Offset(1.2, 1.2),
                 end: const Offset(1.0, 1.0),
                 curve: Curves.easeInOut,
               )
+            ),
           ),
+          const Flexible(
+            child: FractionallySizedBox(
+              heightFactor: 0.2,
+            ),
           ),
           ElevatedButton(
             style: const ButtonStyle(

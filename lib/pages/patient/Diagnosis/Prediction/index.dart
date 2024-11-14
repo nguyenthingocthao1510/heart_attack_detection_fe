@@ -40,7 +40,7 @@ class _PredictionState extends State<Prediction> {
 
     String result = await PredictAPI.predict(diagnosis);
 
-    await Future.delayed(const Duration(milliseconds: 1500));
+    await Future.delayed(const Duration(milliseconds: 2000));
 
     setState(() {
       predictionResult = result;

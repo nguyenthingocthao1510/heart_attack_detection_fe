@@ -26,31 +26,45 @@ class _DisplayingResultState extends State<DisplayingResult> {
     } else {
       resultWidget = const Text(
         'Error: Invalid result',
-        style: TextStyle(color: Colors.red, fontSize: 20),
       );
     }
-
+    
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 20, 139, 251),
       body: Column(
         children: [
-        resultWidget,
-        const SizedBox(height: 20),
-        ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 20, 139, 251)),
+          const Text(
+            'RESULT:',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 48,
+              fontWeight: FontWeight.bold
+            ),
           ),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const Prediction()),
-            );
-          },
-          child: const Text(
-            "Back",
-            style: TextStyle(color: Colors.white),
+          Flex(
+            direction: Axis.vertical,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              resultWidget,
+            ],
           ),
-        ),
-        ],
+          const SizedBox(height: 20),
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(Colors.white),
+            ),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Prediction()),
+              );
+            },
+            child: const Text(
+              "Diagnose again",
+              style: TextStyle(color:Color.fromARGB(255, 20, 139, 251)),
+            ),
+          ),
+          ],
       ),
     );
   }
