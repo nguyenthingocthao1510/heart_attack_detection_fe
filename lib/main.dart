@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // login: (context) => const Login(),
-        // homePage: (context) => const HomePage(),
-        // registerRoute: (context) => const Register(),
-        // notFoundRoute: (context) => const Error404Screen(),
+        login: (context) => const Login(),
+        homePage: (context) => const HomePage(),
+        registerRoute: (context) => const Register(),
+        notFoundRoute: (context) => const Error404Screen(),
         diagnosisRoute: (context) => const Prediction(),
       },
     );
