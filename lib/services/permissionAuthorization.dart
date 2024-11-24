@@ -89,4 +89,19 @@ class PermissionAuthorizationAPI {
       throw Exception('Failed to add permission: $e}');
     }
   }
+
+  static Future<PermissionModule> loadAllPermission(int roleId) async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/get-all-permission/roleId=$roleId';
+
+    final response = await dio.get(url);
+
+    if (response.data is Map<String, dynamic>) {
+      final resData = response.data as Map<String, dynamic>;
+      final permissionModule = PermissionModule.fromJson(resData);
+      return permissionModule;
+    } else {
+      throw Exception('Invalid data format');
+    }
+  }
 }

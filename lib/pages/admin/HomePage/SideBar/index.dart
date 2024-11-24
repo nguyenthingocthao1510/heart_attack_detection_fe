@@ -20,14 +20,23 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
+  late Future<List<ModuleRole>> futureModules;
+
   @override
   void initState() {
     super.initState();
+    futureModules = getAllModuleInRole(); // Lưu trữ Future trong initState
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<List<ModuleRole>> getAllModuleInRole() async {
+    if (!mounted) return [];
+    try {
+      final roleId =
+          int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
+      return await ModuleRoleAPI.getAllModuleInRole(roleId);
+    } catch (error) {
+      return [];
+    }
   }
 
   @override
@@ -36,7 +45,7 @@ class _SideBarState extends State<SideBar> {
       children: [
         Expanded(
           child: FutureBuilder<List<ModuleRole>>(
-            future: getAllModuleInRole(),
+            future: futureModules, // Sử dụng biến Future ở đây
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -125,16 +134,5 @@ class _SideBarState extends State<SideBar> {
         ),
       ],
     );
-  }
-
-  Future<List<ModuleRole>> getAllModuleInRole() async {
-    if (!mounted) return [];
-    try {
-      final roleId =
-          int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
-      return await ModuleRoleAPI.getAllModuleInRole(roleId);
-    } catch (error) {
-      return [];
-    }
   }
 }
