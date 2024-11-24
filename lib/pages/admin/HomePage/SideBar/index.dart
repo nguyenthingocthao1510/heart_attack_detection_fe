@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
-import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/moduleAuthorization.dart';
 import 'package:provider/provider.dart';
 
@@ -89,8 +88,8 @@ class _SideBarState extends State<SideBar> {
                               style: const TextStyle(fontSize: 16.0),
                               overflow: TextOverflow.ellipsis,
                             ),
-                        ],
-                      ),
+                          ), // Đóng đúng cách bằng dấu phẩy
+                      ], // Đóng danh sách con tại đây
                     ),
                   );
                 },
