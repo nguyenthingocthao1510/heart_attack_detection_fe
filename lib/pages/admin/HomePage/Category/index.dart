@@ -17,7 +17,7 @@ class _CatergoryPageState extends State<CatergoryPage>
   Widget build(BuildContext context) {
     return AnimatedBackground(
       behaviour: BubblesBehaviour(
-        options: BubbleOptions(
+        options: const BubbleOptions(
           popRate: 1,
           minTargetRadius: 1.0,
           bubbleCount: 30,
@@ -26,7 +26,7 @@ class _CatergoryPageState extends State<CatergoryPage>
         ),
       ),
       vsync: this,
-      child: SingleChildScrollView(
+      child: const SingleChildScrollView(
         child: Column(
           children: [SliderSection(), ModuleSection(), LatestNewsSection()],
         ),

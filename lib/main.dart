@@ -9,6 +9,7 @@ import 'package:heart_attack_detection_fe/pages/category/Prescription/Prescripti
 import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionModal/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart';
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
           return const Error404Screen();
         },
         notFoundRoute: (context) => const Error404Screen(),
+        diagnosisRoute: (context) => const Prediction(),
       },
     );
   }

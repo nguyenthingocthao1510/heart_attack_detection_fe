@@ -25,7 +25,7 @@ class _Error404ScreenState extends State<Error404Screen> {
             left: MediaQuery.of(context).size.width * 0.3,
             right: MediaQuery.of(context).size.width * 0.3,
             child: FloatingActionButton(
-              backgroundColor: Color(0xFF6B92F2),
+              backgroundColor: const Color(0xFF6B92F2),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
               onPressed: () {
@@ -33,7 +33,7 @@ class _Error404ScreenState extends State<Error404Screen> {
               },
               child: Text(
                 "Go Home".toUpperCase(),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           )

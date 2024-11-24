@@ -10,10 +10,10 @@ class SideBar extends StatefulWidget {
   final VoidCallback onToggle;
 
   const SideBar({
-    Key? key,
+    super.key,
     required this.isSidebarOpen,
     required this.onToggle,
-  }) : super(key: key);
+  });
 
   @override
   _SideBarState createState() => _SideBarState();
@@ -65,38 +65,29 @@ class _SideBarState extends State<SideBar> {
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (route != null) {
-                          Navigator.pushNamed(context, route);
-                        } else {
-                          Navigator.pushNamed(context, notFoundRoute);
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: widget.isSidebarOpen
-                            ? MainAxisAlignment.start
-                            : MainAxisAlignment.center,
-                        children: [
-                          if (widget.isSidebarOpen)
-                            Expanded(
-                              child: Center(
-                                child: Icon(Icons.grid_view),
-                              ),
-                            )
-                          else
-                            Center(
+                    child: Row(
+                      mainAxisAlignment: widget.isSidebarOpen
+                          ? MainAxisAlignment.start
+                          : MainAxisAlignment.center,
+                      children: [
+                        if (widget.isSidebarOpen)
+                          const Expanded(
+                            child: Center(
                               child: Icon(Icons.grid_view),
                             ),
-                          if (widget.isSidebarOpen) const SizedBox(width: 8.0),
-                          if (widget.isSidebarOpen)
-                            Expanded(
-                              flex: 3,
-                              child: Text(
-                                name,
-                                style: const TextStyle(fontSize: 16.0),
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                          )
+                        else
+                          const Center(
+                            child: Icon(Icons.grid_view),
+                          ),
+                        if (widget.isSidebarOpen) const SizedBox(width: 8.0),
+                        if (widget.isSidebarOpen)
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              name,
+                              style: const TextStyle(fontSize: 16.0),
+                              overflow: TextOverflow.ellipsis,
                             ),
                         ],
                       ),
@@ -122,8 +113,8 @@ class _SideBarState extends State<SideBar> {
               onPressed: widget.onToggle,
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.grey[100]!),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    WidgetStateProperty.all<Color>(Colors.grey[100]!),
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0),
                   ),

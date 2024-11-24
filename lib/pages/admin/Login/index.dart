@@ -215,9 +215,13 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     Text('Failed to load permissions: Invalid data format')),
           );
         }
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Login success')),
+        );
+        Navigator.pushNamed(context, homePage, arguments: roleId);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login fail')),
+          const SnackBar(content: Text('Login fail')),
         );
       }
     } catch (e) {

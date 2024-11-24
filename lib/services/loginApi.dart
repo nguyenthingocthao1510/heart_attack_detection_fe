@@ -28,7 +28,7 @@ class LoginAPI {
       } else {
         print('Error sending request: ${e.message}');
       }
-      throw e;
+      rethrow;
     } catch (e) {
       print('Error: $e');
       throw Exception('Failed to login: $e');
