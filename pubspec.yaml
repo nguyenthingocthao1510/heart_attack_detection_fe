@@ -49,11 +49,8 @@ dependencies:
   quickalert: ^1.1.0
   syncfusion_flutter_gauges: ^27.1.57
   fl_chart: ^0.69.0
-  intl: ^0.18.1
-
-
-
-
+  intl: ^0.19.0
+  flutter_form_builder: ^9.5.0
 
 dev_dependencies:
   flutter_test:

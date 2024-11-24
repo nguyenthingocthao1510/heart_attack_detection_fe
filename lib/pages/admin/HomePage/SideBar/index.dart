@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
-import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/moduleAuthorization.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +19,23 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
+  late Future<List<ModuleRole>> futureModules;
+
   @override
   void initState() {
     super.initState();
+    futureModules = getAllModuleInRole(); // Lưu trữ Future trong initState
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<List<ModuleRole>> getAllModuleInRole() async {
+    if (!mounted) return [];
+    try {
+      final roleId =
+          int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
+      return await ModuleRoleAPI.getAllModuleInRole(roleId);
+    } catch (error) {
+      return [];
+    }
   }
 
   @override
@@ -36,7 +44,7 @@ class _SideBarState extends State<SideBar> {
       children: [
         Expanded(
           child: FutureBuilder<List<ModuleRole>>(
-            future: getAllModuleInRole(),
+            future: futureModules, // Sử dụng biến Future ở đây
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -80,8 +88,8 @@ class _SideBarState extends State<SideBar> {
                               style: const TextStyle(fontSize: 16.0),
                               overflow: TextOverflow.ellipsis,
                             ),
-                        ],
-                      ),
+                          ), // Đóng đúng cách bằng dấu phẩy
+                      ], // Đóng danh sách con tại đây
                     ),
                   );
                 },
@@ -116,16 +124,5 @@ class _SideBarState extends State<SideBar> {
         ),
       ],
     );
-  }
-
-  Future<List<ModuleRole>> getAllModuleInRole() async {
-    if (!mounted) return [];
-    try {
-      final roleId =
-          int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
-      return await ModuleRoleAPI.getAllModuleInRole(roleId);
-    } catch (error) {
-      return [];
-    }
   }
 }

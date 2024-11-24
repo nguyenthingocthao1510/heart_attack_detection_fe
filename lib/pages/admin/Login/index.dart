@@ -1,8 +1,13 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/assets/icon/index.dart';
+import 'package:heart_attack_detection_fe/models/permissionAuthorization.dart';
+import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
+import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/loginApi.dart';
+import 'package:heart_attack_detection_fe/services/permissionAuthorization.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -182,7 +187,34 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       final response = await LoginAPI.login(username, password);
       if (response != null) {
         String roleId = response['roleId'];
+        String accountId = response['accountId'];
 
+        final permissionResponse =
+            await PermissionAuthorizationAPI.loadAllPermission(
+                int.parse(roleId));
+
+        if (permissionResponse is PermissionModule) {
+          final permissionProvider =
+              Provider.of<PermissionProvider>(context, listen: false);
+          permissionProvider.updatePermissionsFromApi(permissionResponse);
+
+          print('Permissions: ${permissionProvider.permissions}');
+          print('Role ID: ${permissionProvider.roleId}');
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login success')),
+          );
+          Provider.of<AccountProvider>(context, listen: false)
+              .setAccountId(accountId);
+
+          Navigator.pushNamed(context, homePage, arguments: roleId);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content:
+                    Text('Failed to load permissions: Invalid data format')),
+          );
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login success')),
         );

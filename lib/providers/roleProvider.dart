@@ -10,14 +10,3 @@ class RoleProvider with ChangeNotifier {
     notifyListeners();
   }
 }
-
-class ModuleRoleProvider with ChangeNotifier {
-  String? _roleId;
-
-  String? get id => _roleId;
-
-  void setRoleId(String? id) {
-    _roleId = id;
-    notifyListeners();
-  }
-}

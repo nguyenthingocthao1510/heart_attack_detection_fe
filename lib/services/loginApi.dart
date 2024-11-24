@@ -17,10 +17,9 @@ class LoginAPI {
         final data = response.data;
 
         final roleId = data['roleId'].toString();
+        final accountId = data['accountId'].toString();
 
-        return {
-          'roleId': roleId,
-        };
+        return {'roleId': roleId, 'accountId': accountId};
       }
     } on DioError catch (e) {
       if (e.response != null) {
