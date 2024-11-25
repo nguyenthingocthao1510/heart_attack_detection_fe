@@ -11,6 +11,8 @@ class LoginAPI {
 
       final response =
           await dio.post('http://127.0.0.1:5000/api/login', data: payload);
+          // 'http://:5000/api/login'
+          // 'http://10.0.2.2:5000/api/patient/diagnosis'
       // final response = await dio.post('https://heart-attack-detection-be.onrender.com/api/login', data: payload);
 
       if (response.statusCode == 200) {

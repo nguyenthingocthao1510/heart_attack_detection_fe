@@ -1,4 +1,3 @@
-// lib/pages/diagnose_page.dart
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/diagnosis.d.dart';
 import 'enteringInformation/index.dart';

@@ -5,6 +5,7 @@ const String adminPageRoute = '/admin';
 const String moduleRoute = '/admin/module-authorization';
 
 const String diagnosisRoute = '/patient/diagnosis-prediction';
+const String patientRoute = '/patient/personal-information';
 
 const String registerRoute = '/create-account';
 const String homePage = '/home-page';
