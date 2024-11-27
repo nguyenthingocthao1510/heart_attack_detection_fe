@@ -22,13 +22,12 @@ class _SideBarState extends State<SideBar> {
   late Future<List<ModuleRole>> futureModules;
 
   @override
-  void initState() {
-    super.initState();
-    futureModules = getAllModuleInRole(); // Lưu trữ Future trong initState
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    futureModules = getAllModuleInRole();
   }
 
   Future<List<ModuleRole>> getAllModuleInRole() async {
-    if (!mounted) return [];
     try {
       final roleId =
           int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
@@ -44,7 +43,7 @@ class _SideBarState extends State<SideBar> {
       children: [
         Expanded(
           child: FutureBuilder<List<ModuleRole>>(
-            future: futureModules, // Sử dụng biến Future ở đây
+            future: futureModules,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -62,34 +61,39 @@ class _SideBarState extends State<SideBar> {
                   final name = module.name ?? 'Unnamed Module';
                   final route = module.route;
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisAlignment: widget.isSidebarOpen
-                          ? MainAxisAlignment.start
-                          : MainAxisAlignment.center,
-                      children: [
-                        if (widget.isSidebarOpen)
-                          const Expanded(
-                            child: Center(
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, route!);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        mainAxisAlignment: widget.isSidebarOpen
+                            ? MainAxisAlignment.start
+                            : MainAxisAlignment.center,
+                        children: [
+                          if (widget.isSidebarOpen)
+                            const Expanded(
+                              child: Center(
+                                child: Icon(Icons.grid_view),
+                              ),
+                            )
+                          else
+                            const Center(
                               child: Icon(Icons.grid_view),
                             ),
-                          )
-                        else
-                          const Center(
-                            child: Icon(Icons.grid_view),
-                          ),
-                        if (widget.isSidebarOpen) const SizedBox(width: 8.0),
-                        if (widget.isSidebarOpen)
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              name,
-                              style: const TextStyle(fontSize: 16.0),
-                              overflow: TextOverflow.ellipsis,
+                          if (widget.isSidebarOpen) const SizedBox(width: 8.0),
+                          if (widget.isSidebarOpen)
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                name,
+                                style: const TextStyle(fontSize: 16.0),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ), // Đóng đúng cách bằng dấu phẩy
-                      ], // Đóng danh sách con tại đây
+                        ],
+                      ),
                     ),
                   );
                 },

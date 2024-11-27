@@ -4,7 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/role.dart';
-import 'package:heart_attack_detection_fe/routes/route.constant.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/services/registerApi.dart';
 import 'package:heart_attack_detection_fe/services/role.dart';
 import 'package:quickalert/quickalert.dart';
@@ -74,16 +74,6 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.black),
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.pushNamed(context, homePage),
-          ),
-        ),
         title: const Text("Register account"),
         centerTitle: true,
       ),
@@ -345,7 +335,11 @@ class _RegisterState extends State<Register> {
           type: QuickAlertType.success,
           text: 'Registration Successful!',
           onConfirmBtnTap: () {
-            Navigator.pushNamed(context, homePage);
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+              (Route<dynamic> route) => false,
+            );
           },
         );
       }

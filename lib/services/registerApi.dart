@@ -13,7 +13,7 @@ class RegisterAPI {
       final url = 'http://127.0.0.1:5000/api/register';
       final response = await dio.post(url, data: payload);
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         print('Account created successfully');
         return true;
       } else {
