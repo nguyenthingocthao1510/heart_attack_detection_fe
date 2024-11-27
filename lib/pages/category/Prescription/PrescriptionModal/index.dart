@@ -163,6 +163,8 @@ class _PrescriptionModalState extends State<PrescriptionModal> {
 
     final doctorName = arguments?['doctor_name'] ?? 'Unknown Doctor';
     final doctorId = arguments?['doctor_id']?.toString() ?? 'Unknown ID';
+    print('Doctor name: $doctorName');
+    print('Doctor id: $doctorId');
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),

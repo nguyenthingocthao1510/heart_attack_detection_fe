@@ -17,8 +17,8 @@ class _ModuleSectionState extends State<ModuleSection> {
   final ScrollController _scrollController = ScrollController();
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     fetchData();
   }
 
@@ -70,7 +70,8 @@ class _ModuleSectionState extends State<ModuleSection> {
                         _scrollToIndex(currentIndex - 1);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Cannot go back further')),
+                          const SnackBar(
+                              content: Text('Cannot go back further')),
                         );
                       }
                     },
@@ -133,7 +134,8 @@ class _ModuleSectionState extends State<ModuleSection> {
                                       const SizedBox(height: 8),
                                       Text(
                                         name!,
-                                        style: const TextStyle(color: Colors.black),
+                                        style: const TextStyle(
+                                            color: Colors.black),
                                       ),
                                     ],
                                   ),
@@ -169,10 +171,6 @@ class _ModuleSectionState extends State<ModuleSection> {
   }
 
   Future<void> fetchData() async {
-    await fetchAllModule();
-  }
-
-  Future<void> fetchAllModule() async {
     final roleId =
         int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
     final response = await ModuleRoleAPI.getAllModuleInRole(roleId);
