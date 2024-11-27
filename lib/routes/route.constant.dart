@@ -16,3 +16,4 @@ const String permissionAuthorization = '/permission-authorization';
 const String prescription = '/prescription';
 const String addPrescription = '/prescription-form';
 const String prescriptionDetail = '/prescription-detail';
+const String doctorRoute = '/doctor';
