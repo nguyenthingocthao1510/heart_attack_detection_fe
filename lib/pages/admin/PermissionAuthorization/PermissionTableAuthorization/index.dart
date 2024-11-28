@@ -79,13 +79,13 @@ class _PermissionTableAuthorizationState
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          'Permission not in role',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.red),
-                        ),
+                      Text(
+                        'Permission not in role',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.red),
+                      ),
+                      SizedBox(
+                        height: 24,
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
@@ -229,16 +229,13 @@ class _PermissionTableAuthorizationState
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 18),
-                        child: Text(
-                          'Permission in role',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.red),
-                        ),
+                      Text(
+                        'Permission in role',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.red),
                       ),
                       SizedBox(
-                        height: 7,
+                        height: 24,
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
