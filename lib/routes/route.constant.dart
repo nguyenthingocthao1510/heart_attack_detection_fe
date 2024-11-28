@@ -1,7 +1,7 @@
 const String login = '/';
 
 const String adminPageRoute = '/admin';
-const String moduleRoute = '/admin/module-authorization';
+const String moduleRoute = '/module';
 
 const String diagnosisRoute = '/patient/diagnosis-prediction';
 

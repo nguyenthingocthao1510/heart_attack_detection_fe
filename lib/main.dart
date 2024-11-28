@@ -9,6 +9,7 @@ import 'package:heart_attack_detection_fe/pages/admin/UserFooter/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Doctor/DoctorModal/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Doctor/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Medicine/index.dart';
+import 'package:heart_attack_detection_fe/pages/category/Module/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionDetail/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionModal/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart';
@@ -98,6 +99,7 @@ class MyApp extends StatelessWidget {
           return const SizedBox.shrink();
         },
         medicineRoute: (context) => const MedicinePage(),
+        moduleRoute: (context) => const ModulePage(),
         notFoundRoute: (context) => const Error404Screen(),
         diagnosisRoute: (context) => const Prediction(),
       },

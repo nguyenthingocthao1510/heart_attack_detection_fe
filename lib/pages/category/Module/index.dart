@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/models/medicine.d.dart';
+import 'package:heart_attack_detection_fe/models/module.d.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Medicine/MedicineModal/index.dart';
-import 'package:heart_attack_detection_fe/services/medicine.dart';
+import 'package:heart_attack_detection_fe/pages/category/Module/ModuleModal/index.dart';
+import 'package:heart_attack_detection_fe/services/moduleApi.dart';
 
-class MedicinePage extends StatefulWidget {
-  const MedicinePage({super.key});
+class ModulePage extends StatefulWidget {
+  const ModulePage({super.key});
 
   @override
-  State<MedicinePage> createState() => _MedicinePageState();
+  State<ModulePage> createState() => _ModulePageState();
 }
 
-class _MedicinePageState extends State<MedicinePage> {
-  List<Medicine> medicines = [];
+class _ModulePageState extends State<ModulePage> {
+  List<Module> modules = [];
 
   @override
   void initState() {
@@ -21,13 +21,13 @@ class _MedicinePageState extends State<MedicinePage> {
   }
 
   Future<void> fetchData() async {
-    await getAllMedicine();
+    await getAllModule();
   }
 
-  Future<void> getAllMedicine() async {
-    final response = await MedicineAPI.getAllMedicine();
+  Future<void> getAllModule() async {
+    final response = await ModuleAPI.fetchAllModule();
     setState(() {
-      medicines = response;
+      modules = response;
     });
   }
 
@@ -37,8 +37,8 @@ class _MedicinePageState extends State<MedicinePage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text('Medicine'),
         surfaceTintColor: Colors.white,
+        title: Text('Module'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_outlined, color: Colors.black),
           onPressed: () {
@@ -58,26 +58,25 @@ class _MedicinePageState extends State<MedicinePage> {
           children: [
             Expanded(
                 child: ListView.builder(
-                    itemCount: medicines.length,
+                    itemCount: modules.length,
                     padding: EdgeInsets.only(bottom: 80),
                     itemBuilder: (context, index) {
-                      final medicine = medicines[index];
-                      final name = medicine.name;
-                      final uses = medicine.uses;
-                      final description = medicine.description;
+                      final module = modules[index];
+                      final name = module.name;
+                      final route = module.route;
 
                       return Card(
                         color: Colors.white,
                         child: ListTile(
                           title: Text(name!),
-                          subtitle: Text('${description} - ${uses}'),
+                          subtitle: Text('${route}'),
                           trailing: IconButton(
                               onPressed: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        MedicineModal(medicine: medicine),
+                                        ModuleModal(module: module),
                                   ),
                                 );
                               },
@@ -92,7 +91,7 @@ class _MedicinePageState extends State<MedicinePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MedicineModal()),
+            MaterialPageRoute(builder: (context) => ModuleModal()),
           );
         },
         icon: Icon(Icons.add),

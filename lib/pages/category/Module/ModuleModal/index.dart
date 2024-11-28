@@ -1,46 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/models/medicine.d.dart';
+import 'package:heart_attack_detection_fe/models/module.d.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
-import 'package:heart_attack_detection_fe/services/medicine.dart';
+import 'package:heart_attack_detection_fe/services/moduleApi.dart';
 import 'package:quickalert/quickalert.dart';
 
-class MedicineModal extends StatefulWidget {
-  final Medicine? medicine;
+class ModuleModal extends StatefulWidget {
+  final Module? module;
 
-  const MedicineModal({super.key, this.medicine});
+  const ModuleModal({super.key, this.module});
 
   @override
-  State<MedicineModal> createState() => _MedicineModalState();
+  State<ModuleModal> createState() => _ModuleModalState();
 }
 
-class _MedicineModalState extends State<MedicineModal> {
+class _ModuleModalState extends State<ModuleModal> {
   late TextEditingController nameController;
-  late TextEditingController usesController;
-  late TextEditingController descriptionController;
+  late TextEditingController routeController;
+  late TextEditingController imageController;
 
   @override
   void initState() {
     super.initState();
 
     nameController = TextEditingController(
-        text: widget.medicine != null ? widget.medicine!.name : '');
-    usesController = TextEditingController(
-        text: widget.medicine != null ? widget.medicine!.uses : '');
-    descriptionController = TextEditingController(
-        text: widget.medicine != null ? widget.medicine!.description : '');
+        text: widget.module != null ? widget.module!.name : '');
+    routeController = TextEditingController(
+        text: widget.module != null ? widget.module!.route : '');
+    imageController = TextEditingController(
+        text: widget.module != null ? widget.module!.image : '');
   }
 
   @override
   Widget build(BuildContext context) {
-    final isUpdate = widget.medicine != null;
+    final isUpdate = widget.module != null;
     String? name;
-    String? uses;
-    String? description;
+    String? route;
+    String? image;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(isUpdate ? 'Update Medicine' : 'Add Medicine'),
+        title: Text(isUpdate ? 'Update module' : 'Add module'),
         centerTitle: true,
       ),
       body: Container(
@@ -88,7 +88,7 @@ class _MedicineModalState extends State<MedicineModal> {
                     ),
                     const SizedBox(height: 5),
                     const Text(
-                      'Usage',
+                      'Route',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class _MedicineModalState extends State<MedicineModal> {
                     ),
                     TextField(
                       onChanged: (value) {
-                        uses = value;
+                        route = value;
                       },
                       cursorColor: Colors.black,
                       cursorWidth: 0.5,
@@ -109,7 +109,7 @@ class _MedicineModalState extends State<MedicineModal> {
                           borderSide: BorderSide(color: Colors.lightBlue),
                         ),
                       ),
-                      controller: usesController,
+                      controller: routeController,
                     ),
                     const SizedBox(height: 5),
                     const Text(
@@ -121,7 +121,7 @@ class _MedicineModalState extends State<MedicineModal> {
                     ),
                     TextField(
                       onChanged: (value) {
-                        description = value;
+                        image = value;
                       },
                       cursorColor: Colors.black,
                       cursorWidth: 0.5,
@@ -134,7 +134,7 @@ class _MedicineModalState extends State<MedicineModal> {
                           borderSide: BorderSide(color: Colors.lightBlue),
                         ),
                       ),
-                      controller: descriptionController,
+                      controller: imageController,
                     ),
                     const SizedBox(
                       height: 15,
@@ -146,9 +146,9 @@ class _MedicineModalState extends State<MedicineModal> {
                                 WidgetStatePropertyAll(Colors.blue)),
                         onPressed: () {
                           if (isUpdate) {
-                            updateMedicine();
+                            updateModule();
                           } else {
-                            addMedicine();
+                            addModule();
                           }
                         },
                         child: Text(
@@ -167,28 +167,28 @@ class _MedicineModalState extends State<MedicineModal> {
     );
   }
 
-  void addMedicine() async {
+  void addModule() async {
     try {
       if (nameController.text.isEmpty ||
-          usesController.text.isEmpty ||
-          descriptionController.text.isEmpty) {
+          routeController.text.isEmpty ||
+          imageController.text.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Please enter information of medicine!')));
+            content: Text('Please enter information of module!')));
         return;
       }
 
-      await MedicineAPI.createMedicine(
+      await ModuleAPI.createModule(
         nameController.text,
-        usesController.text,
-        descriptionController.text,
+        routeController.text,
+        imageController.text,
       );
 
       QuickAlert.show(
         context: context,
         type: QuickAlertType.success,
-        text: 'Medicine created successfully!',
+        text: 'Module created successfully!',
         onConfirmBtnTap: () {
-          Navigator.pushNamed(context, medicineRoute);
+          Navigator.pushNamed(context, moduleRoute);
         },
       );
     } catch (e) {
@@ -197,31 +197,31 @@ class _MedicineModalState extends State<MedicineModal> {
         type: QuickAlertType.error,
         text: 'Something went wrong!',
         onConfirmBtnTap: () {
-          Navigator.pushNamed(context, medicineRoute);
+          Navigator.pushNamed(context, moduleRoute);
         },
       );
     }
   }
 
-  void updateMedicine() async {
+  void updateModule() async {
     try {
-      if (widget.medicine == null) {
-        throw Exception('Medicine ID is missing');
+      if (widget.module == null) {
+        throw Exception('Module ID is missing');
       }
 
-      await MedicineAPI.updateMedicine(
-        widget.medicine!.id,
+      await ModuleAPI.updateModule(
+        widget.module!.id,
         nameController.text,
-        usesController.text,
-        descriptionController.text,
+        routeController.text,
+        imageController.text,
       );
 
       QuickAlert.show(
         context: context,
         type: QuickAlertType.success,
-        text: 'Medicine updated successfully!',
+        text: 'Module updated successfully!',
         onConfirmBtnTap: () {
-          Navigator.pushNamed(context, medicineRoute);
+          Navigator.pushNamed(context, moduleRoute);
         },
       );
     } catch (e) {
@@ -230,7 +230,7 @@ class _MedicineModalState extends State<MedicineModal> {
         type: QuickAlertType.error,
         text: 'Something went wrong!',
         onConfirmBtnTap: () {
-          Navigator.pushNamed(context, medicineRoute);
+          Navigator.pushNamed(context, moduleRoute);
         },
       );
     }
