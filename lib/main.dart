@@ -8,6 +8,7 @@ import 'package:heart_attack_detection_fe/pages/admin/Register/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/UserFooter/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Doctor/DoctorModal/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Doctor/index.dart';
+import 'package:heart_attack_detection_fe/pages/category/Medicine/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionDetail/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionModal/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Route',
+      title: 'Healthcare Application',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         hoverColor: Colors.white,
@@ -96,6 +97,7 @@ class MyApp extends StatelessWidget {
           });
           return const SizedBox.shrink();
         },
+        medicineRoute: (context) => const MedicinePage(),
         notFoundRoute: (context) => const Error404Screen(),
         diagnosisRoute: (context) => const Prediction(),
       },
