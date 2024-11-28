@@ -48,9 +48,9 @@ class _PermissionTableState extends State<PermissionTable> {
       headingRowHeight: 35,
       columns: [
         DataColumn2(
-            fixedWidth: 50,
+            fixedWidth: 20,
             label: Center(
-              child: Icon(Icons.check_box_outline_blank, color: Colors.black),
+              child: Text(''),
             )),
         DataColumn2(
             label: SizedBox(

@@ -54,8 +54,10 @@ class _PrescriptionModalState extends State<PrescriptionModal> {
 
   void _addField() {
     setState(() {
-      final newGroupName = 'group_${_newTextFieldId++}';
-      fieldNames.add(newGroupName);
+      fieldNames.add('group_${fieldNames.length}');
+
+      widget.prescriptionData?.details ??= [];
+      widget.prescriptionData!.details!.add(MedicineDetail());
     });
   }
 
@@ -173,6 +175,7 @@ class _PrescriptionModalState extends State<PrescriptionModal> {
         title: Text(widget.prescriptionData == null
             ? 'Add Prescription'
             : 'Edit Prescription'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.only(top: 10),
@@ -292,15 +295,17 @@ class _PrescriptionModalState extends State<PrescriptionModal> {
                             const SizedBox(height: 16),
                             Column(
                               children: [
-                                ...fieldNames.map(
-                                  (groupName) {
-                                    int index =
-                                        int.parse(groupName.split('_')[1]);
+                                ...fieldNames.asMap().entries.map(
+                                  (entry) {
+                                    int index = entry.key;
+                                    String groupName = entry.value;
+
                                     final detail = widget
                                         .prescriptionData?.details?[index];
 
                                     return Row(
-                                      key: ValueKey(groupName),
+                                      key: ValueKey('$groupName-$index'),
+                                      // Sử dụng key duy nhất
                                       children: [
                                         Expanded(
                                           child: Autocomplete<Medicine>(
@@ -462,18 +467,21 @@ class _PrescriptionModalState extends State<PrescriptionModal> {
                                   },
                                 ),
                                 const SizedBox(height: 16),
-                                ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor: WidgetStatePropertyAll(
-                                          Colors.lightBlue)),
-                                  onPressed: _addField,
-                                  child: const Text(
-                                    'Add more detail',
-                                    style: TextStyle(
+                                if (widget.prescriptionData == null)
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.lightBlue)),
+                                    onPressed: _addField,
+                                    child: const Text(
+                                      'Add more detail',
+                                      style: TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                ),
                               ],
                             ),
                             const SizedBox(height: 16),

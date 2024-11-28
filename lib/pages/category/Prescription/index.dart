@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/doctor.d.dart';
 import 'package:heart_attack_detection_fe/models/prescription.d.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
@@ -63,7 +64,18 @@ class _PrescriptionPageState extends State<PrescriptionPage> {
       backgroundColor: Color(0xFFF5F6FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
         title: Text('Prescriptions'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_outlined, color: Colors.black),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,

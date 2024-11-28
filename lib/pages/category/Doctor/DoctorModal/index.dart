@@ -167,392 +167,422 @@ class _DoctorModalState extends State<DoctorModal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(widget.doctor == null ? 'Create Doctor' : 'Edit Doctor'),
+        centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Card(
-          color: Colors.white,
-          margin: const EdgeInsets.all(16.0),
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+      body: Container(
+          color: Color(0xFFF5F6FA),
+          child: SingleChildScrollView(
+            child: Card(
+              color: Colors.white,
+              margin: const EdgeInsets.all(16.0),
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.person, size: 30, color: Colors.blue),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [Colors.blue, Colors.cyan],
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Name',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          TextField(
-                            onChanged: (value) {
-                              name = value;
-                            },
-                            cursorColor: Colors.black,
-                            cursorWidth: 0.5,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.lightBlue),
-                              ),
-                            ),
-                            controller: TextEditingController(text: name),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.calendar_month,
-                        size: 30, color: Colors.blue),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [Colors.blue, Colors.cyan],
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Date of birth',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          TextField(
-                            controller: _dobController,
-                            readOnly: true,
-                            onTap: () => _selectDate(context),
-                            cursorColor: Colors.black,
-                            cursorWidth: 0.5,
-                            decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.calendar_today),
-                              isDense: true,
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.lightBlue),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    ShaderMask(
-                      shaderCallback: (bounds) => LinearGradient(
-                        colors: [Colors.redAccent, Colors.lightBlue],
-                      ).createShader(bounds),
-                      child: const Icon(
-                        Icons.transgender,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [Colors.blue, Colors.cyan],
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Gender',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                  child: ListTile(
-                                title: const Text('Male'),
-                                leading: Radio<int>(
-                                  fillColor:
-                                      WidgetStatePropertyAll(Colors.blue),
-                                  activeColor: Colors.green,
-                                  value: 0,
-                                  groupValue: gender,
-                                  onChanged: (int? value) {
-                                    setState(() {
-                                      gender = value!;
-                                    });
-                                  },
+                    Row(
+                      children: [
+                        const Icon(Icons.person, size: 30, color: Colors.blue),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  colors: [Colors.blue, Colors.cyan],
+                                ).createShader(bounds),
+                                child: const Text(
+                                  'Name',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
-                              )),
-                              Expanded(
-                                child: ListTile(
-                                  title: const Text('Female'),
-                                  leading: Radio<int>(
-                                    fillColor:
-                                        WidgetStatePropertyAll(Colors.blue),
-                                    value: 1,
-                                    groupValue: gender,
-                                    onChanged: (int? value) {
-                                      setState(() {
-                                        gender = value!;
-                                      });
-                                    },
+                              ),
+                              TextField(
+                                onChanged: (value) {
+                                  name = value;
+                                },
+                                cursorColor: Colors.black,
+                                cursorWidth: 0.5,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lightBlue),
                                   ),
                                 ),
+                                controller: TextEditingController(text: name),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.calendar_month,
+                            size: 30, color: Colors.blue),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  colors: [Colors.blue, Colors.cyan],
+                                ).createShader(bounds),
+                                child: const Text(
+                                  'Date of birth',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                              TextField(
+                                controller: _dobController,
+                                readOnly: true,
+                                onTap: () => _selectDate(context),
+                                cursorColor: Colors.black,
+                                cursorWidth: 0.5,
+                                decoration: InputDecoration(
+                                  suffixIcon: Icon(Icons.calendar_today),
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lightBlue),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        ShaderMask(
+                          shaderCallback: (bounds) => LinearGradient(
+                            colors: [Colors.redAccent, Colors.lightBlue],
+                          ).createShader(bounds),
+                          child: const Icon(
+                            Icons.transgender,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  colors: [Colors.blue, Colors.cyan],
+                                ).createShader(bounds),
+                                child: const Text(
+                                  'Gender',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: ListTile(
+                                      dense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                      title: const Text(
+                                        'Male',
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                      leading: Radio<int>(
+                                        fillColor: MaterialStatePropertyAll(
+                                            Colors.blue),
+                                        activeColor: Colors.green,
+                                        value: 0,
+                                        groupValue: gender,
+                                        onChanged: (int? value) {
+                                          setState(() {
+                                            gender = value!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: ListTile(
+                                      dense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                      title: const Text(
+                                        'Female',
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                      leading: Radio<int>(
+                                        fillColor: MaterialStatePropertyAll(
+                                            Colors.blue),
+                                        value: 1,
+                                        groupValue: gender,
+                                        onChanged: (int? value) {
+                                          setState(() {
+                                            gender = value!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.mail, size: 30, color: Colors.blue),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [Colors.blue, Colors.cyan],
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Email',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
                           ),
-                          TextField(
-                            onChanged: (value) {
-                              email = value;
-                            },
-                            cursorColor: Colors.black,
-                            cursorWidth: 0.5,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.lightBlue),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.mail, size: 30, color: Colors.blue),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  colors: [Colors.blue, Colors.cyan],
+                                ).createShader(bounds),
+                                child: const Text(
+                                  'Email',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
                               ),
-                            ),
-                            controller: TextEditingController(text: email),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.access_time, size: 30, color: Colors.blue),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [Colors.blue, Colors.cyan],
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Age',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          TextField(
-                            onChanged: (value) {
-                              age = int.tryParse(value);
-                            },
-                            cursorColor: Colors.black,
-                            cursorWidth: 0.5,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.lightBlue),
+                              TextField(
+                                onChanged: (value) {
+                                  email = value;
+                                },
+                                cursorColor: Colors.black,
+                                cursorWidth: 0.5,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lightBlue),
+                                  ),
+                                ),
+                                controller: TextEditingController(text: email),
                               ),
-                            ),
-                            controller:
-                                TextEditingController(text: age?.toString()),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.home, size: 30, color: Colors.blue),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [Colors.blue, Colors.cyan],
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Address',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          TextField(
-                            onChanged: (value) {
-                              address = value;
-                            },
-                            cursorColor: Colors.black,
-                            cursorWidth: 0.5,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.lightBlue),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.access_time,
+                            size: 30, color: Colors.blue),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  colors: [Colors.blue, Colors.cyan],
+                                ).createShader(bounds),
+                                child: const Text(
+                                  'Age',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
                               ),
-                            ),
-                            controller: TextEditingController(text: address),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.assignment_ind,
-                        size: 30, color: Colors.blue),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ShaderMask(
-                            shaderCallback: (bounds) => LinearGradient(
-                              colors: [Colors.blue, Colors.cyan],
-                            ).createShader(bounds),
-                            child: const Text(
-                              'Specialization',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          TextField(
-                            onChanged: (value) {
-                              specialization = value;
-                            },
-                            cursorColor: Colors.black,
-                            cursorWidth: 0.5,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
-                              border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.lightBlue),
+                              TextField(
+                                onChanged: (value) {
+                                  age = int.tryParse(value);
+                                },
+                                cursorColor: Colors.black,
+                                cursorWidth: 0.5,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lightBlue),
+                                  ),
+                                ),
+                                controller: TextEditingController(
+                                    text: age?.toString()),
                               ),
-                            ),
-                            controller:
-                                TextEditingController(text: specialization),
+                            ],
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.home, size: 30, color: Colors.blue),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  colors: [Colors.blue, Colors.cyan],
+                                ).createShader(bounds),
+                                child: const Text(
+                                  'Address',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                              TextField(
+                                onChanged: (value) {
+                                  address = value;
+                                },
+                                cursorColor: Colors.black,
+                                cursorWidth: 0.5,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lightBlue),
+                                  ),
+                                ),
+                                controller:
+                                    TextEditingController(text: address),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.assignment_ind,
+                            size: 30, color: Colors.blue),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ShaderMask(
+                                shaderCallback: (bounds) => LinearGradient(
+                                  colors: [Colors.blue, Colors.cyan],
+                                ).createShader(bounds),
+                                child: const Text(
+                                  'Specialization',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                              TextField(
+                                onChanged: (value) {
+                                  specialization = value;
+                                },
+                                cursorColor: Colors.black,
+                                cursorWidth: 0.5,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10),
+                                  border: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.black)),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lightBlue),
+                                  ),
+                                ),
+                                controller:
+                                    TextEditingController(text: specialization),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(height: 16),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: _saveDoctor,
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.blue)),
+                        child: Text(
+                          widget.doctor == null
+                              ? 'Create information'
+                              : 'Update information',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 16,
-                ),
-                SizedBox(height: 16),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _saveDoctor,
-                    style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Colors.blue)),
-                    child: Text(
-                      widget.doctor == null
-                          ? 'Create information'
-                          : 'Update information',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

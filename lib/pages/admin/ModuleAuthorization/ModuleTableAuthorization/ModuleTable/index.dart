@@ -50,11 +50,7 @@ class _ModuleTableState extends State<ModuleTable> {
       minWidth: 600,
       headingRowHeight: 35,
       columns: [
-        DataColumn2(
-            fixedWidth: 50,
-            label: Center(
-              child: Icon(Icons.check_box_outline_blank, color: Colors.black),
-            )),
+        DataColumn2(fixedWidth: 20, label: Center(child: Text(''))),
         DataColumn2(
             label: SizedBox(
           width: 300,
@@ -76,15 +72,15 @@ class _ModuleTableState extends State<ModuleTable> {
           .map((module) => DataRow2(
                 specificRowHeight: 50,
                 cells: [
-                  DataCell(SizedBox(
-                    child: Center(
+                  DataCell(
+                    Center(
                       child: Checkbox(
                         value: selectedModules.contains(module.id),
                         onChanged: (bool? value) =>
                             onChecked(value, module.id!),
                       ),
                     ),
-                  )),
+                  ),
                   DataCell(SizedBox(
                     child: Text(module.name!),
                   )),

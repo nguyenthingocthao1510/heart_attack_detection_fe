@@ -57,90 +57,93 @@ class _DoctorPageState extends State<DoctorPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
-        title: Center(
-          child: Text('Doctor Information'),
-        ),
+        title: Text('Doctor Information'),
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Card(
-          color: Colors.white,
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (prescriptionPermissions.contains('View')) ...[
-                  _buildInfoRow(
-                    icon: Icons.person,
-                    label: 'Name',
-                    value: doctor?.name ?? 'N/A',
-                  ),
-                  _buildInfoRow(
-                    icon: Icons.access_time,
-                    label: 'Age',
-                    value: doctor?.age?.toString() ?? 'N/A',
-                  ),
-                  _buildInfoRow(
-                    icon: doctor?.gender == 0 ? Icons.man : Icons.woman,
-                    label: 'Gender',
-                    value: doctor?.gender == 0 ? 'Male' : 'Female',
-                  ),
-                  _buildInfoRow(
-                    icon: Icons.email,
-                    label: 'Email',
-                    value: doctor?.email ?? 'N/A',
-                  ),
-                  _buildInfoRow(
-                    icon: Icons.home,
-                    label: 'Address',
-                    value: doctor?.address ?? 'N/A',
-                  ),
-                  _buildInfoRow(
-                    icon: Icons.calendar_month,
-                    label: 'Date of Birth',
-                    value: doctor?.dob != null
-                        ? DateFormat('dd/MM/yyyy').format(
-                            DateFormat('EEE, dd MMM yyyy HH:mm:ss zzz')
-                                .parse(doctor!.dob!),
-                          )
-                        : 'Invalid date',
-                  ),
-                  _buildInfoRow(
-                    icon: Icons.assignment_ind,
-                    label: 'Specialization',
-                    value: doctor?.specialization ?? 'N/A',
-                  ),
-                ],
-                if (prescriptionPermissions.contains('Edit'))
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25.0, bottom: 0.0),
-                    child: Center(
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.blue)),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DoctorModal(doctor: doctor),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Update Information',
-                          style: TextStyle(color: Colors.white),
+      body: Container(
+        color: Color(0xFFF5F6FA),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Card(
+            color: Colors.white,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (prescriptionPermissions.contains('View')) ...[
+                    _buildInfoRow(
+                      icon: Icons.person,
+                      label: 'Name',
+                      value: doctor?.name ?? 'N/A',
+                    ),
+                    _buildInfoRow(
+                      icon: Icons.access_time,
+                      label: 'Age',
+                      value: doctor?.age?.toString() ?? 'N/A',
+                    ),
+                    _buildInfoRow(
+                      icon: doctor?.gender == 0 ? Icons.man : Icons.woman,
+                      label: 'Gender',
+                      value: doctor?.gender == 0 ? 'Male' : 'Female',
+                    ),
+                    _buildInfoRow(
+                      icon: Icons.email,
+                      label: 'Email',
+                      value: doctor?.email ?? 'N/A',
+                    ),
+                    _buildInfoRow(
+                      icon: Icons.home,
+                      label: 'Address',
+                      value: doctor?.address ?? 'N/A',
+                    ),
+                    _buildInfoRow(
+                      icon: Icons.calendar_month,
+                      label: 'Date of Birth',
+                      value: doctor?.dob != null
+                          ? DateFormat('dd/MM/yyyy').format(
+                              DateFormat('EEE, dd MMM yyyy HH:mm:ss zzz')
+                                  .parse(doctor!.dob!),
+                            )
+                          : 'Invalid date',
+                    ),
+                    _buildInfoRow(
+                      icon: Icons.assignment_ind,
+                      label: 'Specialization',
+                      value: doctor?.specialization ?? 'N/A',
+                    ),
+                  ],
+                  if (prescriptionPermissions.contains('Edit'))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25.0, bottom: 0.0),
+                      child: Center(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(Colors.blue)),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DoctorModal(doctor: doctor),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Update Information',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
