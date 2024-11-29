@@ -189,6 +189,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         String roleId = response['roleId'];
         String accountId = response['accountId'];
 
+        
+
         final permissionResponse =
             await PermissionAuthorizationAPI.loadAllPermission(
                 int.parse(roleId));

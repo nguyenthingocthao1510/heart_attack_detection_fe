@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 
 class UserFooterSection extends StatefulWidget {
   const UserFooterSection({super.key});
@@ -97,6 +98,7 @@ class _UserFooterSectionState extends State<UserFooterSection> {
                   icon: Icons.perm_device_information,
                   title: 'About us',
                   gradientColors: [Color(0xFF009245), Color(0xFFFCEE21)],
+                  onTap: () => onTap(patientRoute)
                 ),
               ],
             ),
@@ -151,7 +153,8 @@ class _UserFooterSectionState extends State<UserFooterSection> {
   Widget _buildListTile(BuildContext context,
       {required IconData icon,
       required String title,
-      required List<Color> gradientColors}) {
+      required List<Color> gradientColors,
+      VoidCallback? onTap}) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
@@ -179,7 +182,13 @@ class _UserFooterSectionState extends State<UserFooterSection> {
           onPressed: () {},
           icon: const Icon(Icons.chevron_right),
         ),
+        onTap: onTap
       ),
     );
   }
+
+  void onTap(String routeName) {
+    Navigator.pushNamed(context, routeName);
+  }
+
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/processingPrediction/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/ProcessingPrediction/index.dart';
 
 void main() {
   testWidgets('Preview enteringInformation page', (WidgetTester tester) async {

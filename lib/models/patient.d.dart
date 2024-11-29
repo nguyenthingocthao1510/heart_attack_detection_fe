@@ -11,7 +11,7 @@ class Patient {
     required this.name,
     required this.gender,
     required this.dob
-    });
+  });
 
   factory Patient.fromMap(Map<String, dynamic> e) {
     return Patient(
@@ -19,7 +19,7 @@ class Patient {
       account_id: e['account_id'],
       name: e['name'],
       gender: e['gender'],
-      dob: e['gender'],
+      dob: e['dob'],
     );
   }
 }
