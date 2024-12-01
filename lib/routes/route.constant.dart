@@ -4,7 +4,7 @@ const String adminPageRoute = '/admin';
 const String moduleRoute = '/module';
 
 const String diagnosisRoute = '/patient/diagnosis-prediction';
-const String patientRoute = '/patient/personal-information';
+const String patientProfileRoute = '/patient';
 
 const String registerRoute = '/create-account';
 const String homePage = '/home-page';

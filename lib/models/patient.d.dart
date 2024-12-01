@@ -4,13 +4,15 @@ class Patient {
   final String name;
   final String gender;
   final String dob;
+  final int age;
 
   Patient({
     required this.id, 
     required this.account_id, 
     required this.name,
     required this.gender,
-    required this.dob
+    required this.dob,
+    required this.age
   });
 
   factory Patient.fromMap(Map<String, dynamic> e) {
@@ -20,6 +22,7 @@ class Patient {
       name: e['name'],
       gender: e['gender'],
       dob: e['dob'],
+      age: e['age']
     );
   }
 }

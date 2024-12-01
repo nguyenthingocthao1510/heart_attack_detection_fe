@@ -9,6 +9,11 @@ class UserFooterSection extends StatefulWidget {
 }
 
 class _UserFooterSectionState extends State<UserFooterSection> {
+
+  void redirectTo(String routeName) {
+    Navigator.pushNamed(context, routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +103,7 @@ class _UserFooterSectionState extends State<UserFooterSection> {
                   icon: Icons.perm_device_information,
                   title: 'About us',
                   gradientColors: [Color(0xFF009245), Color(0xFFFCEE21)],
-                  onTap: () => onTap(patientRoute)
+                  onTap: () => redirectTo(patientProfileRoute)
                 ),
               ],
             ),
@@ -185,10 +190,6 @@ class _UserFooterSectionState extends State<UserFooterSection> {
         onTap: onTap
       ),
     );
-  }
-
-  void onTap(String routeName) {
-    Navigator.pushNamed(context, routeName);
   }
 
 }

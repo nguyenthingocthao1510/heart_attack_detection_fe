@@ -16,11 +16,12 @@ import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/PersonalInformation/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/doctorApi.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,8 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (context) => RoleProvider()),
       ChangeNotifierProvider(create: (context) => PermissionProvider()),
-      ChangeNotifierProvider(create: (context) => AccountProvider())
+      ChangeNotifierProvider(create: (context) => AccountProvider()),
+      ChangeNotifierProvider(create: (context) => PatientProvider())
     ],
     child: const MyApp(),
   ));
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
         moduleAuthorization: (context) => const ModuleAuthorization(),
         dashboard: (context) => const Dashboard(),
         diagnosisRoute: (context) => const Prediction(),
-        patientRoute: (context) => const PersonalInformation(),
+        patientProfileRoute: (context) => const PatientProfile(),
         userInformation: (context) => const UserFooterSection(),
         permissionAuthorization: (context) => const PermissionAuthorization(),
         prescription: (context) => const PrescriptionPage(),
