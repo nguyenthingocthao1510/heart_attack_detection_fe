@@ -79,13 +79,13 @@ class _PermissionTableAuthorizationState
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          'Permission not in role',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.red),
-                        ),
+                      Text(
+                        'Permission not in role',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.red),
+                      ),
+                      SizedBox(
+                        height: 24,
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,
@@ -105,9 +105,9 @@ class _PermissionTableAuthorizationState
                 )),
                 SizedBox(
                     height: 180,
-                    width: 100,
+                    width: 80,
                     child: Padding(
-                      padding: EdgeInsets.only(top: 12.5),
+                      padding: EdgeInsets.only(top: 22.5),
                       child: Table(
                         border: TableBorder.all(
                             color: Colors.grey,
@@ -229,13 +229,13 @@ class _PermissionTableAuthorizationState
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          'Permission in role',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.red),
-                        ),
+                      Text(
+                        'Permission in role',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.red),
+                      ),
+                      SizedBox(
+                        height: 24,
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width,

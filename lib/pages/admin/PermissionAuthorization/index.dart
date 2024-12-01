@@ -45,7 +45,7 @@ class _PermissionAuthorizationState extends State<PermissionAuthorization> {
           ),
           Container(
             height: 265,
-            padding: EdgeInsets.only(top: 30, left: 5, right: 5),
+            padding: EdgeInsets.only(left: 5, right: 5),
             child: Card(
               color: Colors.white,
               child: PermissionTableAuthorization(
