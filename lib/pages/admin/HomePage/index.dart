@@ -1,5 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/SideBar/index.dart';
@@ -45,8 +46,50 @@ class _HomePageState extends State<HomePage>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Homepage'),
-          backgroundColor: Colors.blue[100],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 15, right: 10, bottom: 10),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      child: Image.asset(icon64px),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(50))),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: const Text('Homepage',
+                        style: TextStyle(color: Colors.white)),
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15, right: 10, bottom: 10),
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  child: Icon(
+                    Icons.logout,
+                    color: Colors.blue,
+                  ),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(50))),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.blueAccent,
           automaticallyImplyLeading: false,
         ),
         body: SizedBox.expand(
