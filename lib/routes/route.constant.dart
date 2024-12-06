@@ -17,3 +17,4 @@ const String addPrescription = '/prescription-form';
 const String prescriptionDetail = '/prescription-detail';
 const String doctorRoute = '/doctor';
 const String medicineRoute = '/medicine';
+const String updatePasswordRoute = '/update-password';
