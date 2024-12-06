@@ -4,6 +4,7 @@ import 'package:heart_attack_detection_fe/pages/category/User/ChangePassword/ind
 import 'package:heart_attack_detection_fe/pages/category/User/PrivacyPolicy/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/User/Support/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/User/TermOfUse/index.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 
 class UserFooterSection extends StatefulWidget {
   const UserFooterSection({super.key});
@@ -126,7 +127,7 @@ class _UserFooterSectionState extends State<UserFooterSection> {
                     title: 'Log out',
                     gradientColors: [Color(0xFFD4145A), Color(0xFFFBB03B)],
                     onPressed: () {
-                  // Navigator.pushAndRemoveUntil(context, newRoute, predicate)
+                  Navigator.pushNamed(context, login);
                 }),
               ],
             ),
