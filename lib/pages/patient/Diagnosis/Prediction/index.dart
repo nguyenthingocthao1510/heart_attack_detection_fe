@@ -4,8 +4,9 @@ import 'package:heart_attack_detection_fe/models/diagnosis.d.dart';
 import 'enteringInformation/index.dart';
 import 'processingPrediction/index.dart';
 import 'displayingResult/index.dart';
-import 'package:heart_attack_detection_fe/services/predictApi.dart';
-
+import 'package:heart_attack_detection_fe/services/Diagnosis/predictApi.dart';
+import 'package:heart_attack_detection_fe/services/Diagnosis/receiveUserInputApi.dart';
+import ''
 class Prediction extends StatefulWidget {
   const Prediction({super.key});
 
@@ -26,21 +27,21 @@ class _PredictionState extends State<Prediction> {
       age: inputData['age'],
       trtbps: inputData['trtbps'],
       chol: inputData['chol'],
-      thalachh: inputData['thalachh'],
       oldpeak: inputData['oldpeak'],
       sex: inputData['sex'],
       exng: inputData['exng'],
       caa: inputData['caa'],
       cp: inputData['cp'],
       fbs: inputData['fbs'],
-      restecg: inputData['restecg'],
       slp: inputData['slp'],
       thall: inputData['thall'],
     );
 
-    String result = await PredictAPI.predict(diagnosis);
+    await ReceiveUserInputAPI.receiveUserInput(diagnosis);
 
-    await Future.delayed(const Duration(milliseconds: 2000));
+    String result = await PredictAPI.predict();
+
+    // await Future.delayed(const Duration(milliseconds: 2000));
 
     setState(() {
       predictionResult = result;
