@@ -8,7 +8,8 @@ Widget radioInput({
 }) {
   return Row(
     children: [
-      Radio<dynamic>(
+      Radio<dynamic>
+      (
         value: value,
         groupValue: groupValue,
         activeColor: const Color.fromARGB(255, 20, 139, 251),

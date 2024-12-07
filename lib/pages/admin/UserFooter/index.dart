@@ -14,6 +14,11 @@ class UserFooterSection extends StatefulWidget {
 }
 
 class _UserFooterSectionState extends State<UserFooterSection> {
+
+  void redirectTo(String routeName) {
+    Navigator.pushNamed(context, routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,4 +207,5 @@ class _UserFooterSectionState extends State<UserFooterSection> {
       ),
     );
   }
+
 }

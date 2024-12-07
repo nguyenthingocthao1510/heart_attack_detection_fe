@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/InputFormComponent/textFieldInput.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/enteringInformation/InputFormComponent/radioInput.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/EnteringInformation/InputFormComponent/textFieldInput.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/EnteringInformation/InputFormComponent/radioInput.dart';
 
 // ignore: must_be_immutable
 class EnteringInformation extends StatefulWidget {

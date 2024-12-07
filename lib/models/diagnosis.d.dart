@@ -29,7 +29,7 @@ class Diagnosis {
     required this.thall,
   });
 
-    Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'age': age,
       'trtbps': trtbps,

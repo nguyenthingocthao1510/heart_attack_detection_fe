@@ -1,9 +1,8 @@
-// lib/pages/diagnose_page.dart
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/diagnosis.d.dart';
-import 'enteringInformation/index.dart';
-import 'processingPrediction/index.dart';
-import 'displayingResult/index.dart';
+import 'EnteringInformation/index.dart';
+import 'ProcessingPrediction/index.dart';
+import 'DisplayingResult/index.dart';
 import 'package:heart_attack_detection_fe/services/predictApi.dart';
 
 class Prediction extends StatefulWidget {

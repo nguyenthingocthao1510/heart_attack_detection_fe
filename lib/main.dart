@@ -17,9 +17,12 @@ import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/doctorApi.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +46,8 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (context) => RoleProvider()),
       ChangeNotifierProvider(create: (context) => PermissionProvider()),
-      ChangeNotifierProvider(create: (context) => AccountProvider())
+      ChangeNotifierProvider(create: (context) => AccountProvider()),
+      ChangeNotifierProvider(create: (context) => PatientProvider())
     ],
     child: const MyApp(),
   ));
@@ -66,6 +70,8 @@ class MyApp extends StatelessWidget {
         registerRoute: (context) => const Register(),
         moduleAuthorization: (context) => const ModuleAuthorization(),
         dashboard: (context) => const Dashboard(),
+        diagnosisRoute: (context) => const Prediction(),
+        patientProfileRoute: (context) => const PatientProfile(),
         userInformation: (context) => const UserFooterSection(),
         permissionAuthorization: (context) => const PermissionAuthorization(),
         prescription: (context) => const PrescriptionPage(),
@@ -103,7 +109,6 @@ class MyApp extends StatelessWidget {
         moduleRoute: (context) => const ModulePage(),
         updatePasswordRoute: (context) => UpdatePassword(),
         notFoundRoute: (context) => const Error404Screen(),
-        diagnosisRoute: (context) => const Prediction(),
       },
     );
   }

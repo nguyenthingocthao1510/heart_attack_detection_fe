@@ -4,9 +4,11 @@ import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import 'package:heart_attack_detection_fe/models/permissionAuthorization.dart';
 import 'package:heart_attack_detection_fe/pages/category/User/Support/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/loginApi.dart';
+import 'package:heart_attack_detection_fe/services/patientApi.dart';
 import 'package:heart_attack_detection_fe/services/permissionAuthorization.dart';
 import 'package:provider/provider.dart';
 
@@ -230,7 +232,13 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           Provider.of<AccountProvider>(context, listen: false)
               .setAccountId(accountId);
 
+          final patientData = await PatientAPI.getPatientByAccountId(int.parse(accountId));
+
+          Provider.of<PatientProvider>(context, listen: false)
+            .setPatient(patientData);
+
           Navigator.pushNamed(context, homePage, arguments: roleId);
+
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
