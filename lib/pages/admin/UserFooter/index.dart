@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/pages/category/User/AboutUs/index.dart';
+import 'package:heart_attack_detection_fe/pages/category/User/ChangePassword/index.dart';
+import 'package:heart_attack_detection_fe/pages/category/User/PrivacyPolicy/index.dart';
+import 'package:heart_attack_detection_fe/pages/category/User/Support/index.dart';
+import 'package:heart_attack_detection_fe/pages/category/User/TermOfUse/index.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 
 class UserFooterSection extends StatefulWidget {
@@ -62,61 +67,73 @@ class _UserFooterSectionState extends State<UserFooterSection> {
               context,
               'Settings',
               [
-                _buildListTile(
-                  context,
-                  icon: Icons.lock,
-                  title: 'Change password',
-                  gradientColors: [Color(0xFF614385), Color(0xFF516395)],
-                ),
-                _buildListTile(
-                  context,
-                  icon: Icons.support_agent,
-                  title: 'Support',
-                  gradientColors: [Color(0xFF09203F), Color(0xFF537895)],
-                ),
+                _buildListTile(context,
+                    icon: Icons.lock,
+                    title: 'Change password',
+                    gradientColors: [Color(0xFF614385), Color(0xFF516395)],
+                    onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChangePassword()));
+                }),
+                _buildListTile(context,
+                    icon: Icons.support_agent,
+                    title: 'Support',
+                    gradientColors: [Color(0xFF09203F), Color(0xFF537895)],
+                    onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Support()));
+                }),
               ],
             ),
             _buildCard(
               context,
               'Legal and policies',
               [
-                _buildListTile(
-                  context,
-                  icon: Icons.my_library_books,
-                  title: 'Terms of use',
-                  gradientColors: [Color(0xFF2E3192), Color(0xFF1BFFFF)],
-                ),
-                _buildListTile(
-                  context,
-                  icon: Icons.key,
-                  title: 'Privacy policy',
-                  gradientColors: [Color(0xFF662D8C), Color(0xFFED1E79)],
-                ),
+                _buildListTile(context,
+                    icon: Icons.my_library_books,
+                    title: 'Terms of use',
+                    gradientColors: [Color(0xFF2E3192), Color(0xFF1BFFFF)],
+                    onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TermOfUse()));
+                }),
+                _buildListTile(context,
+                    icon: Icons.key,
+                    title: 'Privacy policy',
+                    gradientColors: [Color(0xFF662D8C), Color(0xFFED1E79)],
+                    onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PrivacyPolicy()));
+                }),
               ],
             ),
             _buildCard(
               context,
               'Information',
               [
-                _buildListTile(
-                  context,
-                  icon: Icons.perm_device_information,
-                  title: 'About us',
-                  gradientColors: [Color(0xFF009245), Color(0xFFFCEE21)],
-                  onTap: () => redirectTo(patientProfileRoute)
-                ),
+                _buildListTile(context,
+                    icon: Icons.perm_device_information,
+                    title: 'About us',
+                    gradientColors: [Color(0xFF009245), Color(0xFFFCEE21)],
+                    onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AboutUs()));
+                }),
               ],
             ),
             _buildCard(
               context,
               'Application',
               [
-                _buildListTile(
-                  context,
-                  icon: Icons.logout,
-                  title: 'Log out',
-                  gradientColors: [Color(0xFFD4145A), Color(0xFFFBB03B)],
-                ),
+                _buildListTile(context,
+                    icon: Icons.logout,
+                    title: 'Log out',
+                    gradientColors: [Color(0xFFD4145A), Color(0xFFFBB03B)],
+                    onPressed: () {
+                  Navigator.pushNamed(context, login);
+                }),
               ],
             ),
           ],
@@ -159,7 +176,7 @@ class _UserFooterSectionState extends State<UserFooterSection> {
       {required IconData icon,
       required String title,
       required List<Color> gradientColors,
-      VoidCallback? onTap}) {
+      VoidCallback? onPressed}) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
@@ -184,10 +201,9 @@ class _UserFooterSectionState extends State<UserFooterSection> {
         ),
         title: Text(title),
         trailing: IconButton(
-          onPressed: () {},
+          onPressed: onPressed,
           icon: const Icon(Icons.chevron_right),
         ),
-        onTap: onTap
       ),
     );
   }
