@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         hoverColor: Colors.white,
       ),
       routes: {
-        // login: (context) => const Login(),
+        login: (context) => const Login(),
         homePage: (context) => const HomePage(),
         registerRoute: (context) => const Register(),
         moduleAuthorization: (context) => const ModuleAuthorization(),

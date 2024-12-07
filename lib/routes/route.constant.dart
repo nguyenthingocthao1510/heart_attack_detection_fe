@@ -1,10 +1,10 @@
-//const String login = '/';
+const String login = '/';
 
 const String adminPageRoute = '/admin';
 const String moduleRoute = '/module';
 
 const String diagnosisRoute = '/patient/diagnosis-prediction';
-const String patientProfileRoute = '/';
+const String patientProfileRoute = '/patient';
 
 const String registerRoute = '/create-account';
 const String homePage = '/home-page';
