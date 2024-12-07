@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/models/doctor.d.dart';
 import 'package:heart_attack_detection_fe/models/prescription.d.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
+import 'package:heart_attack_detection_fe/services/doctorApi.dart';
 import 'package:heart_attack_detection_fe/services/prescription.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +19,7 @@ class PrescriptionPage extends StatefulWidget {
 
 class _PrescriptionPageState extends State<PrescriptionPage> {
   List<Prescription> prescriptions = [];
+  Doctor? doctor;
 
   @override
   void initState() {
@@ -26,6 +30,16 @@ class _PrescriptionPageState extends State<PrescriptionPage> {
   Future<void> fetchData() async {
     if (!mounted) return;
     await getAllPrescription();
+    await getAllDoctor();
+  }
+
+  Future<void> getAllDoctor() async {
+    final accountId =
+        Provider.of<AccountProvider>(context, listen: false).accountId;
+    final response = await DoctorAPI.getDoctorById(int.parse(accountId!));
+    setState(() {
+      doctor = response;
+    });
   }
 
   Future<void> getAllPrescription() async {
@@ -50,7 +64,18 @@ class _PrescriptionPageState extends State<PrescriptionPage> {
       backgroundColor: Color(0xFFF5F6FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
         title: Text('Prescriptions'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_outlined, color: Colors.black),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -102,11 +127,10 @@ class _PrescriptionPageState extends State<PrescriptionPage> {
       ),
       floatingActionButton: IconButton(
         onPressed: () {
-          Navigator.pushNamed(context, addPrescription);
-          // Navigator.pushNamed(context, addPrescription, arguments: {
-          //   'doctor_id': prescriptions[0].doctor_id, // Pass doctor_id here
-          //   'doctor_name': prescriptions[0].doctor_name
-          // });
+          Navigator.pushNamed(context, addPrescription, arguments: {
+            'doctor_id': doctor?.id,
+            'doctor_name': doctor?.name
+          });
         },
         icon: Icon(Icons.add),
         style: ButtonStyle(

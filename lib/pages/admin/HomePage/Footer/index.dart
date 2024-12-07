@@ -84,6 +84,8 @@ class _FooterSectionState extends State<FooterSection> {
             if (index == 1) {
               Navigator.pushNamed(
                   context, dashboard); // Navigate to dashboard page
+            } else if (index == 2) {
+              Navigator.pushNamed(context, diagnosisRoute);
             } else if (index == 4) {
               Navigator.pushNamed(context, userInformation);
             } else {

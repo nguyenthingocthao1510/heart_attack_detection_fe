@@ -2,10 +2,13 @@ import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import 'package:heart_attack_detection_fe/models/permissionAuthorization.dart';
+import 'package:heart_attack_detection_fe/pages/category/User/Support/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/loginApi.dart';
+import 'package:heart_attack_detection_fe/services/patientApi.dart';
 import 'package:heart_attack_detection_fe/services/permissionAuthorization.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +41,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           ),
         ),
         backgroundColor: Colors.blue,
+        automaticallyImplyLeading: false,
       ),
       body: AnimatedBackground(
         behaviour: RandomParticleBehaviour(
@@ -71,8 +75,19 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     Text('Username:'),
                     SizedBox(height: 8),
                     TextField(
+                      cursorColor: Colors.black,
+                      cursorWidth: 1.0,
                       decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         hintText: 'Enter username',
@@ -96,6 +111,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     Text('Password:'),
                     SizedBox(height: 8),
                     TextField(
+                      cursorColor: Colors.black,
+                      cursorWidth: 1.0,
                       obscureText: !passwordVisible,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
@@ -109,6 +126,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           },
                         ),
                         alignLabelWithHint: false,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -207,7 +232,13 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           Provider.of<AccountProvider>(context, listen: false)
               .setAccountId(accountId);
 
+          final patientData = await PatientAPI.getPatientByAccountId(int.parse(accountId));
+
+          Provider.of<PatientProvider>(context, listen: false)
+            .setPatient(patientData);
+
           Navigator.pushNamed(context, homePage, arguments: roleId);
+
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -232,8 +263,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   }
 
   void onForgetPassword() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Forget password functionality not implemented')),
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Support()));
   }
 }
