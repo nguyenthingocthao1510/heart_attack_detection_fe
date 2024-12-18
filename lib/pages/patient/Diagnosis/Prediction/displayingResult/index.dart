@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'ResultComponent/resultIsOne.dart';
-import 'ResultComponent/resultIsZero.dart';
 import '../index.dart';
 
 class DisplayingResult extends StatefulWidget {
@@ -15,56 +13,29 @@ class DisplayingResult extends StatefulWidget {
 class _DisplayingResultState extends State<DisplayingResult> {
   @override
   Widget build(BuildContext context) {
-    Widget resultWidget;
 
     final int prediction = int.tryParse(widget.result) ?? -1;
 
-    if (prediction == 0) {
-      resultWidget = const ResultIsZero();
-    } else if (prediction == 1) {
-      resultWidget = const ResultIsOne();
-    } else {
-      resultWidget = const Text(
-        'Error: Invalid result',
-      );
-    }
-    
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 20, 139, 251),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'RESULT:',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 48,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-          Flex(
-            direction: Axis.vertical,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              resultWidget,
-            ],
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.white),
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Prediction()),
-              );
-            },
-            child: const Text(
-              "Diagnose again",
-              style: TextStyle(color:Color.fromARGB(255, 20, 139, 251)),
-            ),
-          ),
-          ],
+          _buildCard(),
+          
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCard() {
+    return const Card(
+      elevation: 50,
+      shadowColor: Colors.black,
+      color: Colors.white,
+      child: SizedBox(
+        width: 300,
+        height: 200,
       ),
     );
   }

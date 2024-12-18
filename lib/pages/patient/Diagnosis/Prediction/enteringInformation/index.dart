@@ -85,37 +85,10 @@ class _EnteringInformationState extends State<EnteringInformation> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    textFieldInput(label: 'Age', controller: ageController),
                     textFieldInput(label: 'Resting Blood Pressure', controller: trtbpsController),
                     textFieldInput(label: 'Cholesterol', controller: cholController),
-                    textFieldInput(label: 'Heart Rate', controller: thalachhController),
                     textFieldInput(label: 'Old Peak', controller: oldpeakController),
                     textFieldInput(label: 'Fasting Blood Sugar', controller: fbsController),
-                    const Text(
-                      'Gender',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    radioInput(
-                      label: "Male",
-                      value: "Male",
-                      groupValue: sex,
-                      onChanged: (newValue) {
-                        setState(() {
-                          sex = newValue;
-                        });
-                      },
-                    ),
-                    radioInput(
-                      label: "Female",
-                      value: "Female",
-                      groupValue: sex,
-                      onChanged: (newValue) {
-                        setState(() {
-                          sex = newValue;
-                        });
-                      },
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
                     const Text(
                       'Exercise induced angina',
                       style: TextStyle(fontSize: 16),
@@ -242,51 +215,6 @@ class _EnteringInformationState extends State<EnteringInformation> {
                     ),
                     const Padding(padding: EdgeInsets.all(12)),
                     const Text(
-                      'Resting Electrocardiographic result',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    radioInput(
-                      label: "0",
-                      value: 0,
-                      groupValue: restecg,
-                      onChanged: (newValue) {
-                        setState(() {
-                          restecg = newValue;
-                        });
-                      },
-                    ),
-                    radioInput(
-                      label: "1",
-                      value: 1,
-                      groupValue: restecg,
-                      onChanged: (newValue) {
-                        setState(() {
-                          restecg = newValue;
-                        });
-                      },
-                    ),
-                    radioInput(
-                      label: "2",
-                      value: 2,
-                      groupValue: restecg,
-                      onChanged: (newValue) {
-                        setState(() {
-                          restecg = newValue;
-                        });
-                      },
-                    ),
-                    radioInput(
-                      label: "3",
-                      value: 3,
-                      groupValue: restecg,
-                      onChanged: (newValue) {
-                        setState(() {
-                          restecg = newValue;
-                        });
-                      },
-                    ),
-                    const Padding(padding: EdgeInsets.all(12)),
-                    const Text(
                       'Slope',
                       style: TextStyle(fontSize: 16),
                     ),
@@ -383,17 +311,13 @@ class _EnteringInformationState extends State<EnteringInformation> {
                       onPressed: () {
                         try {
                           Map<String, dynamic> inputData = {
-                            'age': int.tryParse(ageController.text) ?? 0,
                             'trtbps': int.tryParse(trtbpsController.text) ?? 0,
                             'chol': int.tryParse(cholController.text) ?? 0,
-                            'thalachh': int.tryParse(thalachhController.text) ?? 0,
                             'oldpeak': double.tryParse(oldpeakController.text) ?? 0.0,
                             'fbs': int.tryParse(fbsController.text) ?? 0,
-                            'sex': sex,
                             'exng': exng,
                             'caa': caa,
                             'cp': cp,
-                            'restecg': restecg,
                             'slp': slp,
                             'thall': thall,
                           };

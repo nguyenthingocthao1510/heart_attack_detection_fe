@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:heart_attack_detection_fe/models/diagnosis.d.dart';
 import 'enteringInformation/index.dart';
 import 'processingPrediction/index.dart';
 import 'displayingResult/index.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/receiveUserInputApi.dart';
-import ''
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 class Prediction extends StatefulWidget {
   const Prediction({super.key});
 
@@ -21,13 +22,14 @@ class _PredictionState extends State<Prediction> {
     setState(() {
       isPredicting = true;
     });
-
+    
+  try {
     Diagnosis diagnosis = Diagnosis(
-      age: inputData['age'],
+      age: Provider.of<PatientProvider>(context, listen: false).patient!.age,
       trtbps: inputData['trtbps'],
       chol: inputData['chol'],
       oldpeak: inputData['oldpeak'],
-      sex: inputData['sex'],
+      sex: Provider.of<PatientProvider>(context, listen: false).patient!.gender,
       exng: inputData['exng'],
       caa: inputData['caa'],
       cp: inputData['cp'],
@@ -36,16 +38,30 @@ class _PredictionState extends State<Prediction> {
       thall: inputData['thall'],
     );
 
-    await ReceiveUserInputAPI.receiveUserInput(diagnosis);
+    String userInputResponse = await ReceiveUserInputAPI.receiveUserInput(diagnosis);
+
+    if (userInputResponse.startsWith('Prediction failed')) {
+      throw Exception(userInputResponse);
+    }
 
     String result = await PredictAPI.predict();
 
-    // await Future.delayed(const Duration(milliseconds: 2000));
+    if (result.startsWith('Prediction failed')) {
+      throw Exception(result);
+    }
 
     setState(() {
       predictionResult = result;
       isPredicting = false;
     });
+  } catch (error) {
+    setState(() {
+      isPredicting = false;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error during prediction: $error')),
+    );
+  }
   }
 
   @override
