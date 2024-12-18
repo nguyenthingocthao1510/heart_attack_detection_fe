@@ -5,10 +5,10 @@ class PredictAPI {
     final dio = Dio();
     try {
       final response = await dio.post(
-        'http://127.0.0.1:5000/api/patient/manual/diagnosis'
+        'http://10.0.2.2:5000/api/patient/manual/diagnosis'
       );
       //https://heart-attack-detection-be.onrender.com/api/patient/diagnosis
-      //http://127.0.0.1:5000
+      //127.0.0.1 10.0.2.2
 
       if (response.statusCode == 200 && response.data != null) {
         return response.data['prediction'].toString();
