@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:logging/logging.dart';
+import 'package:heart_attack_detection_fe/models/Diagnosis/result.d.dart';
 
 class PredictAPI {
-  static Future<String> predict() async {
+  static Future<DiagnosisResult> predict() async {
+    final Logger log = Logger('PredictAPI');
     final dio = Dio();
     try {
       final response = await dio.post(
@@ -11,22 +14,28 @@ class PredictAPI {
       //127.0.0.1 10.0.2.2
 
       if (response.statusCode == 200 && response.data != null) {
-        return response.data['prediction'].toString();
+        log.fine('Prediction result: $response');
+        return DiagnosisResult.fromMap(response.data);
       } else {
-        return 'Prediction failed: Unexpected response format';
+        throw Exception(
+            'Failed to display result');
       }
     } on DioException catch (e) {
       if (e.response != null) {
-        print('Response code: ${e.response?.statusCode}');
-        print('Response data: ${e.response?.data}');
-        return 'Prediction failed: ${e.response?.data}';
+        log.severe('Response code: ${e.response?.statusCode}', e);
+        log.severe('Response data: ${e.response?.data}', e);
+        throw Exception(
+            'Error status code: ${e.message}');
       } else {
-        print('Error sending request: ${e.message}');
-        return 'Prediction failed: ${e.message}';
+        log.severe('Error sending request: ${e.message}', e);
+        throw Exception(
+            'An error occurred: ${e.message}');
       }
     } catch (e) {
-      print('Error: $e');
-      return 'Prediction failed: $e';
-    }
+      log.severe('Error: $e', e);
+      throw Exception(
+          'An error occurred: $e');
+      }
   }
 }
+

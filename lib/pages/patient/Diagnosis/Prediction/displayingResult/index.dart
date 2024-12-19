@@ -1,81 +1,144 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:animated_background/animated_background.dart';
+import 'package:heart_attack_detection_fe/models/Diagnosis/result.d.dart';
+import 'package:heart_attack_detection_fe/themes/textStyle.dart';
+import 'package:heart_attack_detection_fe/themes/divider.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
+import 'package:provider/provider.dart';
 
 class DisplayingResult extends StatefulWidget {
-  final String result;
-
+  final DiagnosisResult result;
   const DisplayingResult({super.key, required this.result});
 
   @override
   State<DisplayingResult> createState() => _DisplayingResultState();
 }
 
-class _DisplayingResultState extends State<DisplayingResult> {
+class _DisplayingResultState extends State<DisplayingResult> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final int prediction = int.tryParse(widget.result) ?? -1;
+    final patient = Provider.of<PatientProvider>(context).patient;
+    final int prediction = widget.result.prediction;
     Color? backgroundColor = (prediction == 1) ? Colors.green : Colors.red;
     String title = (prediction == 1) ? 'Congratulation!' : 'Warning!';
-    String result =
-      (prediction == 1) ?
-      'Your heart is in good shape' :
-      'There is high risk of heart attack';
+    String result = (prediction == 1) ? 'Your heart is in good shape!' : 'There is high risk of heart attack!';
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 50),
-          Text(
-            title,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 50,
-                fontWeight: FontWeight.bold
-            ),
+      body: AnimatedBackground(
+        behaviour: RandomParticleBehaviour(
+          options: const ParticleOptions(
+            spawnOpacity: 0.1,
+            spawnMinSpeed: 150.0,
+            spawnMinRadius: 1.0,
+            spawnMaxSpeed: 300.0,
+            spawnMaxRadius: 5.0,
+            minOpacity: 0.1,
+            maxOpacity: 0.1,
+            baseColor: Colors.white,
           ),
-          const SizedBox(height: 50),
-          Center(
-            child: _buildCard(result),
-          )
-        ],
+        ),
+        vsync: this,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildResultAnnouncement(title, patient, result),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            Center(
+              child: _buildCard(widget.result.thalachh, 'Heart rate'),
+            ).animate()
+              .fadeIn(
+                delay: 400.ms,
+                duration: 800.ms,
+                begin: 0.1
+              )
+              .move(
+                delay: 400.ms,
+                begin: const Offset(0, 100),
+                curve: Curves.easeOut,
+                duration: 800.ms
+              ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            Center(
+              child: _buildCard(widget.result.restecg, 'Electrocardiogram'),
+            ).animate()
+              .fadeIn(
+                delay: 500.ms,
+                duration: 800.ms,
+                begin: 0.1
+              )
+              .move(
+                delay: 500.ms,
+                begin: const Offset(0, 100),
+                curve: Curves.easeOut,
+                duration: 800.ms
+              ),
+
+          ],
+        )
       )
     );
   }
 
-  Widget _buildCard(result) {
+  Widget _buildResultAnnouncement(title, patient, result) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+        Container(
+          margin: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05
+          ),
+          child: Text(title, style: CustomTextStyle.textStyle1(48, Colors.white)),
+        ),
+        Container(
+          margin: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05
+          ),
+          child: Text('${patient!.name}, $result', style: CustomTextStyle.textStyle2(24, Colors.white)),
+        ),
+        CustomDivider.divider1(context),
+      ],
+    ).animate()
+      .fadeIn(
+        duration: 600.ms,
+        begin: 0.1
+      )
+      .move(
+        duration: 600.ms,
+        begin: const Offset(0, 100),
+        curve: Curves.easeOut
+      )
+    ;
+  }
+
+  Widget _buildCard(value, parameter) {
     return Card(
       elevation: 50,
       shadowColor: Colors.black,
       color: Colors.white,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
-        height: MediaQuery.of(context).size.height * 0.6,
-        child: _buildCardContent(result),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
-    );
-  }
-
-  Widget _buildCardContent(result) {
-    return Column(
-      children: [
-        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-        Text(
-          result,
-          style: const TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontWeight: FontWeight.bold
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.6,
+        height: MediaQuery.of(context).size.height * 0.15,
+        child: ListTile(
+          title: Text(
+            value.toString(),
+            style: CustomTextStyle.textStyle1(56, Colors.green),
+            textAlign: TextAlign.center,
           ),
-        ),
-        Divider(
-          height: MediaQuery.of(context).size.height * 0.1,
-          thickness: 1,
-          indent: MediaQuery.of(context).size.width * 0.1,
-          endIndent: MediaQuery.of(context).size.width * 0.1,
+          subtitle: Text(
+            parameter,
+            style: CustomTextStyle.textStyle1(20, Colors.black),
+            textAlign: TextAlign.center,
+          ),
         )
-      ],
+      ),
     );
   }
 }

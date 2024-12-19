@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:heart_attack_detection_fe/models/diagnosis.d.dart';
+import 'package:heart_attack_detection_fe/models/Diagnosis/diagnosis.d.dart';
+import 'package:heart_attack_detection_fe/models/Diagnosis/result.d.dart';
 import 'enteringInformation/index.dart';
 import 'processingPrediction/index.dart';
 import 'displayingResult/index.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/receiveUserInputApi.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
+
 class Prediction extends StatefulWidget {
   const Prediction({super.key});
 
@@ -15,7 +17,7 @@ class Prediction extends StatefulWidget {
 }
 
 class _PredictionState extends State<Prediction> {
-  String? predictionResult;
+  DiagnosisResult? predictionResult;
   bool isPredicting = false;
 
   void startPrediction(Map<String, dynamic> inputData) async {
@@ -44,11 +46,7 @@ class _PredictionState extends State<Prediction> {
       throw Exception(userInputResponse);
     }
 
-    String result = await PredictAPI.predict();
-
-    if (result.startsWith('Prediction failed')) {
-      throw Exception(result);
-    }
+    DiagnosisResult result = await PredictAPI.predict();
 
     setState(() {
       predictionResult = result;
