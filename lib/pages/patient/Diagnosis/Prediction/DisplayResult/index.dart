@@ -7,15 +7,15 @@ import 'package:heart_attack_detection_fe/themes/divider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:provider/provider.dart';
 
-class DisplayingResult extends StatefulWidget {
+class DisplayResult extends StatefulWidget {
   final DiagnosisResult result;
-  const DisplayingResult({super.key, required this.result});
+  const DisplayResult({super.key, required this.result});
 
   @override
-  State<DisplayingResult> createState() => _DisplayingResultState();
+  State<DisplayResult> createState() => _DisplayResultState();
 }
 
-class _DisplayingResultState extends State<DisplayingResult> with SingleTickerProviderStateMixin {
+class _DisplayResultState extends State<DisplayResult> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final patient = Provider.of<PatientProvider>(context).patient;

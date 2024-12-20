@@ -25,6 +25,7 @@ import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/doctorApi.dart';
+import 'package:heart_attack_detection_fe/services/baseApi.dart';
 import 'package:provider/provider.dart';
 
 Future<Doctor?> getDoctorById(BuildContext context) async {
@@ -42,6 +43,8 @@ Future<Doctor?> getDoctorById(BuildContext context) async {
 }
 
 void main() {
+  ChangePrefixURL.setApiPrefix(2);
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => RoleProvider()),

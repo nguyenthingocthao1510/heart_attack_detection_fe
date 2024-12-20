@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/diagnosis.d.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/result.d.dart';
-import 'enteringInformation/index.dart';
-import 'processingPrediction/index.dart';
-import 'displayingResult/index.dart';
+import 'DiagnosisForm/index.dart';
+import 'ProcessPrediction/index.dart';
+import 'DisplayResult/index.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/receiveUserInputApi.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
@@ -67,11 +67,11 @@ class _PredictionState extends State<Prediction> {
     Widget currentWidget;
 
     if (isPredicting) {
-      currentWidget = const ProcessingPrediction();
+      currentWidget = const ProcessPrediction();
     } else if (predictionResult != null) {
-      currentWidget = DisplayingResult(result: predictionResult!);
+      currentWidget = DisplayResult(result: predictionResult!);
     } else {
-      currentWidget = EnteringInformation(onSubmit: startPrediction);
+      currentWidget = DiagnosisForm(onSubmit: startPrediction);
     }
 
     return Scaffold(
