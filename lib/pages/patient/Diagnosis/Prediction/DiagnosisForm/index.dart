@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/DiagnosisForm/InputFormComponent/textFieldInput.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/DiagnosisForm/InputFormComponent/radioInput.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/DiagnosisForm/Component/textFieldInput.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/DiagnosisForm/Component/radioInput.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
+import 'package:heart_attack_detection_fe/services/patientApi.dart';
+
 
 // ignore: must_be_immutable
 class DiagnosisForm extends StatefulWidget {
@@ -28,17 +33,13 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
   String cp = 'None';
   String slp = 'None';
   String thall = 'None';
-
-  ValueChanged changeRadioValue(dynamic groupValue) {
-    return (newValue) {
-      setState(() {
-        groupValue = newValue;
-      });
-    };
-  }
+  PatientAPI patientAPI = PatientAPI();
 
   @override
   Widget build(BuildContext DiagnosisForm) {
+    var patient = Provider.of<PatientProvider>(context).patient;
+    bool status = (patient!.need_prediction == 'Yes') ? true : false;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 20, 139, 251),
       body: SingleChildScrollView(
@@ -46,28 +47,30 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
         child: 
           Column(
             children: [
-              Container(
-                height: 200,
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  "Welcome to diagnosis section",
-                  style: CustomTextStyle.textStyle1(50, Colors.white),
-                  textAlign: TextAlign.center,
-                ),
+              _buildTextContainer(0.1, 1.0, "Welcome, ${patient.name}", CustomTextStyle.textStyle1(36, Colors.white), TextAlign.start),
+              Row(
+                children: [
+                  _buildTextContainer(0.1, 0.7, "Tap for auto-prediction", CustomTextStyle.textStyle2(20, Colors.white), TextAlign.start),
+                  FlutterSwitch(
+                    activeColor: Colors.green,
+                    width: MediaQuery.of(context).size.width * 0.20,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    valueFontSize: 16,
+                    toggleSize: MediaQuery.of(context).size.height * 0.04,
+                    value: status,
+                    borderRadius: 30.0,
+                    showOnOff: true,
+                    onToggle: (val) async {
+                      var newStatus = val ? 'Yes' : 'No';
+                      await patientAPI.toggleAutoPrediction(patient.id, newStatus);
+                      setState(() {
+                        patient.need_prediction = newStatus;
+                      });
+                    },
+                  ),
+                ],
               ),
-              Container(
-                height: 100,
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  "Fill in information to start diagnosing:",
-                  style: CustomTextStyle.textStyle1(20, Colors.white),
-                  textAlign: TextAlign.center,
-                )
-              ),
+              _buildTextContainer(0.1, 1.0, "Or fill information", CustomTextStyle.textStyle2(20, Colors.white), TextAlign.center),
               Container(
                 padding: const EdgeInsets.only(
                   top: 16, 
@@ -127,6 +130,21 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
       )
     );
   }
+
+  Widget _buildTextContainer(height, width, text, style, TextAlign? textAlign) {
+    return Container(
+      height: MediaQuery.of(context).size.height * height,
+      width: MediaQuery.of(context).size.width * width,
+      padding: const EdgeInsets.all(16),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        textAlign: textAlign,
+        style: style,
+      ),
+    );
+  }
+
   Widget _buildRadioItem<T>(String title, List<T> options, T groupValue, ValueChanged<T> onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,6 +155,7 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
       ],
     );
   }
+
   Widget _buildRadioForm() {
     return Column(
       children: [

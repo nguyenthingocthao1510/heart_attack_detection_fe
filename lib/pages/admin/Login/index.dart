@@ -232,7 +232,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           Provider.of<AccountProvider>(context, listen: false)
               .setAccountId(accountId);
 
-          final patientData = await PatientAPI.getPatientByAccountId(int.parse(accountId));
+          PatientAPI patientAPI = PatientAPI();
+          var patientData = await patientAPI.getPatientByAccountId(int.parse(accountId));
 
           Provider.of<PatientProvider>(context, listen: false)
             .setPatient(patientData);

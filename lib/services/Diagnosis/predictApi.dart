@@ -1,17 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:logging/logging.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/result.d.dart';
+import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
-class PredictAPI {
-  static Future<DiagnosisResult> predict() async {
-    final Logger log = Logger('PredictAPI');
+class PredictAPI extends BaseApi {
+  Future<DiagnosisResult> predict() async {
+    final Logger log = Logger('predict');
     final dio = Dio();
     try {
-      final response = await dio.post(
-        'http://10.0.2.2:5000/api/patient/manual/diagnosis'
-      );
-      //https://heart-attack-detection-be.onrender.com/api/patient/diagnosis
-      //127.0.0.1 10.0.2.2
+      final response = await dio.post(getEndpoint('/patient/manual/diagnosis'));
 
       if (response.statusCode == 200 && response.data != null) {
         log.fine('Prediction result: $response');
@@ -37,5 +34,6 @@ class PredictAPI {
           'An error occurred: $e');
       }
   }
+
 }
 

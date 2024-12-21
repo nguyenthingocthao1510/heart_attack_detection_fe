@@ -46,7 +46,9 @@ class _PredictionState extends State<Prediction> {
       throw Exception(userInputResponse);
     }
 
-    DiagnosisResult result = await PredictAPI.predict();
+    PredictAPI predictAPI = PredictAPI();
+
+    DiagnosisResult result = await predictAPI.predict();
 
     setState(() {
       predictionResult = result;
