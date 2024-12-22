@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/diagnosis.d.dart';
-import 'package:heart_attack_detection_fe/models/Diagnosis/result.d.dart';
+import 'package:heart_attack_detection_fe/models/Diagnosis/result.dart';
 import 'DiagnosisForm/index.dart';
 import 'ProcessPrediction/index.dart';
 import 'DisplayResult/index.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/receiveUserInputApi.dart';
+import 'package:heart_attack_detection_fe/services/Diagnosis/History/diagnosisHistoryApi.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 
 class Prediction extends StatefulWidget {
@@ -47,8 +48,11 @@ class _PredictionState extends State<Prediction> {
     }
 
     PredictAPI predictAPI = PredictAPI();
-
     DiagnosisResult result = await predictAPI.predict();
+
+    DiagnosisHistoryApi diagnosisHistoryApi = DiagnosisHistoryApi();
+    result.patientId = Provider.of<PatientProvider>(context, listen: false).patient?.id;
+    await diagnosisHistoryApi.addDiagnosisHistory(result);
 
     setState(() {
       predictionResult = result;
@@ -58,9 +62,7 @@ class _PredictionState extends State<Prediction> {
     setState(() {
       isPredicting = false;
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error during prediction: $error')),
-    );
+    print('error during prediction: $error');
   }
   }
 

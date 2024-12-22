@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:animated_background/animated_background.dart';
-import 'package:heart_attack_detection_fe/models/Diagnosis/result.d.dart';
+import 'package:heart_attack_detection_fe/models/Diagnosis/result.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import 'package:heart_attack_detection_fe/themes/divider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';

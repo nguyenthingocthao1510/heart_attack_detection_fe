@@ -18,7 +18,6 @@ import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
