@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 Widget textFieldInput({
+  required BuildContext context,
   required TextEditingController controller,
   required String label
 }) {
-  return Column(
+  return Container(
+      decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(5),
+  ),
+  padding: const EdgeInsets.all(24),
+  child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
@@ -14,29 +20,30 @@ Widget textFieldInput({
           fontWeight: FontWeight.bold
           ),
       ),
+      const SizedBox(height: 24),
       TextField(
         controller: controller,
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+          focusColor: Color.fromARGB(255, 20, 139, 251),
+          // border: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(24),
+          //   borderSide: const BorderSide(
+          //     color:Colors.black,
+          //     width: 2.0,
+          //   ),
+          // ),
+          focusedBorder: UnderlineInputBorder(
             borderSide: const BorderSide(
-              color:Colors.black,
-              width: 2.0,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(
-              color:Color.fromARGB(255, 20, 139, 251),
+              color: Color.fromARGB(255, 20, 139, 251),
               width: 4.0,
             ),
           ),
         ),
         keyboardType: TextInputType.number,
       ),
-      const Padding(padding: EdgeInsets.all(12)),
     ],
+  )
   );
 }

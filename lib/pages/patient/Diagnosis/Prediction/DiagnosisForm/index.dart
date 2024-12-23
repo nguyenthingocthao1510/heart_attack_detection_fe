@@ -5,6 +5,7 @@ import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/DiagnosisForm/Component/textFieldInput.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/DiagnosisForm/Component/radioInput.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
+import 'package:heart_attack_detection_fe/themes/divider.dart';
 import 'package:heart_attack_detection_fe/services/patientApi.dart';
 
 
@@ -41,93 +42,179 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
     bool status = (patient!.need_prediction == 'Yes') ? true : false;
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 20, 139, 251),
+      backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: 
-          Column(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildTextContainer(0.1, 1.0, "Welcome, ${patient.name}", CustomTextStyle.textStyle1(36, Colors.white), TextAlign.start),
-              Row(
-                children: [
-                  _buildTextContainer(0.1, 0.7, "Tap for auto-prediction", CustomTextStyle.textStyle2(20, Colors.white), TextAlign.start),
-                  FlutterSwitch(
-                    activeColor: Colors.green,
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    valueFontSize: 16,
-                    toggleSize: MediaQuery.of(context).size.height * 0.04,
-                    value: status,
-                    borderRadius: 30.0,
-                    showOnOff: true,
-                    onToggle: (val) async {
-                      var newStatus = val ? 'Yes' : 'No';
-                      await patientAPI.toggleAutoPrediction(patient.id, newStatus);
-                      setState(() {
-                        patient.need_prediction = newStatus;
-                      });
-                    },
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(
+                context, [
+                _buildTextContainer(0.08, 0.8, "Welcome, ${patient.name}!", CustomTextStyle.textStyle1(28, Colors.black), TextAlign.start),
+                _buildTextContainer(0.1,
+                    0.8,
+                    "Turn on monthly auto-diagnosis or fill information below to start diagnosing",
+                    CustomTextStyle.textStyle2(16, Colors.black),
+                    TextAlign.start),
+                CustomDivider.divider2(context, 0.002),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                ],
-              ),
-              _buildTextContainer(0.1, 1.0, "Or fill information", CustomTextStyle.textStyle2(20, Colors.white), TextAlign.center),
-              Container(
-                padding: const EdgeInsets.only(
-                  top: 16, 
-                  right: 24, 
-                  bottom: 16, 
-                  left: 24
-                ),
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 238, 238, 238),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(16),
-                    topLeft: Radius.circular(16),
-                    )
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    textFieldInput(label: 'Resting Blood Pressure', controller: trtbpsController),
-                    textFieldInput(label: 'Cholesterol', controller: cholController),
-                    textFieldInput(label: 'Old Peak', controller: oldpeakController),
-                    textFieldInput(label: 'Fasting Blood Sugar', controller: fbsController),
-                    _buildRadioForm(),
-                    ElevatedButton(
-                      style: const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 20, 139, 251)),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _buildTextContainer(0.07, 0.5, "Auto-prediction", CustomTextStyle.textStyle2(20, Colors.black), TextAlign.start),
+                      FlutterSwitch(
+                        activeColor: const Color.fromARGB(255, 20, 139, 251),
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.04,
+                        valueFontSize: 16,
+                        toggleSize: MediaQuery.of(context).size.height * 0.03,
+                        value: status,
+                        borderRadius: 30.0,
+                        showOnOff: true,
+                        onToggle: (val) async {
+                          var newStatus = val ? 'Yes' : 'No';
+                          await patientAPI.toggleAutoPrediction(patient.id, newStatus);
+                          setState(() {
+                            patient.need_prediction = newStatus;
+                          });
+                        },
                       ),
-                      onPressed: () {
-                        try {
-                          Map<String, dynamic> inputData = {
-                            'trtbps': int.tryParse(trtbpsController.text) ?? 0,
-                            'chol': int.tryParse(cholController.text) ?? 0,
-                            'oldpeak': double.tryParse(oldpeakController.text) ?? 0.0,
-                            'fbs': int.tryParse(fbsController.text) ?? 0,
-                            'exng': exng,
-                            'caa': caa,
-                            'cp': cp,
-                            'slp': slp,
-                            'thall': thall,
-                          };
-                          widget.onSubmit(inputData);
-                        } catch (e) {
-                          print("Error parsing inputs: $e");
-                        }
-                      },
-                      child: const Text(
-                        'Predict',
-                        style: TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                    ),
-                  ]
+                    ],
+                  ),
+                ),
+              ]
+            ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [textFieldInput(context: context, label: 'Resting Blood Pressure', controller: trtbpsController)]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [textFieldInput(context: context, label: 'Cholesterol', controller: cholController)]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [textFieldInput(context: context, label: 'Old Peak', controller: oldpeakController)]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [textFieldInput(context: context, label: 'Fasting Blood Sugar', controller: fbsController)]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [
+                _buildRadioItem(
+                  'Exercise induced angina',
+                  ['No', 'Yes'],
+                  exng, (newValue) {
+                    setState(() {
+                      exng = newValue;
+                    });
+                  }
+              )]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [
+                _buildRadioItem(
+                  'Number of major vessels',
+                  [0, 1, 2, 3],
+                  caa, (newValue) {
+                    setState(() {
+                      caa = newValue;
+                    });
+                  }
                 )
-              )
+              ]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [
+                _buildRadioItem(
+                  'Chest pain type',
+                  ['None', 'Typical angina', 'Atypical angina', 'Non-anginal pain'],
+                  cp, (newValue) {
+                    setState(() {
+                      cp = newValue;
+                    });
+                  }
+                )
+              ]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [
+                _buildRadioItem(
+                  'Slope',
+                  ['None', 'Upsloping', 'Flat', 'Asymptomatic'],
+                  slp, (newValue) {
+                    setState(() {
+                      slp = newValue;
+                    });
+                  }
+                )
+              ]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _buildCard(context, [
+                _buildRadioItem(
+                  'Thallium Stress Test Result',
+                  ['None', 'Normal', 'Fixed defect', 'Reversible defect'],
+                  thall, (newValue) {
+                    setState(() {
+                      slp = newValue;
+                    });
+                  }
+                )
+              ]),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              ElevatedButton(
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 20, 139, 251)),
+                ),
+                onPressed: () {
+                  try {
+                    Map<String, dynamic> inputData = {
+                      'trtbps': int.tryParse(trtbpsController.text) ?? 0,
+                      'chol': int.tryParse(cholController.text) ?? 0,
+                      'oldpeak': double.tryParse(oldpeakController.text) ?? 0.0,
+                      'fbs': int.tryParse(fbsController.text) ?? 0,
+                      'exng': exng,
+                      'caa': caa,
+                      'cp': cp,
+                      'slp': slp,
+                      'thall': thall,
+                    };
+                    widget.onSubmit(inputData);
+                  } catch (e) {
+                    print("Error parsing inputs: $e");
+                  }
+                },
+                child: const Text(
+                  'Predict',
+                  style: TextStyle(
+                      color: Colors.white
+                  ),
+                ),
+              ),
             ],
           ),
+        )
       )
+    );
+  }
+
+  Widget _buildCard(BuildContext context, List<Widget> children) {
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+      ),
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Column(children: children),
+          ),
+        ],
+      ),
     );
   }
 
@@ -136,7 +223,6 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
       height: MediaQuery.of(context).size.height * height,
       width: MediaQuery.of(context).size.width * width,
       padding: const EdgeInsets.all(16),
-      alignment: Alignment.center,
       child: Text(
         text,
         textAlign: textAlign,
@@ -146,70 +232,20 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
   }
 
   Widget _buildRadioItem<T>(String title, List<T> options, T groupValue, ValueChanged<T> onChanged) {
-    return Column(
+    return Container(
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+    ),
+    padding: const EdgeInsets.all(16),
+    child:  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: CustomTextStyle.textStyle1(12, Colors.black)),
+        Text(title, style: CustomTextStyle.textStyle1(16, Colors.black)),
+        CustomDivider.divider2(context, 0.02),
         radioInput(options: options, groupValue: groupValue, onChanged: onChanged),
-        const Padding(padding: EdgeInsets.all(12)),
       ],
+      )
     );
   }
 
-  Widget _buildRadioForm() {
-    return Column(
-      children: [
-        _buildRadioItem(
-          'Exercise induced angina',
-          ['No', 'Yes'],
-          exng,
-          (newValue) {
-            setState(() {
-              exng = newValue;
-            });
-          }
-        ),
-        _buildRadioItem(
-          'Number of major vessels',
-          [0, 1, 2, 3],
-          caa,
-          (newValue) {
-            setState(() {
-              caa = newValue;
-            });
-          }
-        ),
-        _buildRadioItem(
-          'Chest pain type',
-          ['None', 'Typical angina', 'Atypical angina', 'Non-anginal pain'],
-          cp,
-          (newValue) {
-            setState(() {
-              cp = newValue;
-            });
-          }
-        ),
-        _buildRadioItem(
-          'Slope',
-          ['None', 'Upsloping', 'Flat', 'Asymptomatic'],
-          slp,
-          (newValue) {
-            setState(() {
-              slp = newValue;
-            });
-          }
-        ),
-        _buildRadioItem(
-          'Thallium Stress Test Result',
-          ['None', 'Normal', 'Fixed defect', 'Reversible defect'],
-          thall,
-          (newValue) {
-            setState(() {
-              slp = newValue;
-            });
-          }
-        ),
-      ],
-    );
-  }
 }
