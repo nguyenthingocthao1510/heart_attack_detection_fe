@@ -16,6 +16,7 @@ import 'package:heart_attack_detection_fe/pages/category/Prescription/Prescripti
 import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart';
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
         moduleAuthorization: (context) => const ModuleAuthorization(),
         dashboard: (context) => const Dashboard(),
         diagnosisRoute: (context) => const Prediction(),
+        historyRoute: (context) => const DiagnosisHistory(),
         patientProfileRoute: (context) => const PatientProfile(),
         userInformation: (context) => const UserFooterSection(),
         permissionAuthorization: (context) => const PermissionAuthorization(),

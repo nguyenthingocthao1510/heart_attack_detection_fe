@@ -5,10 +5,13 @@ import 'package:heart_attack_detection_fe/models/Diagnosis/result.dart';
 import 'DiagnosisForm/index.dart';
 import 'ProcessPrediction/index.dart';
 import 'DisplayResult/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/receiveUserInputApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/History/diagnosisHistoryApi.dart';
+
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
+import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 
 class Prediction extends StatefulWidget {
   const Prediction({super.key});
@@ -79,7 +82,52 @@ class _PredictionState extends State<Prediction> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Heart Attack Diagnosis')),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding:
+                  const EdgeInsets.only(top: 15, right: 10, bottom: 10),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    child: Image.asset(icon64px),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 15),
+                  child: const Text('Diagnosis',
+                      style: TextStyle(color: Colors.white)),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, right: 10, bottom: 10),
+              child: Container(
+                width: 40,
+                height: 40,
+                child: IconButton(
+                  icon: Image.asset(historyIcon),
+                  color: Colors.blue,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DiagnosisHistory()));
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.blueAccent,
+        automaticallyImplyLeading: false,
+      ),
       body: currentWidget,
     );
   }

@@ -3,7 +3,8 @@ const String login = '/';
 const String adminPageRoute = '/admin';
 const String moduleRoute = '/module';
 
-const String diagnosisRoute = '/patient/diagnosis-prediction';
+const String diagnosisRoute = '/patient/diagnosis';
+const String historyRoute = '/patient/diagnosis/history';
 const String patientProfileRoute = '/patient';
 
 const String registerRoute = '/create-account';
