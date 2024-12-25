@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/diagnosis.d.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/result.dart';
 import 'DiagnosisForm/index.dart';
 import 'ProcessPrediction/index.dart';
 import 'DisplayResult/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
+import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/receiveUserInputApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/History/diagnosisHistoryApi.dart';
-
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 
@@ -83,50 +84,36 @@ class _PredictionState extends State<Prediction> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding:
-                  const EdgeInsets.only(top: 15, right: 10, bottom: 10),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    child: Image.asset(icon64px),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 15),
-                  child: const Text('Diagnosis',
-                      style: TextStyle(color: Colors.white)),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15, right: 10, bottom: 10),
-              child: Container(
-                width: 40,
-                height: 40,
-                child: IconButton(
-                  icon: Image.asset(historyIcon),
-                  color: Colors.blue,
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const DiagnosisHistory()));
-                  },
-                ),
-              ),
-            ),
-          ],
+        title: Text(
+          'Diagnosis',
+          style: CustomTextStyle.textStyle1(28, Colors.white),
         ),
-        backgroundColor: Colors.blueAccent,
-        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromARGB(255, 20, 139, 251),
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          icon: const Icon(
+            CupertinoIcons.arrow_left,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous page
+          },
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: Image.asset(
+                historyIcon,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const DiagnosisHistory()));
+              },
+            ),
+          ),
+        ],
       ),
       body: currentWidget,
     );

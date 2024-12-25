@@ -59,7 +59,7 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                     "Turn on monthly auto-diagnosis or fill information below to start diagnosing",
                     CustomTextStyle.textStyle2(16, Colors.black),
                     TextAlign.start),
-                CustomDivider.divider2(context, 0.002),
+                CustomDivider.divider2(context, 0.02),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -81,9 +81,7 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                         onToggle: (val) async {
                           var newStatus = val ? 'Yes' : 'No';
                           await patientAPI.toggleAutoPrediction(patient.id, newStatus);
-                          setState(() {
-                            patient.need_prediction = newStatus;
-                          });
+                          setState(() => patient.need_prediction = newStatus);
                         },
                       ),
                     ],
@@ -104,22 +102,17 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                 _buildRadioItem(
                   'Exercise induced angina',
                   ['No', 'Yes'],
-                  exng, (newValue) {
-                    setState(() {
-                      exng = newValue;
-                    });
-                  }
-              )]),
+                  exng,
+                  (newValue) {setState(() => exng = newValue);}
+                )
+              ]),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               _buildCard(context, [
                 _buildRadioItem(
                   'Number of major vessels',
                   [0, 1, 2, 3],
-                  caa, (newValue) {
-                    setState(() {
-                      caa = newValue;
-                    });
-                  }
+                  caa,
+                  (newValue) {setState(() => caa = newValue);}
                 )
               ]),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -127,11 +120,8 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                 _buildRadioItem(
                   'Chest pain type',
                   ['None', 'Typical angina', 'Atypical angina', 'Non-anginal pain'],
-                  cp, (newValue) {
-                    setState(() {
-                      cp = newValue;
-                    });
-                  }
+                  cp,
+                  (newValue) {setState(() => cp = newValue);}
                 )
               ]),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -139,11 +129,8 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                 _buildRadioItem(
                   'Slope',
                   ['None', 'Upsloping', 'Flat', 'Asymptomatic'],
-                  slp, (newValue) {
-                    setState(() {
-                      slp = newValue;
-                    });
-                  }
+                  slp,
+                  (newValue) {setState(() => slp = newValue);}
                 )
               ]),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -151,11 +138,8 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                 _buildRadioItem(
                   'Thallium Stress Test Result',
                   ['None', 'Normal', 'Fixed defect', 'Reversible defect'],
-                  thall, (newValue) {
-                    setState(() {
-                      slp = newValue;
-                    });
-                  }
+                  thall,
+                  (newValue) {setState(() => slp = newValue);}
                 )
               ]),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -183,9 +167,7 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                 },
                 child: const Text(
                   'Predict',
-                  style: TextStyle(
-                      color: Colors.white
-                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ],
@@ -198,9 +180,10 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
   Widget _buildCard(BuildContext context, List<Widget> children) {
     return Card(
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       color: Colors.white,
+      elevation: 16,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,11 +224,10 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: CustomTextStyle.textStyle1(16, Colors.black)),
-        CustomDivider.divider2(context, 0.02),
+        CustomDivider.divider2(context, 0.05),
         radioInput(options: options, groupValue: groupValue, onChanged: onChanged),
       ],
       )
     );
   }
-
 }

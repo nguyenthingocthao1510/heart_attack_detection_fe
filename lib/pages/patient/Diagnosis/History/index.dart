@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/assets/icon/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 
 class DiagnosisHistory extends StatefulWidget {
   const DiagnosisHistory({super.key});
@@ -11,39 +12,42 @@ class DiagnosisHistory extends StatefulWidget {
 class _DiagnosisHistoryState extends State<DiagnosisHistory> {
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+  // Future<> getDoctorById() async {
+  //   try {
+  //     final accountId =
+  //         Provider.of<AccountProvider>(context, listen: false).accountId;
+  //     final response = await DoctorAPI.getDoctorById(int.parse(accountId!));
+  //     return response;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding:
-                  const EdgeInsets.only(top: 15, right: 10, bottom: 10),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    child: Image.asset(icon64px),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 15),
-                  child: Text('History',
-                      style: TextStyle(color: Colors.white)),
-                )
-              ],
-            ),
-          ],
+        title: Text(
+          'History',
+          style: CustomTextStyle.textStyle1(28, Colors.white),
         ),
-        backgroundColor: Colors.blueAccent,
-        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromARGB(255, 20, 139, 251),
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          icon: const Icon(
+            CupertinoIcons.arrow_left,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous page
+          },
+        ),
       ),
       body: ListView(
         scrollDirection: Axis.vertical,

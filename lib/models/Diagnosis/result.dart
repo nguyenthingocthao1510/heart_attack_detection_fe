@@ -21,3 +21,15 @@ class DiagnosisResult {
   factory DiagnosisResult.fromJson(Map<String, dynamic> json) => _$DiagnosisResultFromJson(json);
   Map<String, dynamic> toJson() => _$DiagnosisResultToJson(this);
 }
+
+@JsonSerializable()
+class History {
+  List<Map<String, dynamic>> history;
+
+  History({
+    required this.history
+  });
+
+  factory History.fromJson(Map<String, dynamic> json) => _$HistoryFromJson(json);
+  Map<String, dynamic> toJson() => _$HistoryToJson(this);
+}

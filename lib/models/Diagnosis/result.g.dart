@@ -17,9 +17,19 @@ DiagnosisResult _$DiagnosisResultFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$DiagnosisResultToJson(DiagnosisResult instance) =>
     <String, dynamic>{
-      'patient_id': instance.patientId,
+      'patientId': instance.patientId,
       'prediction': instance.prediction,
       'thalachh': instance.thalachh,
       'restecg': instance.restecg,
       'timestamp': instance.timestamp,
+    };
+
+History _$HistoryFromJson(Map<String, dynamic> json) => History(
+      history: (json['history'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
+    );
+
+Map<String, dynamic> _$HistoryToJson(History instance) => <String, dynamic>{
+      'history': instance.history,
     };
