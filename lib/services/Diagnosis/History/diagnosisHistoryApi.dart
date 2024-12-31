@@ -32,5 +32,30 @@ class DiagnosisHistoryApi extends BaseApi {
     }
   }
 
+  Future<History> getAllHistory(int patientId) async {
+    final dio = Dio();
+    try {
+      final response = await dio.get(getEndpoint('/patient/get-history/patient_id=$patientId'));
+
+      if (response.statusCode == 200 && response.data != null) {
+        return History.fromJson(response.data);
+      } else {
+        throw Exception(
+            'Failed to display result');
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw Exception(
+            'Error status code: ${e.message}');
+      } else {
+        throw Exception(
+            'An error occurred: ${e.message}');
+      }
+    } catch (e) {
+      print('Save diagnosis history data: $e.response.data');
+      throw Exception(
+          'An error occurred in save diagnosis history: $e');
+    }
+  }
 }
 
