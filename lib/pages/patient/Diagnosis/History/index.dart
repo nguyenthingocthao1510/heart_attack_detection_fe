@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:heart_attack_detection_fe/themes/divider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/result.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/History/diagnosisHistoryApi.dart';
@@ -69,7 +70,7 @@ class _DiagnosisHistoryState extends State<DiagnosisHistory> {
         ),
       ),
       body: Container(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 238, 238, 238),
         child: FutureBuilder<History>(
           future: historyFuture,
           builder: (context, snapshot) {
@@ -89,10 +90,10 @@ class _DiagnosisHistoryState extends State<DiagnosisHistory> {
                   final entries = item['entries'];
                   return Column(
                     children: [
-                      SizedBox(height: 24,),
+                      const SizedBox(height: 24),
                       _buildHistoryLabel(context, item),
                       ...entries.map((entry) => _buildHistoryDetail(context, entry)).toList(),
-                      CustomDivider.divider2(context, 0.1)
+                      CustomDivider.divider3(context, 0.1, Colors.black)
                     ],
                   );
                 },
@@ -111,7 +112,7 @@ class _DiagnosisHistoryState extends State<DiagnosisHistory> {
     final diagnosisTime = formatDiagnosisTime(diagnosisTimeRaw, 'hh:mm a');
     final restecg = item['restecg'];
     final thalachh = item['thalachh'];
-    List texts = [diagnosisTime, 'Electrocardiograph: $restecg', 'Heart rate: $thalachh'];
+    final resultColor = (item['result'] == 0) ? Colors.green : Colors.red;
 
     return Card(
       shape: const RoundedRectangleBorder(
@@ -119,20 +120,70 @@ class _DiagnosisHistoryState extends State<DiagnosisHistory> {
       ),
       margin: const EdgeInsets.all(8.0),
       elevation: 12,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: IntrinsicHeight(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ...texts.map((text) => Text(
-                                        text,
-                                        style: text == texts[0] ? CustomTextStyle.textStyle1(24, Colors.black) : CustomTextStyle.textStyle2(16, Colors.black),
-                                      )
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      diagnosisTime,
+                      style: CustomTextStyle.textStyle1(24, const Color.fromARGB(255, 20, 139, 251))
+                    ),
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Image.asset(
+                          height: 16.0,
+                          ecgIcon,
+                          color: const Color.fromARGB(255, 20, 139, 251),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Text(
+                            'Electrocardiogram: $restecg',
+                            style: CustomTextStyle.textStyle2(16, Colors.black)
+                        ),
+                      ],
+                    ),
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Image.asset(
+                          height: 16.0,
+                          heartBeatIcon,
+                          color: const Color.fromARGB(255, 20, 139, 251),
+                        ),
+                        const SizedBox(
+                          width: 8.0,
+                        ),
+                        Text(
+                            'Heart rate: $thalachh',
+                            style: CustomTextStyle.textStyle2(16, Colors.black)
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.04,
+                decoration: BoxDecoration(
+                  color: resultColor,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    bottomRight: Radius.circular(15)
+                  ),
+                ),
               ),
             ],
           ),

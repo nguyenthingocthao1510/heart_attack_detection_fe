@@ -18,4 +18,14 @@ class CustomDivider {
       color: const Color.fromARGB(255, 238, 238, 238),
     );
   }
+
+  static Divider divider3(BuildContext context, height, color) {
+    return Divider(
+      height: MediaQuery.of(context).size.height * height,
+      thickness: 1,
+      indent: MediaQuery.of(context).size.width * 0.05,
+      endIndent: MediaQuery.of(context).size.width * 0.05,
+      color: color,
+    );
+  }
 }
