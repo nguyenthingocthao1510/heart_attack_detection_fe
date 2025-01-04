@@ -23,7 +23,8 @@ class LoginAPI {
 
         return {'roleId': roleId, 'accountId': accountId};
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
+      print('DioError: ${e.message}');
       if (e.response != null) {
         print('Status code: ${e.response?.statusCode}');
         print('Response data: ${e.response?.data}');

@@ -1,18 +1,19 @@
 import 'package:dio/dio.dart';
-import '../models/diagnosis.d.dart';
+import '../../models/Diagnosis/diagnosis.d.dart';
 
-class PredictAPI {
-  static Future<String> predict(Diagnosis input) async {
+class ReceiveUserInputAPI {
+  static Future<String> receiveUserInput(Diagnosis input) async {
     final dio = Dio();
     try {
       final Map<String, dynamic> payload = input.toJson();
       final response = await dio.post(
-        'http://10.0.2.2:5000/api/patient/diagnosis',
+        'http://10.0.2.2:5000/api/patient/manual/receive-user-data',
+        //10.0.2.2  127.0.0.1
         data: payload,
       );
 
       if (response.statusCode == 200 && response.data != null) {
-        return response.data['prediction'].toString();
+        return response.data['data'].toString();
       } else {
         return 'Prediction failed: Unexpected response format';
       }

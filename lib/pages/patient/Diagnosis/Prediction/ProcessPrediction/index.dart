@@ -4,8 +4,8 @@ import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import '../index.dart';
 
 
-class ProcessingPrediction extends StatelessWidget {
-  const ProcessingPrediction({super.key});
+class ProcessPrediction extends StatelessWidget {
+  const ProcessPrediction({super.key});
 
   @override
   Widget build(BuildContext context) {

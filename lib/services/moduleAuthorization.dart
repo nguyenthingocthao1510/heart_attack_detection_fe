@@ -4,7 +4,8 @@ import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
 class ModuleRoleAPI {
   static Future<List<ModuleRole>> getAllModuleInRole(int roleId) async {
     final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/module-in-role/roleId=$roleId';
+    final url = 'http://10.0.2.2:5000/api/module-in-role/roleId=$roleId';
+    //10.0.2.2  127.0.0.1
     final response = await dio.get(url);
     final resData = response.data['data'];
     final result = resData as List<dynamic>;
