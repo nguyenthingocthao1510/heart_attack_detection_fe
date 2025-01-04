@@ -21,6 +21,7 @@ class _PermissionTableAuthorizationState
   List<int> selectedPermissionNotInRole = [];
   List<PermissionAuthorization> permissionInRoleModule = [];
   List<int> selectedPermissionInRole = [];
+  PermissionAuthorizationAPI permissionAuthorizationAPI = PermissionAuthorizationAPI();
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _PermissionTableAuthorizationState
     final roleId = int.parse(widget.roleId!);
     final moduleId = int.parse(widget.moduleId!);
     final response =
-        await PermissionAuthorizationAPI.getAllPermissionNotInModuleRole(
+        await permissionAuthorizationAPI.getAllPermissionNotInModuleRole(
             roleId, moduleId);
     setState(() {
       permissionNotInRoleModule = response;
@@ -57,7 +58,7 @@ class _PermissionTableAuthorizationState
     final roleId = int.parse(widget.roleId!);
     final moduleId = int.parse(widget.moduleId!);
     final response =
-        await PermissionAuthorizationAPI.getAllPermissionInModuleRole(
+        await permissionAuthorizationAPI.getAllPermissionInModuleRole(
             roleId, moduleId);
     setState(() {
       permissionInRoleModule = response;
@@ -267,7 +268,7 @@ class _PermissionTableAuthorizationState
       return;
     }
     try {
-      final response = await PermissionAuthorizationAPI.addPermission(
+      final response = await permissionAuthorizationAPI.addPermission(
           selectedPermissionIds, roleId, moduleId);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -292,7 +293,7 @@ class _PermissionTableAuthorizationState
       return;
     }
     try {
-      final response = await PermissionAuthorizationAPI.removePermission(
+      final response = await permissionAuthorizationAPI.removePermission(
           selectedPermissionIds, roleId, moduleId);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(

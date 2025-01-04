@@ -31,7 +31,8 @@ class _SideBarState extends State<SideBar> {
     try {
       final roleId =
           int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
-      return await ModuleRoleAPI.getAllModuleInRole(roleId);
+      ModuleRoleAPI moduleRoleAPI = ModuleRoleAPI();
+      return await moduleRoleAPI.getAllModuleInRole(roleId);
     } catch (error) {
       return [];
     }

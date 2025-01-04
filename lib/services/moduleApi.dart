@@ -4,7 +4,6 @@ import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
 class ModuleAPI extends BaseApi {
   Future<List<Module>> fetchAllModule() async {
-    final dio = Dio();
     final url = getEndpoint('/modules');
     final response = await dio.get(url);
     final resData = response.data['data'];
@@ -16,7 +15,6 @@ class ModuleAPI extends BaseApi {
   }
 
   Future<Module> getModuleById(int moduleId) async {
-    final dio = Dio();
     final url = getEndpoint('/module/id=${moduleId}');
     try {
       final response = await dio.get(url);
@@ -31,13 +29,12 @@ class ModuleAPI extends BaseApi {
     }
   }
 
-  static Future<Module> createModule(
+  Future<Module> createModule(
     String name,
     String route,
     String image,
   ) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/module/add';
+    final url = getEndpoint("/module/add");
 
     try {
       final payload = {
@@ -69,14 +66,14 @@ class ModuleAPI extends BaseApi {
     }
   }
 
-  static Future<Module> updateModule(
+  Future<Module> updateModule(
     int? id,
     String name,
     String route,
     String image,
   ) async {
     final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/module/update/id=${id}';
+    final url = getEndpoint("/update/id=${id}");
 
     try {
       final payload = {'name': name, 'route': route, 'image': image};

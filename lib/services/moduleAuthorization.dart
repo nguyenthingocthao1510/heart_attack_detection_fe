@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
+import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
-class ModuleRoleAPI {
-  static Future<List<ModuleRole>> getAllModuleInRole(int roleId) async {
-    final dio = Dio();
-    final url = 'http://10.0.2.2:5000/api/module-in-role/roleId=$roleId';
-    //10.0.2.2  127.0.0.1
+class ModuleRoleAPI extends BaseApi {
+  Future<List<ModuleRole>> getAllModuleInRole(int roleId) async {
+    final url = getEndpoint("/module-in-role/roleId=$roleId");
     final response = await dio.get(url);
     final resData = response.data['data'];
     final result = resData as List<dynamic>;
@@ -15,9 +14,8 @@ class ModuleRoleAPI {
     return moduleAuthorizations;
   }
 
-  static Future<List<ModuleRole>> getAllModuleNotInRole(int roleId) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/module-not-in-role/roleId=$roleId';
+  Future<List<ModuleRole>> getAllModuleNotInRole(int roleId) async {
+    final url = getEndpoint("/module-not-in-role/roleId=$roleId");
     final response = await dio.get(url);
     final resData = response.data['data'];
     final result = resData as List<dynamic>;
@@ -27,10 +25,8 @@ class ModuleRoleAPI {
     return moduleAuthorizations;
   }
 
-  static Future<Response> addModule(
-      List<int> selectedModuleIds, int roleId) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/add-module-to-role';
+  Future<Response> addModule(List<int> selectedModuleIds, int roleId) async {
+    final url = getEndpoint("/add-module-to-role");
     try {
       final Map<String, dynamic> payload = {
         'module_ids': selectedModuleIds,
@@ -52,10 +48,8 @@ class ModuleRoleAPI {
     }
   }
 
-  static Future<Response> removeModule(
-      List<int> selectedModuleIds, int roleId) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/remove-module-in-role';
+  Future<Response> removeModule(List<int> selectedModuleIds, int roleId) async {
+    final url = getEndpoint("/remove-module-in-role");
     try {
       final Map<String, dynamic> payload = {
         'module_ids': selectedModuleIds,

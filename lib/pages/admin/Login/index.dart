@@ -214,9 +214,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       if (response != null) {
         String roleId = response['roleId'];
         String accountId = response['accountId'];
-
+        PermissionAuthorizationAPI permissionAuthorizationAPI = PermissionAuthorizationAPI();
         final permissionResponse =
-            await PermissionAuthorizationAPI.loadAllPermission(
+            await permissionAuthorizationAPI.loadAllPermission(
                 int.parse(roleId));
 
         if (permissionResponse is PermissionModule) {
@@ -234,13 +234,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
               .setAccountId(accountId);
 
           PatientAPI patientAPI = PatientAPI();
-          var patientData = await patientAPI.getPatientByAccountId(int.parse(accountId));
+          var patientData = await patientAPI.getPatientByAccountId(accountId);
 
           Provider.of<PatientProvider>(context, listen: false)
             .setPatient(patientData);
 
           Navigator.pushNamed(context, homePage, arguments: roleId);
-
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -251,7 +250,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login success')),
         );
-        Navigator.pushNamed(context, homePage, arguments: roleId);
+        // Navigator.pushNamed(context, homePage, arguments: roleId);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login fail')),

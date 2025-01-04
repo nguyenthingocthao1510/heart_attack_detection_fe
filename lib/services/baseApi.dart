@@ -20,6 +20,9 @@ class ChangePrefixURL {
       case 3:
         apiPrefix = 'https://heart-attack-detection-be.onrender.com/api';
         break;
+      case 4:
+        apiPrefix = 'https://heart-attack-detection-be-5sf2.onrender.com/api';
+        break;
       default:
         throw Exception('Unknown environment: $choice');
     }
