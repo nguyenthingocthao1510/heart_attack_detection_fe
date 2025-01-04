@@ -18,6 +18,7 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
   List<ModuleRole> moduleNotInRoles = [];
   List<int> selectedKeysNotInRole = [];
   List<int> selectedKeysInRole = [];
+  ModuleRoleAPI moduleRoleAPI = ModuleRoleAPI();
 
   @override
   void initState() {
@@ -40,7 +41,7 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
 
   Future<void> getAllModuleNotInRole() async {
     final roleId = int.parse(widget.roleId!);
-    final response = await ModuleRoleAPI.getAllModuleNotInRole(roleId);
+    final response = await moduleRoleAPI.getAllModuleNotInRole(roleId);
 
     setState(() {
       moduleNotInRoles = response;
@@ -49,7 +50,7 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
 
   Future<void> getAllModuleInRole() async {
     final roleId = int.parse(widget.roleId!);
-    final response = await ModuleRoleAPI.getAllModuleInRole(roleId);
+    final response = await moduleRoleAPI.getAllModuleInRole(roleId);
 
     setState(() {
       moduleInRoles = response;
@@ -260,7 +261,7 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
 
     try {
       final response =
-          await ModuleRoleAPI.addModule(selectedModuleIds, parsedRoleId);
+          await moduleRoleAPI.addModule(selectedModuleIds, parsedRoleId);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Module added successfully.')),
@@ -289,7 +290,7 @@ class _ModuleTableAuthorizationState extends State<ModuleTableAuthorization> {
 
     try {
       final response =
-          await ModuleRoleAPI.removeModule(selectedModuleIds, roleId);
+          await moduleRoleAPI.removeModule(selectedModuleIds, roleId);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Module remove successfully.')),

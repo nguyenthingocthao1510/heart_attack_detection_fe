@@ -6,6 +6,9 @@ class Patient {
   final String dob;
   final int age;
   String need_prediction;
+  final String phone_number;
+  final String email;
+  final String address;
 
   Patient({
     required this.id, 
@@ -14,7 +17,10 @@ class Patient {
     required this.gender,
     required this.dob,
     required this.age,
-    required this.need_prediction
+    required this.need_prediction,
+    required this.phone_number,
+    required this.email,
+    required this.address
   });
 
   factory Patient.fromMap(Map<String, dynamic> e) {
@@ -25,7 +31,10 @@ class Patient {
       gender: e['gender'],
       dob: e['dob'],
       age: e['age'],
-      need_prediction: e['need_prediction']
+      need_prediction: e['need_prediction'],
+      phone_number: e['phone_number'],
+      email: e['email'],
+      address: e['address']
     );
   }
 }

@@ -25,7 +25,8 @@ class _ModulePageState extends State<ModulePage> {
   }
 
   Future<void> getAllModule() async {
-    final response = await ModuleAPI.fetchAllModule();
+    ModuleAPI moduleAPI = ModuleAPI();
+    final response = await moduleAPI.fetchAllModule();
     setState(() {
       modules = response;
     });

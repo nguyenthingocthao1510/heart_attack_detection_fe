@@ -45,7 +45,7 @@ Future<Doctor?> getDoctorById(BuildContext context) async {
 }
 
 void main() {
-  ChangePrefixURL.setApiPrefix(2);
+  ChangePrefixURL.setApiPrefix(4);
 
   runApp(MultiProvider(
     providers: [
@@ -65,6 +65,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Healthcare Application',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         hoverColor: Colors.white,

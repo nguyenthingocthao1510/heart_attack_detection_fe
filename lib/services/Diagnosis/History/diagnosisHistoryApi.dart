@@ -4,10 +4,7 @@ import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
 class DiagnosisHistoryApi extends BaseApi {
   Future<DiagnosisResult> addDiagnosisHistory(DiagnosisResult result) async {
-    final dio = Dio();
-
     final jsonData = result.toJson();
-
     try {
       final response = await dio.post(getEndpoint('/patient/add-diagnosis-history'), data: jsonData);
 

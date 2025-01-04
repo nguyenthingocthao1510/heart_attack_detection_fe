@@ -173,7 +173,8 @@ class _ModuleSectionState extends State<ModuleSection> {
   Future<void> fetchData() async {
     final roleId =
         int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
-    final response = await ModuleRoleAPI.getAllModuleInRole(roleId);
+    ModuleRoleAPI moduleRoleAPI = ModuleRoleAPI();
+    final response = await moduleRoleAPI.getAllModuleInRole(roleId);
     setState(() {
       modules = response;
     });

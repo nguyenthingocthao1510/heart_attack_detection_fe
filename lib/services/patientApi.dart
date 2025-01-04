@@ -4,8 +4,7 @@ import 'package:heart_attack_detection_fe/models/patient.d.dart';
 import 'baseApi.dart';
 
 class PatientAPI extends BaseApi {
-  Future<Patient> getPatientByAccountId(int accountId) async {
-    final dio = Dio();
+  Future<Patient> getPatientByAccountId(String accountId) async {
     final response = await dio.get(getEndpoint('/patient/personal_info/account_id=$accountId'));
     final resData = response.data['data'];
     return Patient.fromMap(resData);

@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:heart_attack_detection_fe/models/module.d.dart';
+import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
-class ModuleAPI {
-  static Future<List<Module>> fetchAllModule() async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/modules';
+class ModuleAPI extends BaseApi {
+  Future<List<Module>> fetchAllModule() async {
+    final url = getEndpoint('/modules');
     final response = await dio.get(url);
     final resData = response.data['data'];
     final results = resData as List<dynamic>;
@@ -14,9 +14,8 @@ class ModuleAPI {
     return modules;
   }
 
-  static Future<Module> getModuleById(int moduleId) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/module/id=${moduleId}';
+  Future<Module> getModuleById(int moduleId) async {
+    final url = getEndpoint('/module/id=${moduleId}');
     try {
       final response = await dio.get(url);
       if (response.statusCode == 200) {
@@ -30,13 +29,12 @@ class ModuleAPI {
     }
   }
 
-  static Future<Module> createModule(
+  Future<Module> createModule(
     String name,
     String route,
     String image,
   ) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/module/add';
+    final url = getEndpoint("/module/add");
 
     try {
       final payload = {
@@ -68,14 +66,14 @@ class ModuleAPI {
     }
   }
 
-  static Future<Module> updateModule(
+  Future<Module> updateModule(
     int? id,
     String name,
     String route,
     String image,
   ) async {
     final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/module/update/id=${id}';
+    final url = getEndpoint("/update/id=${id}");
 
     try {
       final payload = {'name': name, 'route': route, 'image': image};

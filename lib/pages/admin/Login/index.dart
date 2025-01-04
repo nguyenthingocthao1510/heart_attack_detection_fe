@@ -209,13 +209,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
   Future<void> onLogin(String username, String password) async {
     try {
-      final response = await LoginAPI.login(username, password);
+      LoginAPI loginAPI = LoginAPI();
+      final response = await loginAPI.login(username, password);
       if (response != null) {
         String roleId = response['roleId'];
         String accountId = response['accountId'];
-
+        PermissionAuthorizationAPI permissionAuthorizationAPI = PermissionAuthorizationAPI();
         final permissionResponse =
-            await PermissionAuthorizationAPI.loadAllPermission(
+            await permissionAuthorizationAPI.loadAllPermission(
                 int.parse(roleId));
 
         if (permissionResponse is PermissionModule) {
@@ -232,12 +233,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           Provider.of<AccountProvider>(context, listen: false)
               .setAccountId(accountId);
 
-          if (roleId == 3) {
-            final patientData =
-                await PatientAPI.getPatientByAccountId(int.parse(accountId));
-            Provider.of<PatientProvider>(context, listen: false)
-                .setPatient(patientData);
-          }
+        if (roleId == 3) {
+          PatientAPI patientAPI = PatientAPI();
+          final patientData = await patientAPI.getPatientByAccountId(accountId);
+          Provider.of<PatientProvider>(context, listen: false)
+            .setPatient(patientData);
+        }
 
           Navigator.pushNamed(context, homePage, arguments: roleId);
         } else {
@@ -250,7 +251,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login success')),
         );
-        Navigator.pushNamed(context, homePage, arguments: roleId);
+        // Navigator.pushNamed(context, homePage, arguments: roleId);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login fail')),

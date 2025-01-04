@@ -176,8 +176,8 @@ class _ModuleModalState extends State<ModuleModal> {
             content: Text('Please enter information of module!')));
         return;
       }
-
-      await ModuleAPI.createModule(
+      ModuleAPI moduleAPI = ModuleAPI();
+      await moduleAPI.createModule(
         nameController.text,
         routeController.text,
         imageController.text,
@@ -208,8 +208,8 @@ class _ModuleModalState extends State<ModuleModal> {
       if (widget.module == null) {
         throw Exception('Module ID is missing');
       }
-
-      await ModuleAPI.updateModule(
+      ModuleAPI moduleAPI = ModuleAPI();
+      await moduleAPI.updateModule(
         widget.module!.id,
         nameController.text,
         routeController.text,
