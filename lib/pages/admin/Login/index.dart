@@ -209,7 +209,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
   Future<void> onLogin(String username, String password) async {
     try {
-      final response = await LoginAPI.login(username, password);
+      LoginAPI loginAPI = LoginAPI();
+      final response = await loginAPI.login(username, password);
       if (response != null) {
         String roleId = response['roleId'];
         String accountId = response['accountId'];

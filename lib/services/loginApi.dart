@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'baseApi.dart';
 
-class LoginAPI {
-  static Future<dynamic> login(String username, String password) async {
+class LoginAPI extends BaseApi {
+  Future<dynamic> login(String username, String password) async {
     final dio = Dio();
     try {
       final Map<String, dynamic> payload = {
@@ -10,10 +11,7 @@ class LoginAPI {
       };
 
       final response =
-          await dio.post('http://10.0.2.2:5000/api/login', data: payload);
-          // 'http://127.0.0.1:5000/api/login'
-          // 'http://10.0.2.2:5000/api/login'
-          // 'https://heart-attack-detection-be.onrender.com/api/login'
+          await dio.post(getEndpoint('/login'), data: payload);
 
       if (response.statusCode == 200) {
         final data = response.data;
