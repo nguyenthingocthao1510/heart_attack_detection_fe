@@ -10,8 +10,7 @@ class LoginAPI extends BaseApi {
         'password': password,
       };
 
-      final response =
-          await dio.post(getEndpoint('/login'), data: payload);
+      final response = await dio.post(getEndpoint('/login'), data: payload);
 
       if (response.statusCode == 200) {
         final data = response.data;
