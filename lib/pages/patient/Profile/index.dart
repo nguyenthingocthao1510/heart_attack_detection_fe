@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
+import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 
 class PatientProfile extends StatefulWidget {
   const PatientProfile({super.key});
@@ -18,19 +20,30 @@ class _PatientProfileState extends State<PatientProfile> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white70,
-        title: Text('Patient Information'),
-        centerTitle: true,
+        title: Text(
+          'Patient Information',
+          style: CustomTextStyle.textStyle1(28, Colors.white),
+        ),
+        backgroundColor: const Color.fromARGB(255, 20, 139, 251),
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+          icon: const Icon(
+            CupertinoIcons.arrow_left,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context); // Go back to the previous page
+          },
+        ),
       ),
       body: Container(
-        color: Color(0xFFF5F6FA),
+        color: const Color.fromARGB(255, 238, 238, 238),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
             color: Colors.white,
             elevation: 5,
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.grey),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
@@ -44,9 +57,9 @@ class _PatientProfileState extends State<PatientProfile> {
                     value: patient?.name ?? 'N/A',
                   ),
                   _buildInfoRow(
-                    icon: patient?.gender == 0 ? Icons.man : Icons.woman,
+                    icon: patient?.gender == 'Male' ? Icons.man : Icons.woman,
                     label: 'Gender',
-                    value: patient?.gender == 0 ? 'Male' : 'Female',
+                    value: patient?.gender == 'Male' ? 'Male' : 'Female',
                   ),
                   _buildInfoRow(
                     icon: Icons.phone,
