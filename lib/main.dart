@@ -14,15 +14,17 @@ import 'package:heart_attack_detection_fe/pages/category/Module/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionDetail/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionModal/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart';
+import 'package:heart_attack_detection_fe/pages/doctor/PatientRecord/index.dart';
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/PatientRecord/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
-import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/doctorApi.dart';
 import 'package:heart_attack_detection_fe/services/baseApi.dart';
@@ -113,6 +115,28 @@ class MyApp extends StatelessWidget {
         moduleRoute: (context) => const ModulePage(),
         updatePasswordRoute: (context) => UpdatePassword(),
         notFoundRoute: (context) => const Error404Screen(),
+        patientRecordRoute: (context) {
+          final roleProvider =
+              Provider.of<RoleProvider>(context, listen: false);
+          String? role = roleProvider.roleId;
+
+          print('Role in main page: $role');
+
+          if (role == null) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              roleProvider.setRoleId('2');
+            });
+            return const SizedBox.shrink();
+          }
+
+          if (role == '2') {
+            return const DoctorPatientRecordPage();
+          } else if (role == '3') {
+            return const PatientPatientRecordPage();
+          }
+
+          return const SizedBox.shrink();
+        }
       },
     );
   }
