@@ -1,12 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:heart_attack_detection_fe/models/permissionAuthorization.dart';
+import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
-class PermissionAuthorizationAPI {
-  static Future<List<PermissionAuthorization>> getAllPermissionInModuleRole(
+class PermissionAuthorizationAPI extends BaseApi {
+  Future<List<PermissionAuthorization>> getAllPermissionInModuleRole(
       int roleId, int moduleId) async {
-    final dio = Dio();
-    final url =
-        'http://127.0.0.1:5000/api/permission-in-role-module/roleId=$roleId/moduleId=$moduleId';
+    final url = getEndpoint("/permission-in-role-module/roleId=$roleId/moduleId=$moduleId");
+    final response = await dio.get(url);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final permissionAuthorizations = result.map((e) {
+      return PermissionAuthorization.fromMap(e);
+    }).toList();
+
+    return permissionAuthorizations;
+  }
+
+  Future<List<PermissionAuthorization>> getAllPermissionNotInModuleRole(
+      int roleId, int moduleId) async {
+    final url = getEndpoint("/permission-not-in-role-module/roleId=$roleId/moduleId=$moduleId");
 
     final response = await dio.get(url);
     final resData = response.data['data'];
@@ -19,27 +31,9 @@ class PermissionAuthorizationAPI {
     return permissionAuthorizations;
   }
 
-  static Future<List<PermissionAuthorization>> getAllPermissionNotInModuleRole(
-      int roleId, int moduleId) async {
-    final dio = Dio();
-    final url =
-        'http://127.0.0.1:5000/api/permission-not-in-role-module/roleId=$roleId/moduleId=$moduleId';
-
-    final response = await dio.get(url);
-    final resData = response.data['data'];
-
-    final result = resData as List<dynamic>;
-    final permissionAuthorizations = result.map((e) {
-      return PermissionAuthorization.fromMap(e);
-    }).toList();
-
-    return permissionAuthorizations;
-  }
-
-  static Future<Response> addPermission(
+  Future<Response> addPermission(
       List<int> selectedPermissionIds, int roleId, int moduleId) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/add-permission-to-role-module';
+    final url = getEndpoint("/add-permission-to-role-module");
 
     try {
       final Map<String, dynamic> payload = {
@@ -63,10 +57,9 @@ class PermissionAuthorizationAPI {
     }
   }
 
-  static Future<Response> removePermission(
+  Future<Response> removePermission(
       List<int> selectedPermissionIds, int roleId, int moduleId) async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/remove-permission-from-role-module';
+    final url = getEndpoint("/remove-permission-from-role-module");
 
     try {
       final Map<String, dynamic> payload = {
@@ -90,9 +83,9 @@ class PermissionAuthorizationAPI {
     }
   }
 
-  static Future<PermissionModule> loadAllPermission(int roleId) async {
+  Future<PermissionModule> loadAllPermission(int roleId) async {
     final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/get-all-permission/roleId=$roleId';
+    final url = getEndpoint("/get-all-permission/roleId=$roleId");
 
     final response = await dio.get(url);
 

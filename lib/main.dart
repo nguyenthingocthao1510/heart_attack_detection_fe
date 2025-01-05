@@ -17,6 +17,7 @@ import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart
 import 'package:heart_attack_detection_fe/pages/doctor/PatientRecord/index.dart';
 import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/PatientRecord/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
@@ -26,6 +27,7 @@ import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/doctorApi.dart';
+import 'package:heart_attack_detection_fe/services/baseApi.dart';
 import 'package:provider/provider.dart';
 
 Future<Doctor?> getDoctorById(BuildContext context) async {
@@ -43,6 +45,8 @@ Future<Doctor?> getDoctorById(BuildContext context) async {
 }
 
 void main() {
+  ChangePrefixURL.setApiPrefix(4);
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => RoleProvider()),
@@ -61,6 +65,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Healthcare Application',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         hoverColor: Colors.white,
@@ -72,6 +77,7 @@ class MyApp extends StatelessWidget {
         moduleAuthorization: (context) => const ModuleAuthorization(),
         dashboard: (context) => const Dashboard(),
         diagnosisRoute: (context) => const Prediction(),
+        historyRoute: (context) => const DiagnosisHistory(),
         patientProfileRoute: (context) => const PatientProfile(),
         userInformation: (context) => const UserFooterSection(),
         permissionAuthorization: (context) => const PermissionAuthorization(),

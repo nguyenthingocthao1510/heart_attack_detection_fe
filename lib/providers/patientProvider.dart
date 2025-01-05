@@ -6,6 +6,10 @@ class PatientProvider extends ChangeNotifier {
 
   int? get patientId => _patientId;
 
+  String? _needPrediction;
+
+  String? get needPrediction => _needPrediction;
+
   Patient? _patient;
 
   Patient? get patient => _patient;
@@ -15,8 +19,14 @@ class PatientProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setNeedPrediction(String? needPrediction) {
+    _needPrediction = needPrediction;
+    notifyListeners();
+  }
+
   void setPatient(Patient? patient) {
     _patient = patient;
     notifyListeners();
   }
+
 }
