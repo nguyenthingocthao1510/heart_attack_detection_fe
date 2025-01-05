@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../models/Diagnosis/diagnosis.d.dart';
+import '../../../models/Diagnosis/diagnosis.d.dart';
 
 class ReceiveUserInputAPI {
   static Future<String> receiveUserInput(Diagnosis input) async {

@@ -1,24 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/models/doctor.d.dart';
-import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
-import 'package:heart_attack_detection_fe/pages/admin/Login/index.dart';
-import 'package:heart_attack_detection_fe/pages/admin/ModuleAuthorization/index.dart';
-import 'package:heart_attack_detection_fe/pages/admin/PermissionAuthorization/index.dart';
-import 'package:heart_attack_detection_fe/pages/admin/Register/index.dart';
-import 'package:heart_attack_detection_fe/pages/admin/UpdatePassword/index.dart';
-import 'package:heart_attack_detection_fe/pages/admin/UserFooter/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Doctor/DoctorModal/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Doctor/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Medicine/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Module/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionDetail/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Prescription/PrescriptionModal/index.dart';
-import 'package:heart_attack_detection_fe/pages/category/Prescription/index.dart';
-import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
+import 'package:heart_attack_detection_fe/utils/exporters/adminPages.dart';
+import 'package:heart_attack_detection_fe/utils/exporters/doctorPages.dart';
+import 'package:heart_attack_detection_fe/utils/exporters/patientPages.dart';
+
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
@@ -43,7 +27,7 @@ Future<Doctor?> getDoctorById(BuildContext context) async {
 }
 
 void main() {
-  ChangePrefixURL.setApiPrefix(4);
+  ChangePrefixURL.setApiPrefix(1);
 
   runApp(MultiProvider(
     providers: [
@@ -73,6 +57,7 @@ class MyApp extends StatelessWidget {
         homePage: (context) => const HomePage(),
         registerRoute: (context) => const Register(),
         moduleAuthorization: (context) => const ModuleAuthorization(),
+        deviceRoute: (context) => const DevicePage(),
         dashboard: (context) => const Dashboard(),
         diagnosisRoute: (context) => const Prediction(),
         historyRoute: (context) => const DiagnosisHistory(),

@@ -1,0 +1,9 @@
+export 'package:heart_attack_detection_fe/models/doctor.d.dart';
+export 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
+export 'package:heart_attack_detection_fe/pages/admin/Login/index.dart';
+export 'package:heart_attack_detection_fe/pages/admin/ModuleAuthorization/index.dart';
+export 'package:heart_attack_detection_fe/pages/admin/PermissionAuthorization/index.dart';
+export 'package:heart_attack_detection_fe/pages/admin/Register/index.dart';
+export 'package:heart_attack_detection_fe/pages/admin/UpdatePassword/index.dart';
+export 'package:heart_attack_detection_fe/pages/admin/UserFooter/index.dart';
+export 'package:heart_attack_detection_fe/pages/admin/Device/index.dart';
