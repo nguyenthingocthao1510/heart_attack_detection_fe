@@ -13,7 +13,7 @@ class DevicePage extends StatefulWidget {
 
 class _DevicePageState extends State<DevicePage> {
   DeviceApi deviceApi = DeviceApi();
-  late Future<Device> deviceFuture;
+  late Future<List<Map<String, dynamic>>> deviceFuture;
   late List<Map<String, dynamic>> filteredDevices;
   late String selectedStatus;
 
@@ -21,38 +21,32 @@ class _DevicePageState extends State<DevicePage> {
   void initState() {
     super.initState();
     selectedStatus = 'All';
-    filteredDevices = [];
     deviceFuture = fetchDevices();
+    filteredDevices = [];
   }
 
-  Future<Device> fetchDevices() async {
+  Future<List<Map<String, dynamic>>> fetchDevices() async {
     try {
-      return deviceApi.getAllDevice();
+      final response = await deviceApi.getAllDevice();
+      return response.device;
     } catch (e) {
       rethrow;
     }
   }
 
-  
-
-  void filterDevices(String status, Device device) {
-    print("response: ${deviceFuture}");
+  void filterDevices(String status, List<Map<String, dynamic>> devices) {
     setState(() {
       selectedStatus = status;
 
       if (status == 'All') {
-        filteredDevices = device.device
-            .expand((device) => device['entries'] as List<Map<String, dynamic>>)
-            .toList();
+        filteredDevices = devices;
       } else {
-        filteredDevices = device.device
-            .where((d) => d['status'] == status)
-            .expand((d) => d['entries'] as List<Map<String, dynamic>>)
+        filteredDevices = devices
+            .where((device) => device['status'] == status)
             .toList();
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +68,7 @@ class _DevicePageState extends State<DevicePage> {
           },
         ),
       ),
-      body: FutureBuilder<Device>(
+      body: FutureBuilder<List<Map<String, dynamic>>>(
         future: deviceFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -82,24 +76,29 @@ class _DevicePageState extends State<DevicePage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
-            final device = snapshot.data!;
+            final devices = snapshot.data!;
 
+            // Initialize filteredDevices for the first render
             if (filteredDevices.isEmpty || selectedStatus == 'All') {
-              filteredDevices = device.device
-                  .expand((d) => d['entries'] as List<Map<String, dynamic>>)
-                  .toList();
+              filteredDevices = devices;
             }
 
             return Column(
               children: [
-                _buildRowOfChangeStateButton(context, device),
+                _buildRowOfChangeStateButton(devices),
                 const SizedBox(height: 16),
                 Expanded(
                   child: ListView.builder(
                     itemCount: filteredDevices.length,
                     itemBuilder: (context, index) {
-                      final entry = filteredDevices[index];
-                      return _buildDeviceDetail(context, entry);
+                      final device = filteredDevices[index];
+                      final entries = device['entries'] as List;
+                      return Column(
+                        children: [
+                          _buildDeviceDetail(context, device),
+                          ...entries.map((entry) => _buildDeviceDetail(context, entry)).toList(),
+                        ],
+                      );
                     },
                   ),
                 ),
@@ -109,30 +108,29 @@ class _DevicePageState extends State<DevicePage> {
             return const Center(child: Text('No data available.'));
           }
         },
-      )
+      ),
     );
   }
 
-  Widget _buildRowOfChangeStateButton(BuildContext context, Device device) {
+  Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () => filterDevices('All', device),
+          onPressed: () => filterDevices('All', devices),
           child: const Text('All'),
         ),
         ElevatedButton(
-          onPressed: () => filterDevices('Available', device),
+          onPressed: () => filterDevices('Available', devices),
           child: const Text('Available'),
         ),
         ElevatedButton(
-          onPressed: () => filterDevices('Assigned', device),
+          onPressed: () => filterDevices('Assigned', devices),
           child: const Text('Assigned'),
         ),
       ],
     );
   }
-
 
   Widget _buildDeviceDetail(BuildContext context, Map<String, dynamic> device) {
     final deviceId = device['device_id'] ?? 'Unknown ID';
