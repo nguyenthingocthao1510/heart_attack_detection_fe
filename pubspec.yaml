@@ -44,7 +44,7 @@ dependencies:
   flutter_animate: ^4.5.0
   dropdown_button2: ^2.3.9
   provider: ^6.1.2
-  data_table_2: ^2.5.15
+  data_table_2: ^2.5.18
   easy_stepper: ^0.8.5+1
   quickalert: ^1.1.0
   syncfusion_flutter_gauges: ^27.1.57

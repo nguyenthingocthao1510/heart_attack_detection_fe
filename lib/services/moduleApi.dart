@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:heart_attack_detection_fe/models/module.d.dart';
-import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
-class ModuleAPI extends BaseApi {
+class ModuleAPI {
+  final String baseUrl = 'http://127.0.0.1:5000/api';
+  final Dio dio = Dio();
+
   Future<List<Module>> fetchAllModule() async {
-    final url = getEndpoint('/modules');
-    final response = await dio.get(url);
+    final response = await dio.get('$baseUrl/modules');
     final resData = response.data['data'];
     final results = resData as List<dynamic>;
     final modules = results.map((e) {
@@ -15,7 +16,7 @@ class ModuleAPI extends BaseApi {
   }
 
   Future<Module> getModuleById(int moduleId) async {
-    final url = getEndpoint('/module/id=${moduleId}');
+    final url = '$baseUrl/module/id=$moduleId';
     try {
       final response = await dio.get(url);
       if (response.statusCode == 200) {
@@ -34,7 +35,7 @@ class ModuleAPI extends BaseApi {
     String route,
     String image,
   ) async {
-    final url = getEndpoint("/module/add");
+    final url = '$baseUrl/module/add';
 
     try {
       final payload = {
@@ -46,7 +47,7 @@ class ModuleAPI extends BaseApi {
       final response = await dio.post(url, data: payload);
       if (response.statusCode == 200) {
         print('Create module information success');
-        return Module.fromMap(response.data);
+        return Module.fromMap(response.data['data']);
       } else {
         throw Exception(
             'Failed to create module information ${response.statusCode}');
@@ -72,8 +73,7 @@ class ModuleAPI extends BaseApi {
     String route,
     String image,
   ) async {
-    final dio = Dio();
-    final url = getEndpoint("/update/id=${id}");
+    final url = '$baseUrl/update/id=$id';
 
     try {
       final payload = {'name': name, 'route': route, 'image': image};
@@ -82,7 +82,7 @@ class ModuleAPI extends BaseApi {
 
       if (response.statusCode == 200) {
         print('Update module information successful');
-        return Module.fromMap(response.data);
+        return Module.fromMap(response.data['data']);
       } else {
         throw Exception(
             'Failed to update module information ${response.statusCode}');

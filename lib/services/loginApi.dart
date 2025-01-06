@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
-import 'baseApi.dart';
 
-class LoginAPI extends BaseApi {
+class LoginAPI {
   Future<dynamic> login(String username, String password) async {
     final dio = Dio();
     try {
@@ -10,7 +9,9 @@ class LoginAPI extends BaseApi {
         'password': password,
       };
 
-      final response = await dio.post(getEndpoint('/login'), data: payload);
+      // Sử dụng URL tĩnh thay vì getEndpoint
+      final response =
+          await dio.post('http://127.0.0.1:5000/api/login', data: payload);
 
       if (response.statusCode == 200) {
         final data = response.data;
