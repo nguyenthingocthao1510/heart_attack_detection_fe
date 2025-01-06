@@ -21,3 +21,4 @@ const String doctorRoute = '/doctor';
 const String medicineRoute = '/medicine';
 const String updatePasswordRoute = '/update-password';
 const String patientRecordRoute = '/patient-record';
+const String healthInsuranceRoute = '/patient-health-insurance';

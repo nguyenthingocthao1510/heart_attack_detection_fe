@@ -19,6 +19,7 @@ import 'package:heart_attack_detection_fe/pages/notFound/notFound.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/Prediction/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/HealthInsurance/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/PatientRecord/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Profile/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
@@ -26,8 +27,8 @@ import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
-import 'package:heart_attack_detection_fe/services/doctorApi.dart';
 import 'package:heart_attack_detection_fe/services/baseApi.dart';
+import 'package:heart_attack_detection_fe/services/doctorApi.dart';
 import 'package:provider/provider.dart';
 
 Future<Doctor?> getDoctorById(BuildContext context) async {
@@ -137,7 +138,8 @@ class MyApp extends StatelessWidget {
           }
 
           return const SizedBox.shrink();
-        }
+        },
+        healthInsuranceRoute: (context) => const HealthInsurancePage(),
       },
     );
   }
