@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import 'package:heart_attack_detection_fe/models/Device/device.dart';
 import 'package:heart_attack_detection_fe/services/device.dart';
+import 'package:heart_attack_detection_fe/pages/admin/Device/assignPatient.dart';
 
 class DevicePage extends StatefulWidget {
   const DevicePage({super.key});
@@ -229,6 +230,14 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
                       color: Colors.white,
                     ),
                     onPressed: () {
+                      if(type == 'Available') {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AssignPatientPage();
+                          }
+                        );
+                      }
                     },
                   ),
                 ],
