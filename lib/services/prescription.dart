@@ -114,4 +114,45 @@ class PrescriptionAPI {
       throw e;
     }
   }
+
+  static Future<List<PatientPrescription>> getAllPatientPrescription(
+      int patientId) async {
+    final dio = Dio();
+    final url =
+        'http://127.0.0.1:5000/api/prescriptions/patientId=${patientId}';
+    final response = await dio.get(url);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final patientPrescriptions = result.map((e) {
+      return PatientPrescription.fromMap(e);
+    }).toList();
+
+    return patientPrescriptions;
+  }
+
+  static Future<List<DoctorPrescription>> getAllDoctorPrescription() async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/prescription/doctors';
+    final response = await dio.get(url);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final doctorPrescriptions = result.map((e) {
+      return DoctorPrescription.fromMap(e);
+    }).toList();
+
+    return doctorPrescriptions;
+  }
+
+  static Future<List<MedicinePrescription>> getAllMedicinePrescription() async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/prescription/medicines';
+    final response = await dio.get(url);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final medicinePrescriptions = result.map((e) {
+      return MedicinePrescription.fromMap(e);
+    }).toList();
+
+    return medicinePrescriptions;
+  }
 }

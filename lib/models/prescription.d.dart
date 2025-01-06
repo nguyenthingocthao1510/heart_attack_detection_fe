@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Prescription {
   int? account_id;
   String? doctor_name;
@@ -68,6 +70,73 @@ class MedicineDetail {
       id: e['id'],
       medicine_id: e['medicine_id'],
       medicine_amount: e['medicine_amount'],
+      usage_instructions: e['usage_instructions'],
+    );
+  }
+}
+
+class DoctorPrescription {
+  int? id;
+  String? name;
+
+  DoctorPrescription({this.id, this.name});
+
+  factory DoctorPrescription.fromMap(Map<String, dynamic> e) {
+    return DoctorPrescription(id: e['id'], name: e['name']);
+  }
+}
+
+class MedicinePrescription {
+  int? id;
+  String? name;
+
+  MedicinePrescription({this.id, this.name});
+
+  factory MedicinePrescription.fromMap(Map<String, dynamic> e) {
+    return MedicinePrescription(id: e['id'], name: e['name']);
+  }
+}
+
+class PatientPrescription {
+  int? doctor_id;
+  int? medicine_amount;
+  int? medicine_id;
+  String? note;
+  int? patient_id;
+  DateTime? prescription_date;
+  int? prescription_id;
+  String? usage_instructions;
+
+  PatientPrescription({
+    this.doctor_id,
+    this.medicine_amount,
+    this.medicine_id,
+    this.note,
+    this.patient_id,
+    this.prescription_date,
+    this.prescription_id,
+    this.usage_instructions,
+  });
+
+  factory PatientPrescription.fromMap(Map<String, dynamic> e) {
+    DateTime? parseDate(String? dateStr) {
+      if (dateStr == null) return null;
+      try {
+        return DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'").parseUtc(dateStr);
+      } catch (_) {
+        print('Error parsing date: $dateStr');
+        return null;
+      }
+    }
+
+    return PatientPrescription(
+      doctor_id: e['doctor_id'],
+      medicine_amount: e['medicine_amount'],
+      medicine_id: e['medicine_id'],
+      note: e['note'],
+      patient_id: e['patient_id'],
+      prescription_date: parseDate(e['prescription_date']),
+      prescription_id: e['prescription_id'],
       usage_instructions: e['usage_instructions'],
     );
   }
