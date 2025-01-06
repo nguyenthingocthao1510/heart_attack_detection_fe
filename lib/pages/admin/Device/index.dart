@@ -13,7 +13,7 @@ class DevicePage extends StatefulWidget {
 
 class _DevicePageState extends State<DevicePage> {
   DeviceApi deviceApi = DeviceApi();
-  late Future<List<Map<String, dynamic>>> deviceFuture;
+  late Future<Device> deviceFuture;
   late List<Map<String, dynamic>> filteredDevices;
   late String selectedStatus;
 
@@ -25,10 +25,10 @@ class _DevicePageState extends State<DevicePage> {
     filteredDevices = [];
   }
 
-  Future<List<Map<String, dynamic>>> fetchDevices() async {
+  Future<Device> fetchDevices() async {
     try {
       final response = await deviceApi.getAllDevice();
-      return response.device;
+      return response;
     } catch (e) {
       rethrow;
     }
@@ -68,75 +68,118 @@ class _DevicePageState extends State<DevicePage> {
           },
         ),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: deviceFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (snapshot.hasData) {
-            final devices = snapshot.data!;
+      body: Container(
+        color: const Color.fromARGB(255, 238, 238, 238),
+        child: FutureBuilder<Device>(
+          future: deviceFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              final devices = snapshot.data!.device;
 
-            // Initialize filteredDevices for the first render
-            if (filteredDevices.isEmpty || selectedStatus == 'All') {
-              filteredDevices = devices;
+              if (filteredDevices.isEmpty || selectedStatus == 'All') {
+                filteredDevices = devices;
+              }
+              return Column(
+                children: [
+                  _buildRowOfChangeStateButton(devices),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: filteredDevices.length,
+                      itemBuilder: (context, index) {
+                        final device = filteredDevices[index];
+                        final entries = device['entries'] as List;
+                        return Column(
+                          children: [
+                            ...entries.map((entry) => _buildDeviceDetail(context, entry, device['status'])).toList(),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return const Center(child: Text('No data available.'));
             }
+          },
+        ),
+      )
+    );
+  }
 
-            return Column(
-              children: [
-                _buildRowOfChangeStateButton(devices),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: filteredDevices.length,
-                    itemBuilder: (context, index) {
-                      final device = filteredDevices[index];
-                      final entries = device['entries'] as List;
-                      return Column(
-                        children: [
-                          _buildDeviceDetail(context, device),
-                          ...entries.map((entry) => _buildDeviceDetail(context, entry)).toList(),
-                        ],
-                      );
-                    },
+Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
+  List<String> types = ['All', 'Available', 'Assigned'];
+  return Container(
+    color: Colors.white,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: types.map((type) {
+        bool isActive = type == selectedStatus;
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedStatus = type;
+            });
+            filterDevices(type, devices);
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.05,
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Text(
+                  type,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: isActive
+                        ? const Color.fromARGB(255, 20, 139, 251)
+                        : Colors.black,
+                    fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
-              ],
-            );
-          } else {
-            return const Center(child: Text('No data available.'));
-          }
-        },
-      ),
-    );
-  }
+              ),
+              Container(
+                height: 3,
+                constraints: BoxConstraints(
+                  minWidth: 0,
+                  maxWidth: MediaQuery.of(context).size.width * 0.3,
+                ),
+                color: isActive
+                  ? const Color.fromARGB(255, 20, 139, 251)
+                  : Colors.transparent,
+                child: IntrinsicWidth(
+                  child: Text(
+                    type,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
 
-  Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton(
-          onPressed: () => filterDevices('All', devices),
-          child: const Text('All'),
-        ),
-        ElevatedButton(
-          onPressed: () => filterDevices('Available', devices),
-          child: const Text('Available'),
-        ),
-        ElevatedButton(
-          onPressed: () => filterDevices('Assigned', devices),
-          child: const Text('Assigned'),
-        ),
-      ],
-    );
-  }
 
-  Widget _buildDeviceDetail(BuildContext context, Map<String, dynamic> device) {
+  Widget _buildDeviceDetail(BuildContext context, Map<String, dynamic> device, type) {
     final deviceId = device['device_id'] ?? 'Unknown ID';
-    final patientId = device['patient_id']?.toString() ?? 'Unassigned';
+    final patientId = device['patient_id']?.toString() ?? 'None';
 
     return Card(
+      color: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
@@ -158,30 +201,38 @@ class _DevicePageState extends State<DevicePage> {
                   children: [
                     Text(
                       deviceId,
-                      style: CustomTextStyle.textStyle1(
-                          24, const Color.fromARGB(255, 20, 139, 251)),
+                      style: CustomTextStyle.textStyle1(16, const Color.fromARGB(255, 20, 139, 251))
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.favorite,
-                          size: 16,
-                          color: const Color.fromARGB(255, 20, 139, 251),
-                        ),
-                        const SizedBox(width: 8.0),
-                        Text(
-                          'Assigned to: $patientId',
-                          style: CustomTextStyle.textStyle2(16, Colors.black),
-                        ),
-                      ],
+                    Text(
+                        'Assigned to: $patientId',
+                        style: CustomTextStyle.textStyle2(12, Colors.black)
                     ),
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Action'),
-              ),
+              Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.1,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 20, 139, 251),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(15),
+                        bottomRight: Radius.circular(15)
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      (type == 'Available') ? Icons.person_add : Icons.person_remove,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                    },
+                  ),
+                ],
+              )
             ],
           ),
         ),
