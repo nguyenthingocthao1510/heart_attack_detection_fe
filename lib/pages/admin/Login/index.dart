@@ -214,10 +214,10 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       if (response != null) {
         String roleId = response['roleId'];
         String accountId = response['accountId'];
-        PermissionAuthorizationAPI permissionAuthorizationAPI = PermissionAuthorizationAPI();
-        final permissionResponse =
-            await permissionAuthorizationAPI.loadAllPermission(
-                int.parse(roleId));
+        PermissionAuthorizationAPI permissionAuthorizationAPI =
+            PermissionAuthorizationAPI();
+        final permissionResponse = await permissionAuthorizationAPI
+            .loadAllPermission(int.parse(roleId));
 
         if (permissionResponse is PermissionModule) {
           final permissionProvider =
@@ -232,16 +232,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           );
           Provider.of<AccountProvider>(context, listen: false)
               .setAccountId(accountId);
-           if (roleId =='3') {
-            PatientAPI patientAPI = PatientAPI();
-            var patientData = await patientAPI.getPatientByAccountId(accountId);
 
-        if (roleId == 3) {
-          PatientAPI patientAPI = PatientAPI();
-          final patientData = await patientAPI.getPatientByAccountId(accountId);
-          Provider.of<PatientProvider>(context, listen: false)
-            .setPatient(patientData);
-        }
+          if (roleId == 3) {
+            PatientAPI patientAPI = PatientAPI();
+            final patientData =
+                await patientAPI.getPatientByAccountId(accountId);
+            Provider.of<PatientProvider>(context, listen: false)
+                .setPatient(patientData);
+          }
 
           Navigator.pushNamed(context, homePage, arguments: roleId);
         } else {
@@ -259,7 +257,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login fail')),
         );
-      }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
