@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:heart_attack_detection_fe/models/moduleAuthorization.d.dart';
-import 'package:heart_attack_detection_fe/services/baseApi.dart';
 
-class ModuleRoleAPI extends BaseApi {
+class ModuleRoleAPI {
+  final String baseUrl = 'http://127.0.0.1:5000/api';
+  final Dio dio = Dio();
+
   Future<List<ModuleRole>> getAllModuleInRole(int roleId) async {
-    final url = getEndpoint("/module-in-role/roleId=$roleId");
+    final url = '$baseUrl/module-in-role/roleId=$roleId';
     final response = await dio.get(url);
     final resData = response.data['data'];
     final result = resData as List<dynamic>;
@@ -15,7 +17,7 @@ class ModuleRoleAPI extends BaseApi {
   }
 
   Future<List<ModuleRole>> getAllModuleNotInRole(int roleId) async {
-    final url = getEndpoint("/module-not-in-role/roleId=$roleId");
+    final url = '$baseUrl/module-not-in-role/roleId=$roleId';
     final response = await dio.get(url);
     final resData = response.data['data'];
     final result = resData as List<dynamic>;
@@ -26,7 +28,7 @@ class ModuleRoleAPI extends BaseApi {
   }
 
   Future<Response> addModule(List<int> selectedModuleIds, int roleId) async {
-    final url = getEndpoint("/add-module-to-role");
+    final url = '$baseUrl/add-module-to-role';
     try {
       final Map<String, dynamic> payload = {
         'module_ids': selectedModuleIds,
@@ -49,7 +51,7 @@ class ModuleRoleAPI extends BaseApi {
   }
 
   Future<Response> removeModule(List<int> selectedModuleIds, int roleId) async {
-    final url = getEndpoint("/remove-module-in-role");
+    final url = '$baseUrl/remove-module-in-role';
     try {
       final Map<String, dynamic> payload = {
         'module_ids': selectedModuleIds,

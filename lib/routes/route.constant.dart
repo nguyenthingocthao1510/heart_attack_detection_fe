@@ -25,6 +25,8 @@ const String diagnosisRoute = '/patient/diagnosis';
 const String historyRoute = '/patient/diagnosis/history';
 const String patientProfileRoute = '/patient';
 const String dashboard = '/dashboard';
+const String patientRecordRoute = '/patient-record';
+const String healthInsuranceRoute = '/patient-health-insurance';
 ///*********************************************************
 ///*********************************************************
 
@@ -40,3 +42,4 @@ const String doctorRoute = '/doctor';
 const String medicineRoute = '/medicine';
 ///*********************************************************
 ///*********************************************************
+

@@ -5,7 +5,8 @@ import 'package:heart_attack_detection_fe/services/baseApi.dart';
 class PermissionAuthorizationAPI extends BaseApi {
   Future<List<PermissionAuthorization>> getAllPermissionInModuleRole(
       int roleId, int moduleId) async {
-    final url = getEndpoint("/permission-in-role-module/roleId=$roleId/moduleId=$moduleId");
+    final url =
+        'http://127.0.0.1:5000/api/permission-in-role-module/roleId=$roleId/moduleId=$moduleId'; // Đổi getEndpoint thành URL trực tiếp
     final response = await dio.get(url);
     final resData = response.data['data'];
     final result = resData as List<dynamic>;
@@ -18,7 +19,8 @@ class PermissionAuthorizationAPI extends BaseApi {
 
   Future<List<PermissionAuthorization>> getAllPermissionNotInModuleRole(
       int roleId, int moduleId) async {
-    final url = getEndpoint("/permission-not-in-role-module/roleId=$roleId/moduleId=$moduleId");
+    final url =
+        'http://127.0.0.1:5000/api/permission-not-in-role-module/roleId=$roleId/moduleId=$moduleId'; // Đổi getEndpoint thành URL trực tiếp
 
     final response = await dio.get(url);
     final resData = response.data['data'];
@@ -33,7 +35,8 @@ class PermissionAuthorizationAPI extends BaseApi {
 
   Future<Response> addPermission(
       List<int> selectedPermissionIds, int roleId, int moduleId) async {
-    final url = getEndpoint("/add-permission-to-role-module");
+    final url =
+        'http://127.0.0.1:5000/api/add-permission-to-role-module'; // Đổi getEndpoint thành URL trực tiếp
 
     try {
       final Map<String, dynamic> payload = {
@@ -59,7 +62,8 @@ class PermissionAuthorizationAPI extends BaseApi {
 
   Future<Response> removePermission(
       List<int> selectedPermissionIds, int roleId, int moduleId) async {
-    final url = getEndpoint("/remove-permission-from-role-module");
+    final url =
+        'http://127.0.0.1:5000/api/remove-permission-from-role-module'; // Đổi getEndpoint thành URL trực tiếp
 
     try {
       final Map<String, dynamic> payload = {
@@ -85,7 +89,8 @@ class PermissionAuthorizationAPI extends BaseApi {
 
   Future<PermissionModule> loadAllPermission(int roleId) async {
     final dio = Dio();
-    final url = getEndpoint("/get-all-permission/roleId=$roleId");
+    final url =
+        'http://127.0.0.1:5000/api/get-all-permission/roleId=$roleId'; // Đổi getEndpoint thành URL trực tiếp
 
     final response = await dio.get(url);
 
