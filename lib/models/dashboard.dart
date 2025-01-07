@@ -1,17 +1,19 @@
 class Dashboard {
-  int? heartRate;
+  double? AvgBPM;
+  double? BPM;
+  double? ECG;
+  double? IR;
   String? timestamp;
-  int? userId;
-  int? temperature;
 
-  Dashboard({this.heartRate, this.timestamp, this.userId, this.temperature});
+  Dashboard({this.AvgBPM, this.BPM, this.ECG, this.IR, this.timestamp});
 
   factory Dashboard.fromMap(Map<String, dynamic> e) {
     return Dashboard(
-      heartRate: e['heartRate'],
+      AvgBPM: e['AvgBPM'],
+      BPM: e['BPM'],
+      ECG: e['ECG'],
+      IR: e['IR'],
       timestamp: e['timestamp'],
-      userId: e['userId'],
-      temperature: e['temperature'],
     );
   }
 }

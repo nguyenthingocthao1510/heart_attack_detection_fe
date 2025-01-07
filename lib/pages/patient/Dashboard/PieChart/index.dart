@@ -41,7 +41,7 @@ class _PieChartDashboardState extends State<PieChartDashboard> {
     setState(() {
       temperatures = response;
       if (temperatures.isNotEmpty) {
-        latestTemperature = temperatures.last.temperature?.toDouble() ?? 0.0;
+        latestTemperature = temperatures.last.BPM?.toDouble() ?? 0.0;
         latestTime = DateFormat('HH:mm').format(DateTime.parse(
             temperatures.last.timestamp ?? DateTime.now().toString()));
       }
@@ -62,22 +62,22 @@ class _PieChartDashboardState extends State<PieChartDashboard> {
             textStyle:
                 const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
         axes: <RadialAxis>[
-          RadialAxis(minimum: 30, maximum: 40, ranges: <GaugeRange>[
+          RadialAxis(minimum: 0, maximum: 121, ranges: <GaugeRange>[
             GaugeRange(
                 startValue: 0,
-                endValue: 34,
+                endValue: 59,
                 color: Colors.blue.shade50,
                 startWidth: 20,
                 endWidth: 20),
             GaugeRange(
-                startValue: 34,
-                endValue: 37,
+                startValue: 60,
+                endValue: 100,
                 color: Colors.green.shade300,
                 startWidth: 20,
                 endWidth: 20),
             GaugeRange(
-                startValue: 37,
-                endValue: 40,
+                startValue: 101,
+                endValue: 120,
                 color: Colors.red,
                 startWidth: 20,
                 endWidth: 20)

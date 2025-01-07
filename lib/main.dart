@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:heart_attack_detection_fe/utils/exporters/adminPages.dart';
-import 'package:heart_attack_detection_fe/utils/exporters/doctorPages.dart';
-import 'package:heart_attack_detection_fe/utils/exporters/patientPages.dart';
-
+import 'package:heart_attack_detection_fe/pages/doctor/PatientRecord/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/HealthInsurance/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/PatientRecord/index.dart';
+import 'package:heart_attack_detection_fe/pages/patient/Prescription/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
@@ -11,6 +10,9 @@ import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/baseApi.dart';
 import 'package:heart_attack_detection_fe/services/doctorApi.dart';
+import 'package:heart_attack_detection_fe/utils/exporters/adminPages.dart';
+import 'package:heart_attack_detection_fe/utils/exporters/doctorPages.dart';
+import 'package:heart_attack_detection_fe/utils/exporters/patientPages.dart';
 import 'package:provider/provider.dart';
 
 Future<Doctor?> getDoctorById(BuildContext context) async {

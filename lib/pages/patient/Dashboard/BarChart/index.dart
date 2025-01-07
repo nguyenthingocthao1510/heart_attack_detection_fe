@@ -21,15 +21,6 @@ class _BarChartDashboardState extends State<BarChartDashboard> {
   void initState() {
     super.initState();
 
-    heartbeats = List.generate(
-      10,
-      (index) => Dashboard(
-        heartRate: 60 + index,
-        timestamp:
-            DateTime.now().subtract(Duration(seconds: 60)).toIso8601String(),
-      ),
-    );
-
     fetchData();
     startDataFetching();
   }
@@ -148,7 +139,7 @@ class _BarChartDashboardState extends State<BarChartDashboard> {
   List<BarChartGroupData> get barGroups {
     return heartbeats.asMap().entries.map((entry) {
       int index = entry.key;
-      double? heartRate = entry.value.heartRate?.toDouble() ?? 0;
+      double? heartRate = entry.value.ECG?.toDouble() ?? 0;
       return BarChartGroupData(
         x: index,
         barRods: [
@@ -172,7 +163,7 @@ class _BarChartDashboardState extends State<BarChartDashboard> {
         barGroups: barGroups,
         gridData: const FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
-        maxY: 120,
+        maxY: 200,
       ),
     );
   }
