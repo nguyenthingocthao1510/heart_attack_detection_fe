@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/pages/doctor/PatientRecord/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/HealthInsurance/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/PatientRecord/index.dart';
-import 'package:heart_attack_detection_fe/pages/patient/Prescription/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
@@ -30,7 +26,7 @@ Future<Doctor?> getDoctorById(BuildContext context) async {
 }
 
 void main() {
-  ChangePrefixURL.setApiPrefix(4);
+  ChangePrefixURL.setApiPrefix(1);
 
   runApp(MultiProvider(
     providers: [
