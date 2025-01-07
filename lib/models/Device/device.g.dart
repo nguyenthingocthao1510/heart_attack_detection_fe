@@ -17,3 +17,15 @@ Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
       'device': instance.device,
       'total': instance.total,
     };
+
+UnassignedPatient _$UnassignedPatientFromJson(Map<String, dynamic> json) =>
+    UnassignedPatient(
+      unassignedPatient: (json['unassignedPatient'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
+    );
+
+Map<String, dynamic> _$UnassignedPatientToJson(UnassignedPatient instance) =>
+    <String, dynamic>{
+      'unassignedPatient': instance.unassignedPatient,
+    };

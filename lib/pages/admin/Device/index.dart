@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import 'package:heart_attack_detection_fe/models/Device/device.dart';
-import 'package:heart_attack_detection_fe/services/device.dart';
+import 'package:heart_attack_detection_fe/services/Device/device.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Device/assignPatient.dart';
 
 class DevicePage extends StatefulWidget {
@@ -234,7 +234,7 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
                         showModalBottomSheet(
                           context: context,
                           builder: (BuildContext context) {
-                            return const AssignPatientPage();
+                            return AssignPatientPage(deviceId: device['device_id']);
                           }
                         );
                       }

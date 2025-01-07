@@ -28,5 +28,28 @@ class DeviceApi extends BaseApi {
           'An error occurred in save diagnosis history: $e');
     }
   }
+
+  Future<UnassignedPatient> getAllUnassignedPatient() async {
+    try {
+      final response = await dio.get(getEndpoint('/unassigned-patients'));
+      if (response.statusCode == 200 && response.data != null) {
+        return UnassignedPatient.fromJson(response.data);
+      } else {
+        throw Exception(
+            'Failed to fetch unassigned data!');
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw Exception(
+            'Error status code: ${e.message}');
+      } else {
+        throw Exception(
+            'An error occurred: ${e.message}');
+      }
+    } catch (e) {
+      throw Exception(
+          'An error occurred: $e');
+    }
+  }
 }
 
