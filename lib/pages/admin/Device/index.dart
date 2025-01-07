@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:heart_attack_detection_fe/themes/textStyle.dart';
+import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/Device/device.dart';
-import 'package:heart_attack_detection_fe/services/Device/device.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Device/assignPatient.dart';
+import 'package:heart_attack_detection_fe/pages/admin/Device/updateWifi.dart';
+import 'package:heart_attack_detection_fe/services/Device/device.dart';
+import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 
 class DevicePage extends StatefulWidget {
   const DevicePage({super.key});
@@ -42,9 +43,8 @@ class _DevicePageState extends State<DevicePage> {
       if (status == 'All') {
         filteredDevices = devices;
       } else {
-        filteredDevices = devices
-            .where((device) => device['status'] == status)
-            .toList();
+        filteredDevices =
+            devices.where((device) => device['status'] == status).toList();
       }
     });
   }
@@ -52,130 +52,134 @@ class _DevicePageState extends State<DevicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Device',
-          style: CustomTextStyle.textStyle1(28, Colors.white),
-        ),
-        backgroundColor: const Color.fromARGB(255, 20, 139, 251),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: const Icon(
-            CupertinoIcons.arrow_left,
-            color: Colors.white,
+        appBar: AppBar(
+          title: Text(
+            'Device',
+            style: CustomTextStyle.textStyle1(28, Colors.white),
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          backgroundColor: const Color.fromARGB(255, 20, 139, 251),
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: const Icon(
+              CupertinoIcons.arrow_left,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body: Container(
-        color: const Color.fromARGB(255, 238, 238, 238),
-        child: FutureBuilder<Device>(
-          future: deviceFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData) {
-              final devices = snapshot.data!.device;
+        body: Container(
+          color: const Color.fromARGB(255, 238, 238, 238),
+          child: FutureBuilder<Device>(
+            future: deviceFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (snapshot.hasData) {
+                final devices = snapshot.data!.device;
 
-              if (filteredDevices.isEmpty || selectedStatus == 'All') {
-                filteredDevices = devices;
-              }
-              return Column(
-                children: [
-                  _buildRowOfChangeStateButton(devices),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredDevices.length,
-                      itemBuilder: (context, index) {
-                        final device = filteredDevices[index];
-                        final entries = device['entries'] as List;
-                        return Column(
-                          children: [
-                            ...entries.map((entry) => _buildDeviceDetail(context, entry, device['status'])).toList(),
-                          ],
-                        );
-                      },
+                if (filteredDevices.isEmpty || selectedStatus == 'All') {
+                  filteredDevices = devices;
+                }
+                return Column(
+                  children: [
+                    _buildRowOfChangeStateButton(devices),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: filteredDevices.length,
+                        itemBuilder: (context, index) {
+                          final device = filteredDevices[index];
+                          final entries = device['entries'] as List;
+                          return Column(
+                            children: [
+                              ...entries
+                                  .map((entry) => _buildDeviceDetail(
+                                      context, entry, device['status']))
+                                  .toList(),
+                            ],
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              );
-            } else {
-              return const Center(child: Text('No data available.'));
-            }
-          },
-        ),
-      )
-    );
+                  ],
+                );
+              } else {
+                return const Center(child: Text('No data available.'));
+              }
+            },
+          ),
+        ));
   }
 
-Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
-  List<String> types = ['All', 'Available', 'Assigned'];
-  return Container(
-    color: Colors.white,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: types.map((type) {
-        bool isActive = type == selectedStatus;
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedStatus = type;
-            });
-            filterDevices(type, devices);
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.05,
-                alignment: Alignment.center,
-                color: Colors.white,
-                child: Text(
-                  type,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: isActive
-                        ? const Color.fromARGB(255, 20, 139, 251)
-                        : Colors.black,
-                    fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-                  ),
-                ),
-              ),
-              Container(
-                height: 3,
-                constraints: BoxConstraints(
-                  minWidth: 0,
-                  maxWidth: MediaQuery.of(context).size.width * 0.3,
-                ),
-                color: isActive
-                  ? const Color.fromARGB(255, 20, 139, 251)
-                  : Colors.transparent,
-                child: IntrinsicWidth(
+  Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
+    List<String> types = ['All', 'Available', 'Assigned'];
+    return Container(
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: types.map((type) {
+          bool isActive = type == selectedStatus;
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedStatus = type;
+              });
+              filterDevices(type, devices);
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  alignment: Alignment.center,
+                  color: Colors.white,
                   child: Text(
                     type,
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                      color: isActive
+                          ? const Color.fromARGB(255, 20, 139, 251)
+                          : Colors.black,
+                      fontWeight:
+                          isActive ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      }).toList(),
-    ),
-  );
-}
+                Container(
+                  height: 3,
+                  constraints: BoxConstraints(
+                    minWidth: 0,
+                    maxWidth: MediaQuery.of(context).size.width * 0.3,
+                  ),
+                  color: isActive
+                      ? const Color.fromARGB(255, 20, 139, 251)
+                      : Colors.transparent,
+                  child: IntrinsicWidth(
+                    child: Text(
+                      type,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight:
+                            isActive ? FontWeight.bold : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
 
-
-  Widget _buildDeviceDetail(BuildContext context, Map<String, dynamic> device, type) {
+  Widget _buildDeviceDetail(
+      BuildContext context, Map<String, dynamic> device, type) {
     final deviceId = device['device_id'] ?? 'Unknown ID';
     final patientId = device['patient_id']?.toString() ?? 'None';
 
@@ -197,17 +201,30 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
             children: [
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      deviceId,
-                      style: CustomTextStyle.textStyle1(16, const Color.fromARGB(255, 20, 139, 251))
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(deviceId,
+                            style: CustomTextStyle.textStyle1(
+                                16, const Color.fromARGB(255, 20, 139, 251))),
+                        Text('Assigned to: $patientId',
+                            style:
+                                CustomTextStyle.textStyle2(12, Colors.black)),
+                      ],
                     ),
-                    Text(
-                        'Assigned to: $patientId',
-                        style: CustomTextStyle.textStyle2(12, Colors.black)
+                    SizedBox(
+                      width: 20,
                     ),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UpdateWifiPage()));
+                        },
+                        icon: Icon(Icons.settings))
                   ],
                 ),
               ),
@@ -219,24 +236,25 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 20, 139, 251),
                       borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(15),
-                        bottomRight: Radius.circular(15)
-                      ),
+                          topRight: Radius.circular(15),
+                          bottomRight: Radius.circular(15)),
                     ),
                   ),
                   IconButton(
                     icon: Icon(
-                      (type == 'Available') ? Icons.person_add : Icons.person_remove,
+                      (type == 'Available')
+                          ? Icons.person_add
+                          : Icons.person_remove,
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      if(type == 'Available') {
+                      if (type == 'Available') {
                         showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AssignPatientPage(deviceId: device['device_id']);
-                          }
-                        );
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AssignPatientPage(
+                                  deviceId: device['device_id']);
+                            });
                       }
                     },
                   ),
@@ -249,4 +267,3 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
     );
   }
 }
-
