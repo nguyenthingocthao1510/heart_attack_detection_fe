@@ -18,10 +18,10 @@ class Device {
 
 @JsonSerializable()
 class UnassignedPatient {
-  final List<Map<String, dynamic>> unassignedPatient;
+  final List<Map<String, dynamic>> unassigned_patient;
 
   UnassignedPatient({
-    required this.unassignedPatient,
+    required this.unassigned_patient,
   });
 
   factory UnassignedPatient.fromJson(Map<String, dynamic> json) => _$UnassignedPatientFromJson(json);

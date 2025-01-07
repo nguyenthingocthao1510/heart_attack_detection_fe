@@ -28,7 +28,7 @@ Future<Doctor?> getDoctorById(BuildContext context) async {
 }
 
 void main() {
-  ChangePrefixURL.setApiPrefix(4);
+  ChangePrefixURL.setApiPrefix(1);
 
   runApp(MultiProvider(
     providers: [

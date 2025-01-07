@@ -232,29 +232,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           );
           Provider.of<AccountProvider>(context, listen: false)
               .setAccountId(accountId);
-           if (roleId =='3') {
+        if (roleId =='3') {
             PatientAPI patientAPI = PatientAPI();
             var patientData = await patientAPI.getPatientByAccountId(accountId);
-
-        if (roleId == 3) {
-          PatientAPI patientAPI = PatientAPI();
-          final patientData = await patientAPI.getPatientByAccountId(accountId);
-          Provider.of<PatientProvider>(context, listen: false)
-            .setPatient(patientData);
-        }
-
-          Navigator.pushNamed(context, homePage, arguments: roleId);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content:
-                    Text('Failed to load permissions: Invalid data format')),
-          );
-        }
+        } 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login success')),
         );
-        // Navigator.pushNamed(context, homePage, arguments: roleId);
+        Navigator.pushNamed(context, homePage, arguments: roleId);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Login fail')),

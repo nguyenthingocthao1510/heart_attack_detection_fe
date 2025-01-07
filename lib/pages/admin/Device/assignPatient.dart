@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import 'package:heart_attack_detection_fe/themes/divider.dart';
+import 'package:heart_attack_detection_fe/models/Device/device.dart';
+import 'package:heart_attack_detection_fe/services/Device/device.dart';
 
 class AssignPatientPage extends StatefulWidget {
   final String deviceId;
@@ -11,25 +13,46 @@ class AssignPatientPage extends StatefulWidget {
 }
 
 class _AssignPatientPageState extends State<AssignPatientPage> {
-  late List<Map<String, dynamic>> patients;
+  final DeviceApi deviceApi = DeviceApi();
+  Future<UnassignedPatient>? patientFuture;
+  UnassignedPatient? patients;
+  late bool checkSelected;
 
   @override
   void initState() {
     super.initState();
-    patients = List.generate(
-      20,
-          (index) => {'name': 'Patient ${index + 1}', 'selected': false},
-    );
+    fetchUnassignedPatients();
+    checkSelected = false;
   }
 
-  void selectPatient(int index) {
-    setState(() {
-      for (var patient in patients) {
-        patient['selected'] = false;
-      }
-      patients[index]['selected'] = true;
-    });
+  Future<void> fetchUnassignedPatients() async {
+    try {
+      final data = await deviceApi.getAllUnassignedPatient();
+      setState(() {
+        patients = data;
+        patientFuture = Future.value(data);
+      });
+    } catch (error) {
+      print('Error fetching patients: $error');
+      setState(() {
+        patientFuture = Future.error(error);
+      });
+    }
   }
+
+
+void selectPatient(int index) {
+  if (patients == null) return;
+
+  setState(() {
+    for (var patient in patients!.unassigned_patient) {
+      patient['selected'] = false;
+    }
+    patients!.unassigned_patient[index]['selected'] = true;
+    checkSelected = true;
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,67 +68,113 @@ class _AssignPatientPageState extends State<AssignPatientPage> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Select a patient to assign',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              width: double.infinity,
-              color: Colors.grey[200],
-              child: SingleChildScrollView(
-                child: Column(
-                  children: List.generate(patients.length, (index) {
-                    final patient = patients[index];
-                    return GestureDetector(
-                      onTap: () => selectPatient(index),
-                      child: Container(
-                        padding: const EdgeInsets.all(12.0),
-                        margin: const EdgeInsets.symmetric(vertical: 4.0),
-                        decoration: BoxDecoration(
-                          color: patient['selected']
-                              ? Colors.blueAccent
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          patient['name'],
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: patient['selected']
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // final selectedPatient = patients
-                //     .firstWhere((patient) => patient['selected'], orElse: () => null);
-                // if (selectedPatient != null) {
-                //   // Do something with the selected patient
-                //   print('Assigned to: ${selectedPatient['name']}');
-                // } else {
-                //   // No patient selected
-                //   print('No patient selected');
-                // }
-              },
-              child: const Text('Assign Patient'),
-            ),
-          ],
+        child: FutureBuilder<UnassignedPatient>(
+          future: patientFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              print('Patient: $patientFuture');
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              final patientData = snapshot.data!.unassigned_patient;
+              return Column(
+                children: [
+                  Text(
+                    'Select patient to assign',
+                    style: CustomTextStyle.textStyle1(24, Colors.black),
+                  ),
+                  CustomDivider.divider2(context, 0.05),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: patientData.length,
+                      itemBuilder: (context, index) {
+                        final patients = patientData[index];
+                        return Column(
+                          children: [
+                            _buildPatientInformation(context, patients, index),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  _buildConfirmButton(context),
+                ],
+              );
+            } else {
+              return const Center(child: Text('No data available.'));
+            }
+          },
         ),
       ),
     );
   }
+
+  Widget _buildPatientInformation(BuildContext context, Map<String, dynamic> item, int index) {
+    final patientId = item['patient_id'];
+    final patientName = item['patient_name'];
+
+    return SingleChildScrollView(
+      child: GestureDetector(
+        onTap: () => selectPatient(index),
+        child: Container(
+          padding: const EdgeInsets.all(12.0),
+          margin: const EdgeInsets.symmetric(vertical: 4.0),
+          decoration: BoxDecoration(
+            color: item['selected']
+                ? const Color.fromARGB(255, 20, 139, 251)
+                : Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                patientId.toString(),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: item['selected']
+                      ? Colors.white
+                      : Colors.black,
+                ),
+              ),
+              Text(
+                patientName,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: item['selected']
+                      ? Colors.white
+                      : Colors.black,
+                ),
+              ),
+            ],
+          )
+        ),
+      )
+    );
+  }
+
+  Widget _buildConfirmButton(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(
+          checkSelected ? 
+        const Color.fromARGB(255, 20, 139, 251) :
+          Colors.grey
+        ),
+      ),
+      onPressed: () {
+
+      }, 
+      child: Text(
+        'Confirm',
+        style: CustomTextStyle.textStyle2(
+          16, 
+          Colors.white
+        ),
+      )
+    );
+  }
 }
+
