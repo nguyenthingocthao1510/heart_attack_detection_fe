@@ -48,5 +48,29 @@ class DeviceApi extends BaseApi {
           'An error occurred: $e');
     }
   }
+
+  Future<AssignDevice> updateDeviceAssignment(String device_id, AssignDevice patient_id) async {
+    try {
+      final jsonData = patient_id.toJson();
+      final response = await dio.put(getEndpoint('/update-device-assignment/device_id=$device_id'), data: jsonData);
+      if (response.statusCode == 200 && response.data != null) {
+        return AssignDevice.fromJson(response.data);
+      } else {
+        throw Exception(
+            'Failed to fetch unassigned data!');
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw Exception(
+            'Error status code: ${e.message}');
+      } else {
+        throw Exception(
+            'An error occurred: ${e.message}');
+      }
+    } catch (e) {
+      throw Exception(
+          'An error occurred: $e');
+    }
+  }
 }
 

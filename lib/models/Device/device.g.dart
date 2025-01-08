@@ -29,3 +29,12 @@ Map<String, dynamic> _$UnassignedPatientToJson(UnassignedPatient instance) =>
     <String, dynamic>{
       'unassigned_patient': instance.unassigned_patient,
     };
+
+AssignDevice _$AssignDeviceFromJson(Map<String, dynamic> json) => AssignDevice(
+      patient_id: (json['patient_id'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$AssignDeviceToJson(AssignDevice instance) =>
+    <String, dynamic>{
+      'patient_id': instance.patient_id,
+    };

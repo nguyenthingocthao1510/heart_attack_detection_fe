@@ -99,7 +99,7 @@ void selectPatient(int index) {
                       },
                     ),
                   ),
-                  _buildConfirmButton(context),
+                  _buildConfirmButton(context, patientData),
                 ],
               );
             } else {
@@ -155,7 +155,7 @@ void selectPatient(int index) {
     );
   }
 
-  Widget _buildConfirmButton(BuildContext context) {
+  Widget _buildConfirmButton(BuildContext context, List<Map<String, dynamic>> patients) {
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(
@@ -164,8 +164,19 @@ void selectPatient(int index) {
           Colors.grey
         ),
       ),
-      onPressed: () {
-
+      onPressed: () async {
+        if (checkSelected) {
+          final selectedPatient = patients.firstWhere(
+                (patient) => patient['selected'] == true,
+          );
+          if (selectedPatient != null) {
+            final patientId = AssignDevice(patient_id: selectedPatient['patient_id']);
+            await deviceApi.updateDeviceAssignment(widget.deviceId, patientId);
+            print('Patient ID assigned: $patientId');
+          } else {
+            print('No patient selected');
+          }
+        }
       }, 
       child: Text(
         'Confirm',
