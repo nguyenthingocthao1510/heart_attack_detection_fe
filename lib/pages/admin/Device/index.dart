@@ -247,7 +247,14 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
                         showModalBottomSheet(
                           context: context,
                           builder: (BuildContext context) {
-                            return AssignPatientPage(deviceId: device['device_id']);
+                            return AssignPatientPage(
+                              deviceId: device['device_id'],
+                              onRefresh: () {
+                                setState(() {
+                                  deviceFuture = fetchDevices();
+                                });
+                              },
+                            );
                           }
                         );
                       }
