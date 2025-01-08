@@ -117,6 +117,10 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
   List<String> types = ['All', 'Available', 'Assigned'];
   return Container(
     color: Colors.white,
+    constraints: const BoxConstraints(
+      minWidth: 250.0,
+      minHeight: 50.0
+    ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: types.map((type) {
@@ -189,6 +193,10 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
       child: IntrinsicHeight(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,
+          constraints: const BoxConstraints(
+            minWidth: 250.0,
+            maxWidth: 350.0
+          ),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
@@ -216,6 +224,11 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width * 0.1,
+                    constraints: const BoxConstraints(
+                      minWidth: 45.0,
+                      maxWidth: 45.0
+
+                    ),
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 20, 139, 251),
                       borderRadius: BorderRadius.only(
