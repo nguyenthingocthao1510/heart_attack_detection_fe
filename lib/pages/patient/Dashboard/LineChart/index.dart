@@ -41,7 +41,7 @@ class _LineChartDashboardState extends State<LineChartDashboard> {
   }
 
   Future<void> fetchData() async {
-    final response = await DashboardAPI.getHeartRate();
+    final response = await DashboardAPI.getAvgBPM();
     if (mounted) {
       setState(() {
         heartBeats.clear();
@@ -51,7 +51,7 @@ class _LineChartDashboardState extends State<LineChartDashboard> {
   }
 
   Future<void> fetchLatestHeartRate() async {
-    final response = await DashboardAPI.getHeartRate();
+    final response = await DashboardAPI.getAvgBPM();
     if (response.isNotEmpty && mounted) {
       setState(() {
         heartBeats.add(response.last);
@@ -113,7 +113,7 @@ class _LineChartDashboardState extends State<LineChartDashboard> {
           spots: heartBeats.asMap().entries.map((entry) {
             int index = entry.key;
             Dashboard data = entry.value;
-            return FlSpot(index.toDouble(), data.heartRate?.toDouble() ?? 0);
+            return FlSpot(index.toDouble(), data.AvgBPM?.toDouble() ?? 0);
           }).toList(),
           isCurved: true,
           gradient: LinearGradient(colors: gradientColors),
