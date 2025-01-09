@@ -247,6 +247,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           const SnackBar(content: Text('Login fail')),
         );
       }
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('An error occurred: ${e.toString()}')),
