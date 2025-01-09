@@ -55,7 +55,7 @@ class _PredictionState extends State<Prediction> {
     DiagnosisResult result = await predictAPI.predict();
 
     DiagnosisHistoryApi diagnosisHistoryApi = DiagnosisHistoryApi();
-    result.patientId = Provider.of<PatientProvider>(context, listen: false).patient?.id;
+    result.patient_id = Provider.of<PatientProvider>(context, listen: false).patient?.id;
     await diagnosisHistoryApi.addDiagnosisHistory(result);
 
     setState(() {

@@ -4,14 +4,14 @@ part 'result.g.dart';
 
 @JsonSerializable()
 class DiagnosisResult {
-  int? patientId;
+  int? patient_id;
   final int prediction;
   final int thalachh;
   final int restecg;
   final String timestamp;
 
   DiagnosisResult({
-    this.patientId,
+    this.patient_id,
     required this.prediction,
     required this.thalachh,
     required this.restecg,

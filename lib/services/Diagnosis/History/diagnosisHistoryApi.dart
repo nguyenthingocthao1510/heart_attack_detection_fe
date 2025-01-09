@@ -23,7 +23,6 @@ class DiagnosisHistoryApi extends BaseApi {
             'An error occurred: ${e.message}');
       }
     } catch (e) {
-      print('Save diagnosis history data: $e.response.data');
       throw Exception(
           'An error occurred in save diagnosis history: $e');
     }
@@ -49,9 +48,9 @@ class DiagnosisHistoryApi extends BaseApi {
             'An error occurred: ${e.message}');
       }
     } catch (e) {
-      print('Save diagnosis history data: $e.response.data');
+      print('Get diagnosis history data: $e.response.data');
       throw Exception(
-          'An error occurred in save diagnosis history: $e');
+          'An error occurred in get diagnosis history: $e');
     }
   }
 }

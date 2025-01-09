@@ -8,7 +8,7 @@ part of 'result.dart';
 
 DiagnosisResult _$DiagnosisResultFromJson(Map<String, dynamic> json) =>
     DiagnosisResult(
-      patientId: (json['patientId'] as num?)?.toInt(),
+      patient_id: (json['patient_id'] as num?)?.toInt(),
       prediction: (json['prediction'] as num).toInt(),
       thalachh: (json['thalachh'] as num).toInt(),
       restecg: (json['restecg'] as num).toInt(),
@@ -17,7 +17,7 @@ DiagnosisResult _$DiagnosisResultFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$DiagnosisResultToJson(DiagnosisResult instance) =>
     <String, dynamic>{
-      'patientId': instance.patientId,
+      'patient_id': instance.patient_id,
       'prediction': instance.prediction,
       'thalachh': instance.thalachh,
       'restecg': instance.restecg,
