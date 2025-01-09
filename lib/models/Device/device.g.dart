@@ -20,12 +20,21 @@ Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
 
 UnassignedPatient _$UnassignedPatientFromJson(Map<String, dynamic> json) =>
     UnassignedPatient(
-      unassignedPatient: (json['unassignedPatient'] as List<dynamic>)
+      unassigned_patient: (json['unassigned_patient'] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
     );
 
 Map<String, dynamic> _$UnassignedPatientToJson(UnassignedPatient instance) =>
     <String, dynamic>{
-      'unassignedPatient': instance.unassignedPatient,
+      'unassigned_patient': instance.unassigned_patient,
+    };
+
+AssignDevice _$AssignDeviceFromJson(Map<String, dynamic> json) => AssignDevice(
+      patient_id: (json['patient_id'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$AssignDeviceToJson(AssignDevice instance) =>
+    <String, dynamic>{
+      'patient_id': instance.patient_id,
     };

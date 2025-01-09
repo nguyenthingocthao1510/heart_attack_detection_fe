@@ -18,12 +18,24 @@ class Device {
 
 @JsonSerializable()
 class UnassignedPatient {
-  final List<Map<String, dynamic>> unassignedPatient;
+  final List<Map<String, dynamic>> unassigned_patient;
 
   UnassignedPatient({
-    required this.unassignedPatient,
+    required this.unassigned_patient,
   });
 
   factory UnassignedPatient.fromJson(Map<String, dynamic> json) => _$UnassignedPatientFromJson(json);
   Map<String, dynamic> toJson() => _$UnassignedPatientToJson(this);
+}
+
+@JsonSerializable()
+class AssignDevice {
+  int? patient_id;
+
+  AssignDevice({
+    required this.patient_id,
+  });
+
+  factory AssignDevice.fromJson(Map<String, dynamic> json) => _$AssignDeviceFromJson(json);
+  Map<String, dynamic> toJson() => _$AssignDeviceToJson(this);
 }
