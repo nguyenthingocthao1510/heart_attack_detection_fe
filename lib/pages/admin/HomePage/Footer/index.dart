@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/pages/admin/Dashboard/index.dart';
+import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
+import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class FooterSection extends StatefulWidget {
@@ -27,6 +30,7 @@ class _FooterSectionState extends State<FooterSection> {
 
   @override
   Widget build(BuildContext context) {
+    final role = Provider.of<RoleProvider>(context, listen: false).roleId;
     return SizedBox(
       height: 60,
       child: Scaffold(
@@ -82,8 +86,15 @@ class _FooterSectionState extends State<FooterSection> {
               selected = index;
             });
             if (index == 1) {
-              Navigator.pushNamed(
-                  context, dashboard); // Navigate to dashboard page
+              if (role == '1') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AdminDashboardPage()),
+                );
+              } else if (role == '2' || role == '3') {
+                Navigator.pushNamed(context, dashboard);
+              }
             } else if (index == 2) {
               Navigator.pushNamed(context, diagnosisRoute);
             } else if (index == 4) {
