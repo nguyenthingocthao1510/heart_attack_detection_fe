@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:heart_attack_detection_fe/assets/icon/index.dart';
+import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import '../index.dart';
 
 
@@ -10,10 +11,18 @@ class ProcessPrediction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:const Color.fromARGB(255, 20, 139, 251),
+      backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: Text(
+                "Predicting, please wait...",
+                style: CustomTextStyle.textStyle1(32, Colors.black)
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.1),
           Center(
           child: Container(
             height: 300,
@@ -46,7 +55,7 @@ class ProcessPrediction extends StatelessWidget {
           ),
           ElevatedButton(
             style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+              backgroundColor: WidgetStatePropertyAll(Color.fromARGB(255, 20, 139, 251)),
             ),
             onPressed: () {
             Navigator.pushReplacement(
@@ -57,7 +66,7 @@ class ProcessPrediction extends StatelessWidget {
             child: const Text(
               "Cancel",
               style: TextStyle(
-                color: Colors.black
+                color: Colors.white
               ),
             )
           )

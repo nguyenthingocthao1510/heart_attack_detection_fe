@@ -23,19 +23,12 @@ Widget textFieldInput({
       const SizedBox(height: 24),
       TextField(
         controller: controller,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           filled: true,
           fillColor: Colors.white,
           focusColor: Color.fromARGB(255, 20, 139, 251),
-          // border: OutlineInputBorder(
-          //   borderRadius: BorderRadius.circular(24),
-          //   borderSide: const BorderSide(
-          //     color:Colors.black,
-          //     width: 2.0,
-          //   ),
-          // ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(
+            borderSide: BorderSide(
               color: Color.fromARGB(255, 20, 139, 251),
               width: 4.0,
             ),

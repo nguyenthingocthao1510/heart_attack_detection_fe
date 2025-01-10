@@ -20,9 +20,9 @@ class _DisplayResultState extends State<DisplayResult> with SingleTickerProvider
   Widget build(BuildContext context) {
     final patient = Provider.of<PatientProvider>(context).patient;
     final int prediction = widget.result.prediction;
-    Color? backgroundColor = (prediction == 1) ? Colors.green : Colors.red;
-    String title = (prediction == 1) ? 'Congratulation!' : 'Warning!';
-    String result = (prediction == 1) ? 'Your heart is in good shape!' : 'There is high risk of heart attack!';
+    Color? backgroundColor = (prediction == 0) ? Colors.green : Colors.red;
+    String title = (prediction == 0) ? 'Congratulation!' : 'Warning!';
+    String result = (prediction == 0) ? 'Your heart is in good shape!' : 'There is high risk of heart attack!';
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -46,7 +46,7 @@ class _DisplayResultState extends State<DisplayResult> with SingleTickerProvider
             _buildResultAnnouncement(title, patient, result),
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
             Center(
-              child: _buildCard(widget.result.thalachh, 'Heart rate'),
+              child: _buildCard(widget.result.thalachh, 'Heart rate', backgroundColor),
             ).animate()
               .fadeIn(
                 delay: 400.ms,
@@ -61,7 +61,7 @@ class _DisplayResultState extends State<DisplayResult> with SingleTickerProvider
               ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Center(
-              child: _buildCard(widget.result.restecg, 'Electrocardiogram'),
+              child: _buildCard(widget.result.restecg, 'Electrocardiogram', backgroundColor),
             ).animate()
               .fadeIn(
                 delay: 500.ms,
@@ -115,7 +115,7 @@ class _DisplayResultState extends State<DisplayResult> with SingleTickerProvider
     ;
   }
 
-  Widget _buildCard(value, parameter) {
+  Widget _buildCard(value, parameter, Color? color) {
     return Card(
       elevation: 50,
       shadowColor: Colors.black,
@@ -129,7 +129,7 @@ class _DisplayResultState extends State<DisplayResult> with SingleTickerProvider
         child: ListTile(
           title: Text(
             value.toString(),
-            style: CustomTextStyle.textStyle1(56, Colors.green),
+            style: CustomTextStyle.textStyle1(56, color),
             textAlign: TextAlign.center,
           ),
           subtitle: Text(
