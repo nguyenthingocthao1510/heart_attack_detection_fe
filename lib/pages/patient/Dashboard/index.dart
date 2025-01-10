@@ -53,7 +53,7 @@ class _DashboardState extends State<Dashboard> {
                     colors: [Colors.blue, Colors.redAccent],
                   ).createShader(bounds),
                   child: const Text(
-                    'Heartbeat per minute:',
+                    'Average BPM:',
                     style: TextStyle(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -70,7 +70,7 @@ class _DashboardState extends State<Dashboard> {
                     colors: [Colors.blue, Colors.redAccent],
                   ).createShader(bounds),
                   child: const Text(
-                    'SP02 per minute:',
+                    'ECG per minutes:',
                     style: TextStyle(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -94,7 +94,7 @@ class _DashboardState extends State<Dashboard> {
                     colors: [Colors.blue, Colors.redAccent],
                   ).createShader(bounds),
                   child: const Text(
-                    'Temperature per minute:',
+                    'BPM:',
                     style: TextStyle(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
