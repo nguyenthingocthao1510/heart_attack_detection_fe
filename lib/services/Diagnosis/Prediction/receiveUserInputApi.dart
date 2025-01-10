@@ -7,7 +7,7 @@ class ReceiveUserInputAPI {
     try {
       final Map<String, dynamic> payload = input.toJson();
       final response = await dio.post(
-        'http://10.0.2.2:5000/api/patient/manual/receive-user-data',
+        'http://127.0.0.1:5000/api/patient/manual/receive-user-data',
         //10.0.2.2  127.0.0.1
         data: payload,
       );

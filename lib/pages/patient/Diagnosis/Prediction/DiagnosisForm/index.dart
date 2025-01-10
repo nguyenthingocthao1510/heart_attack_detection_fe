@@ -139,7 +139,7 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                   'Thallium Stress Test Result',
                   ['None', 'Normal', 'Fixed defect', 'Reversible defect'],
                   thall,
-                  (newValue) {setState(() => slp = newValue);}
+                  (newValue) {setState(() => thall = newValue);}
                 )
               ]),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -170,6 +170,7 @@ class _DiagnosisFormState extends State<DiagnosisForm> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             ],
           ),
         )
