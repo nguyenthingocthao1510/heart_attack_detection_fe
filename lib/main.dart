@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         registerRoute: (context) => const Register(),
         moduleAuthorization: (context) => const ModuleAuthorization(),
         deviceRoute: (context) => const DevicePage(),
-        dashboard: (context) => const Dashboard(),
+        dashboard: (context) => const DashboardPage(),
         diagnosisRoute: (context) => const Prediction(),
         historyRoute: (context) => const DiagnosisHistory(),
         patientProfileRoute: (context) => const PatientProfile(),

@@ -4,7 +4,7 @@ import 'package:heart_attack_detection_fe/models/account.d.dart';
 class AccountAPI {
   static Future<dynamic> fetchAccount() async {
     final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/accounts';
+    final url = 'https://heart-attack-detection-be.onrender.com/api/accounts';
 
     final response = await dio.get(url);
     final resData = response.data['data'];
@@ -17,12 +17,17 @@ class AccountAPI {
     return accounts;
   }
 
-  static Future<Account> changePassword(String? userPassword, int? id) async {
+  static Future<Account> changePassword(
+      String? userPassword, String? accountStatus, int? id) async {
     final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/update-password/id=${id}';
+    final url =
+        'https://heart-attack-detection-be.onrender.com/api/update-password/id=${id}';
 
     try {
-      final payload = {'user_password': userPassword};
+      final payload = {
+        'user_password': userPassword,
+        'account_status': accountStatus
+      };
 
       final response = await dio.put(url, data: payload);
 

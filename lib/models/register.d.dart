@@ -5,13 +5,14 @@ class Register {
   String? password_salt;
   String? password_hash;
   int? roleId;
+  String? account_status;
 
-  Register({
-    this.id,
-    this.username,
-    this.password,
-    this.password_salt,
-    this.password_hash,
-    this.roleId,
-  });
+  Register(
+      {this.id,
+      this.username,
+      this.password,
+      this.password_salt,
+      this.password_hash,
+      this.roleId,
+      this.account_status});
 }
