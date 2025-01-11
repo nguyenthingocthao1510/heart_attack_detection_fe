@@ -1,12 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/pages/admin/Dashboard/index.dart';
-import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
-import 'package:heart_attack_detection_fe/routes/route.constant.dart';
+import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import 'package:provider/provider.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 
 class FooterSection extends StatefulWidget {
-  const FooterSection({super.key});
+  String route;
+  FooterSection({super.key, required this.route});
 
   @override
   State<FooterSection> createState() => _FooterSectionState();
@@ -15,6 +18,7 @@ class FooterSection extends StatefulWidget {
 class _FooterSectionState extends State<FooterSection> {
   int selected = 0;
   late PageController _pageController;
+  MaterialColor color = Colors.grey;
 
   @override
   void initState() {
@@ -28,9 +32,60 @@ class _FooterSectionState extends State<FooterSection> {
     super.dispose();
   }
 
+  Map<String, dynamic> changeIcon2(int roleId) {
+    switch (roleId) {
+      case 1:
+        return {};
+      case 2:
+        return {
+          'icon': const Icon(CupertinoIcons.phone_solid),
+          'title': const Text('Contact'),
+        };
+      case 3:
+        return {
+          'icon': const Icon(Icons.show_chart),
+          'title': const Text('Dashboard'),
+          'color': (widget.route == dashboard) ? Colors.blue : color
+        };
+      default:
+        break;
+    }
+    return {};
+  }
+
+  Map<String, dynamic> changeIcons3(int roleId) {
+    switch (roleId) {
+      case 1:
+        return {};
+      case 2:
+        return {
+          'icon': Image.asset(prescriptionIcon),
+          'title': const Text('Prescription'),
+          'color': (widget.route == prescription) ? Colors.blue : color
+        };
+      case 3:
+        return {
+          'icon': Image.asset(
+            diagnosisIcon,
+            width: 25,
+            height: 25,
+            color: (widget.route == diagnosisRoute) ? Colors.blue : color
+          ),
+          'title': const Text('Diagnosis'),
+          'color': (widget.route == diagnosisRoute) ? Colors.blue : color
+        };
+      default:
+        break;
+    }
+    return {};
+  }
+
   @override
   Widget build(BuildContext context) {
-    final role = Provider.of<RoleProvider>(context, listen: false).roleId;
+    final roleId =
+    int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
+    final item2 = changeIcon2(roleId);
+    final item3 = changeIcons3(roleId);
     return SizedBox(
       height: 60,
       child: Scaffold(
@@ -56,27 +111,27 @@ class _FooterSectionState extends State<FooterSection> {
             BottomBarItem(
               icon: const Icon(Icons.home),
               title: const Text('Home'),
-              backgroundColor: Colors.blue,
+              backgroundColor: (widget.route == homePage) ? Colors.blue : color,
             ),
             BottomBarItem(
-              icon: const Icon(Icons.show_chart),
-              title: const Text('Dashboard'),
-              backgroundColor: Colors.blue,
+              icon: item2['icon'] ?? const Icon(Icons.error),
+              title: item2['title'] ?? const Text('Error'),
+              backgroundColor: item2['color'] ?? color,
             ),
             BottomBarItem(
-              icon: const Icon(Icons.health_and_safety),
-              title: const Text('Predict'),
-              backgroundColor: Colors.blue,
+              icon: item3['icon'] ?? const Icon(Icons.error),
+              title: item3['title'] ?? const Text('Error'),
+              backgroundColor: item3['color'] ?? color,
             ),
             BottomBarItem(
               icon: const Icon(Icons.settings),
               title: const Text('Setting'),
-              backgroundColor: Colors.blue,
+              backgroundColor: color,
             ),
             BottomBarItem(
               icon: const Icon(Icons.person),
               title: const Text('User'),
-              backgroundColor: Colors.blue,
+              backgroundColor: color,
             ),
           ],
           hasNotch: true,
@@ -85,16 +140,10 @@ class _FooterSectionState extends State<FooterSection> {
             setState(() {
               selected = index;
             });
-            if (index == 1) {
-              if (role == '1') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const AdminDashboardPage()),
-                );
-              } else if (role == '2' || role == '3') {
-                Navigator.pushNamed(context, dashboard);
-              }
+            if (index == 0) {
+              Navigator.pushNamed(context, homePage);
+            } else if (index == 1) {
+              Navigator.pushNamed(context, dashboard); // Navigate to dashboard page
             } else if (index == 2) {
               Navigator.pushNamed(context, diagnosisRoute);
             } else if (index == 4) {

@@ -5,6 +5,7 @@ import 'package:heart_attack_detection_fe/pages/admin/HomePage/Category/index.da
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/SideBar/index.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -135,7 +136,7 @@ class _HomePageState extends State<HomePage>
         bottomNavigationBar: SizedBox(
           height: 50,
           width: MediaQuery.of(context).size.width,
-          child: const FooterSection(),
+          child: FooterSection(route: homePage,),
         ),
       ),
     );
