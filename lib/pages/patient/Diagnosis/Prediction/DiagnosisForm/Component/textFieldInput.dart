@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 
 Widget textFieldInput({
   required BuildContext context,
@@ -23,6 +24,8 @@ Widget textFieldInput({
       const SizedBox(height: 24),
       TextField(
         controller: controller,
+        textAlignVertical: TextAlignVertical(y: -0.3),
+        style: CustomTextStyle.textStyle2(16, Colors.black),
         decoration: const InputDecoration(
           filled: true,
           fillColor: Colors.white,
@@ -33,6 +36,7 @@ Widget textFieldInput({
               width: 4.0,
             ),
           ),
+          contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 0.0),
         ),
         keyboardType: TextInputType.number,
       ),
