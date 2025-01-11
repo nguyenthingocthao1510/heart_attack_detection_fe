@@ -1,17 +1,70 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/models/dashboard.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/BarChart/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/LineChart/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/PieChart/index.dart';
+import 'package:heart_attack_detection_fe/services/dashboard.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardState extends State<Dashboard> {
-  final bool isShowingMainData = true;
+class _DashboardPageState extends State<DashboardPage> {
+  List<Dashboard> avgBpm = [];
+  List<Dashboard> ecg = [];
+  List<Dashboard> bpm = [];
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+    startDataFetching();
+  }
+
+  Future<void> fetchData() async {
+    await getAllAvgBPM();
+    await getAllECG();
+    await getAllBPM();
+  }
+
+  void startDataFetching() {
+    _timer = Timer.periodic(Duration(seconds: 60), (timer) async {
+      await fetchData();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> getAllAvgBPM() async {
+    final response = await PatientDashboardAPI.getAllAvgBPM();
+    setState(() {
+      avgBpm = response;
+    });
+  }
+
+  Future<void> getAllECG() async {
+    final response = await PatientDashboardAPI.getAllECG();
+    setState(() {
+      ecg = response;
+    });
+  }
+
+  Future<void> getAllBPM() async {
+    final response = await PatientDashboardAPI.getAllBPM();
+    setState(() {
+      bpm = response;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +115,11 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-              const LineChartDashboard(),
+              Container(
+                child: LineChartDashboard(
+                  avgBpm: avgBpm,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 50, top: 30, bottom: 20),
                 child: ShaderMask(
@@ -84,8 +141,13 @@ class _DashboardState extends State<Dashboard> {
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child: const BarChartDashboard(),
+                  child: BarChartDashboard(
+                    ecg: ecg,
+                  ),
                 ),
+              ),
+              SizedBox(
+                height: 25,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 50, top: 0, bottom: 20),
@@ -103,7 +165,11 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-              const PieChartDashboard(),
+              Container(
+                child: PieChart(
+                  bpms: bpm,
+                ),
+              ),
             ],
           ),
         ),

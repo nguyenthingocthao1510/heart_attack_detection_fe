@@ -17,6 +17,7 @@ class _UpdatePasswordState extends State<UpdatePassword> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  String accountStatus = 'Active'; // Default account status
   bool isLoading = false;
   bool passwordVisible = false;
   bool confirmPasswordVisible = false;
@@ -81,7 +82,11 @@ class _UpdatePasswordState extends State<UpdatePassword> {
     });
 
     try {
-      await AccountAPI.changePassword(password, selectedAccount!.id!);
+      await AccountAPI.changePassword(
+        password,
+        accountStatus,
+        selectedAccount!.id!,
+      );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Password updated successfully'),
@@ -167,6 +172,46 @@ class _UpdatePasswordState extends State<UpdatePassword> {
     );
   }
 
+  Widget _buildStatusDropdown() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Account Status'),
+          DropdownButtonFormField<String>(
+            value: accountStatus,
+            items: ['Active', 'Inactive']
+                .map((status) => DropdownMenuItem(
+                      value: status,
+                      child: Text(status),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                accountStatus = value!;
+              });
+            },
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.blueGrey),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -227,12 +272,16 @@ class _UpdatePasswordState extends State<UpdatePassword> {
               controller: confirmPasswordController,
               isConfirmPassword: true,
             ),
+            const SizedBox(height: 16),
+            _buildStatusDropdown(),
             const SizedBox(height: 20),
             SizedBox(
               width: 300,
               height: 45,
               child: TextButton(
-                onPressed: isLoading ? null : _updatePassword,
+                onPressed: (isLoading || selectedAccount == null)
+                    ? null
+                    : _updatePassword,
                 style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.blue),

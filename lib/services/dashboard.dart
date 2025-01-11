@@ -1,42 +1,40 @@
 import 'package:dio/dio.dart';
 import 'package:heart_attack_detection_fe/models/dashboard.dart';
 
-class DashboardAPI {
-  static Future<List<Dashboard>> getHeartRate() async {
-    final dio = Dio();
-    final url = 'http://127.0.0.1:5000/api/heartbeat';
-    final response = await dio.get(url);
-    final resData = response.data;
-
-    if (resData is List) {
-      return resData.map((item) => Dashboard.fromMap(item)).toList();
-    } else {
-      throw Exception('Unexpected response format: ${resData}');
-    }
-  }
-
-  static Future<List<Dashboard>> getAvgBPM() async {
-    final dio = Dio();
+class PatientDashboardAPI {
+  static Future<List<Dashboard>> getAllAvgBPM() async {
+    final Dio dio = Dio();
     final url = 'http://127.0.0.1:5000/api/avg-BPM';
     final response = await dio.get(url);
-    final resData = response.data;
-    if (resData is List) {
-      return resData.map((item) => Dashboard.fromMap(item)).toList();
-    } else {
-      throw Exception('Unexpected response format: ${resData}');
-    }
+    final resData = response.data['data'];
+    final results = resData as List<dynamic>;
+    final avgBPM = results.map((e) {
+      return Dashboard.fromMap(e);
+    }).toList();
+    return avgBPM;
   }
 
-  static Future<List<Dashboard>> getTemperature() async {
-    final dio = Dio();
+  static Future<List<Dashboard>> getAllECG() async {
+    final Dio dio = Dio();
     final url = 'http://127.0.0.1:5000/api/heartbeat';
     final response = await dio.get(url);
-    final resData = response.data;
+    final resData = response.data['data'];
+    final results = resData as List<dynamic>;
+    final ecg = results.map((e) {
+      return Dashboard.fromMap(e);
+    }).toList();
+    return ecg;
+  }
 
-    if (resData is List) {
-      return resData.map((item) => Dashboard.fromMap(item)).toList();
-    } else {
-      throw Exception('Unexpected response format: ${resData}');
-    }
+  static Future<List<Dashboard>> getAllBPM() async {
+    final Dio dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/heartbeat';
+    final response = await dio.get(url);
+    final resData = response.data['data'];
+    final results = resData as List<dynamic>;
+    final bpm = results.map((e) {
+      return Dashboard.fromMap(e);
+    }).toList();
+    return bpm;
   }
 }
