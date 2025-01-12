@@ -95,7 +95,7 @@ class _PatientPrescriptionPageState extends State<PatientPrescriptionPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: const Text('Health Insurance'),
+        title: const Text('Prescription'),
         surfaceTintColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_outlined, color: Colors.black),

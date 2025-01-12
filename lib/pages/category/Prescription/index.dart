@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/assets/components/SearchButton/index.dart';
 import 'package:heart_attack_detection_fe/models/doctor.d.dart';
 import 'package:heart_attack_detection_fe/models/prescription.d.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
@@ -20,6 +21,7 @@ class PrescriptionPage extends StatefulWidget {
 class _PrescriptionPageState extends State<PrescriptionPage> {
   List<Prescription> prescriptions = [];
   Doctor? doctor;
+  String? patientName = "";
 
   @override
   void initState() {
@@ -45,8 +47,8 @@ class _PrescriptionPageState extends State<PrescriptionPage> {
   Future<void> getAllPrescription() async {
     String accountId =
         Provider.of<AccountProvider>(context, listen: false).accountId!;
-    final response =
-        await PrescriptionAPI.getAllPrescription(int.parse(accountId));
+    final response = await PrescriptionAPI.filterPrescription(
+        int.parse(accountId), patientName);
     if (mounted) {
       setState(() {
         prescriptions = response;
@@ -83,45 +85,50 @@ class _PrescriptionPageState extends State<PrescriptionPage> {
         child: Column(
           children: [
             if (prescriptionPermissions.contains('List'))
-              Expanded(
-                child: ListView.builder(
-                  itemCount: prescriptions.length,
-                  itemBuilder: (context, index) {
-                    final prescription = prescriptions[index];
-                    final doctorName = prescription.doctor_name;
-                    final patientName = prescription.patient_name;
+              SearchFunction(onSearch: (query) {
+                setState(() {
+                  patientName = query;
+                });
+                fetchData();
+              }),
+            Expanded(
+              child: ListView.builder(
+                itemCount: prescriptions.length,
+                itemBuilder: (context, index) {
+                  final prescription = prescriptions[index];
+                  final doctorName = prescription.doctor_name;
+                  final patientName = prescription.patient_name;
 
-                    DateTime? prescriptionDate;
-                    try {
-                      prescriptionDate =
-                          DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'")
-                              .parse(prescription.prescription_date!);
-                    } catch (e) {
-                      print('Error parsing date: $e');
-                    }
+                  DateTime? prescriptionDate;
+                  try {
+                    prescriptionDate =
+                        DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'")
+                            .parse(prescription.prescription_date!);
+                  } catch (e) {
+                    print('Error parsing date: $e');
+                  }
 
-                    final formatDate = prescriptionDate != null
-                        ? DateFormat.yMMMd().format(prescriptionDate)
-                        : 'Invalid Date';
+                  final formatDate = prescriptionDate != null
+                      ? DateFormat.yMMMd().format(prescriptionDate)
+                      : 'Invalid Date';
 
-                    return Card(
-                      color: Colors.white,
-                      child: ListTile(
-                        title: Text(patientName!),
-                        subtitle: Text('$doctorName - $formatDate'),
-                        trailing: IconButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, prescriptionDetail,
-                                arguments:
-                                    prescriptions[index].prescription_id);
-                          },
-                          icon: const Icon(Icons.chevron_right),
-                        ),
+                  return Card(
+                    color: Colors.white,
+                    child: ListTile(
+                      title: Text(patientName!),
+                      subtitle: Text('$doctorName - $formatDate'),
+                      trailing: IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, prescriptionDetail,
+                              arguments: prescriptions[index].prescription_id);
+                        },
+                        icon: const Icon(Icons.chevron_right),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
+            ),
           ],
         ),
       ),

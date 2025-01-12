@@ -29,19 +29,28 @@ class _HomePageState extends State<HomePage>
 
   Future<void> _fetchData() async {
     final roleId = Provider.of<RoleProvider>(context, listen: false).roleId;
-    print("Fetching API for roleId: $roleId");
+    if (roleId != null) {
+      print("Đang gọi API với roleId: $roleId");
+      // Thêm logic gọi API tại đây
+    } else {
+      print("Không tìm thấy roleId, không thể gọi API.");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Nhận roleId từ arguments
     roleId = ModalRoute.of(context)?.settings.arguments as String?;
     final roleProvider = Provider.of<RoleProvider>(context);
 
-    roleProvider.setRoleId(roleId);
+    // Cập nhật roleId trong RoleProvider
+    if (roleId != null) {
+      roleProvider.setRoleId(roleId);
+    }
 
     return WillPopScope(
       onWillPop: () async {
-        _fetchData();
+        _fetchData(); // Đảm bảo dữ liệu được tải lại khi quay lại
         return true;
       },
       child: Scaffold(
@@ -60,31 +69,41 @@ class _HomePageState extends State<HomePage>
                       height: 40,
                       child: Image.asset(icon64px),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(50))),
+                        border: Border.all(color: Colors.white),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                      ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 15),
-                    child: const Text('Homepage',
-                        style: TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Trang chủ',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   )
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 15, right: 10, bottom: 10),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  child: Icon(
-                    Icons.logout,
-                    color: Colors.blue,
-                  ),
-                  decoration: BoxDecoration(
+                child: GestureDetector(
+                  onTap: () {
+                    // Logic cho nút đăng xuất
+                    print("Người dùng đã nhấn nút đăng xuất.");
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    child: Icon(
+                      Icons.logout,
+                      color: Colors.blue,
+                    ),
+                    decoration: BoxDecoration(
                       border: Border.all(color: Colors.white),
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50))),
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
+                  ),
                 ),
               ),
             ],

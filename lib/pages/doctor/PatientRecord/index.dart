@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/assets/components/SearchButton/index.dart';
 import 'package:heart_attack_detection_fe/models/patientRecord.d.dart';
 import 'package:heart_attack_detection_fe/pages/doctor/PatientRecord/PatientRecordDetail/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
@@ -15,6 +16,7 @@ class DoctorPatientRecordPage extends StatefulWidget {
 
 class _DoctorPatientRecordPageState extends State<DoctorPatientRecordPage> {
   List<doctorPatientRecord> patientRecords = [];
+  String? name = "";
 
   @override
   void initState() {
@@ -29,8 +31,8 @@ class _DoctorPatientRecordPageState extends State<DoctorPatientRecordPage> {
   Future<void> getAllPatientRecord() async {
     String? accountId =
         Provider.of<AccountProvider>(context, listen: false).accountId;
-    final response =
-        await DoctorPatientRecordAPI.getAllPatientRecord(int.parse(accountId!));
+    final response = await DoctorPatientRecordAPI.filterPatientRecord(
+        int.parse(accountId!), name);
     setState(() {
       patientRecords = response;
     });
@@ -50,6 +52,12 @@ class _DoctorPatientRecordPageState extends State<DoctorPatientRecordPage> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            SearchFunction(onSearch: (query) {
+              setState(() {
+                name = query;
+              });
+              fetchData();
+            }),
             Expanded(
                 child: ListView.builder(
               itemCount: patientRecords.length,

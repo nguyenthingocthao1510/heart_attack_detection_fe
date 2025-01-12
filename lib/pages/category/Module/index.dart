@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/assets/components/SearchButton/index.dart';
 import 'package:heart_attack_detection_fe/models/module.d.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Module/ModuleModal/index.dart';
@@ -13,6 +14,8 @@ class ModulePage extends StatefulWidget {
 
 class _ModulePageState extends State<ModulePage> {
   List<Module> modules = [];
+  String name = "";
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -26,7 +29,7 @@ class _ModulePageState extends State<ModulePage> {
 
   Future<void> getAllModule() async {
     ModuleAPI moduleAPI = ModuleAPI();
-    final response = await moduleAPI.fetchAllModule();
+    final response = await moduleAPI.filterModule(name);
     setState(() {
       modules = response;
     });
@@ -57,6 +60,12 @@ class _ModulePageState extends State<ModulePage> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            SearchFunction(onSearch: (query) {
+              setState(() {
+                name = query;
+              });
+              fetchData();
+            }),
             Expanded(
                 child: ListView.builder(
                     itemCount: modules.length,
@@ -68,6 +77,9 @@ class _ModulePageState extends State<ModulePage> {
 
                       return Card(
                         color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: BorderSide(color: Colors.blue)),
                         child: ListTile(
                           title: Text(name!),
                           subtitle: Text('${route}'),
