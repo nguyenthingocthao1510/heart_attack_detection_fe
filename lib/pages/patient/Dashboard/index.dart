@@ -34,7 +34,7 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   void startDataFetching() {
-    _timer = Timer.periodic(Duration(seconds: 60), (timer) async {
+    _timer = Timer.periodic(Duration(seconds: 65), (timer) async {
       await fetchData();
     });
   }
