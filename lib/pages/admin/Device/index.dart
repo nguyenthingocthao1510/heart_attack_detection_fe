@@ -112,7 +112,9 @@ class _DevicePageState extends State<DevicePage> {
               }
             },
           ),
-        ));
+        )
+
+    );
   }
 
 Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
