@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-Color mainColor = const Color.fromARGB(255, 20, 139, 251);
+Color mainColor = Color.fromARGB(255, 20, 139, 251);

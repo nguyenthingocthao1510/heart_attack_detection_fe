@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:heart_attack_detection_fe/models/Diagnosis/diagnosis.d.dart';
@@ -7,6 +8,7 @@ import 'DiagnosisForm/index.dart';
 import 'ProcessPrediction/index.dart';
 import 'DisplayResult/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/Prediction/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/Prediction/receiveUserInputApi.dart';
@@ -116,6 +118,11 @@ class _PredictionState extends State<Prediction> {
         ],
       ),
       body: currentWidget,
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        width: MediaQuery.of(context).size.width,
+        child: FooterSection(route: diagnosisRoute),
+      ),
     );
   }
 }

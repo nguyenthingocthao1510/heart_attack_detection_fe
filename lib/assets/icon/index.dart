@@ -5,3 +5,5 @@ const String icon64px = 'assets/icon/icon_64px.png';
 const String historyIcon = 'assets/icon/history.png';
 const String ecgIcon = 'assets/icon/ecg.png';
 const String heartBeatIcon = 'assets/icon/cardiology.png';
+const String prescriptionIcon = 'assets/icon/prescription.png';
+const String diagnosisIcon = 'assets/icon/diagnosis.png';

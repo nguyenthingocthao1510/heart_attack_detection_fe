@@ -5,6 +5,7 @@ import 'package:heart_attack_detection_fe/pages/category/User/PrivacyPolicy/inde
 import 'package:heart_attack_detection_fe/pages/category/User/Support/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/User/TermOfUse/index.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
+import '../HomePage/Footer/index.dart';
 
 class UserFooterSection extends StatefulWidget {
   const UserFooterSection({super.key});
@@ -138,6 +139,11 @@ class _UserFooterSectionState extends State<UserFooterSection> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        width: MediaQuery.of(context).size.width,
+        child: FooterSection(route: userInformation),
       ),
     );
   }
