@@ -17,12 +17,16 @@ class AccountAPI {
     return accounts;
   }
 
-  static Future<Account> changePassword(String? userPassword, int? id) async {
+  static Future<Account> changePassword(
+      String? userPassword, String? accountStatus, int? id) async {
     final dio = Dio();
     final url = 'http://127.0.0.1:5000/api/update-password/id=${id}';
 
     try {
-      final payload = {'user_password': userPassword};
+      final payload = {
+        'user_password': userPassword,
+        'account_status': accountStatus
+      };
 
       final response = await dio.put(url, data: payload);
 
@@ -46,5 +50,18 @@ class AccountAPI {
       throw Exception(
           'Failed to update password information due to an unexpected error');
     }
+  }
+
+  Future<List<Account>> filterAccount(String? username) async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/account/list-accounts';
+    final payload = {'username': username};
+    final response = await dio.post(url, data: payload);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final modules = result.map((e) {
+      return Account.fromMap(e);
+    }).toList();
+    return modules;
   }
 }

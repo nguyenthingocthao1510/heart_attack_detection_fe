@@ -104,4 +104,17 @@ class MedicineAPI {
           'Failed to update medicine information due to an unexpected error');
     }
   }
+
+  static Future<List<Medicine>> filterMedicine(String? name) async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/medicine/list-medicines';
+    final payload = {'name': name};
+    final response = await dio.post(url, data: payload);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final modules = result.map((e) {
+      return Medicine.fromMap(e);
+    }).toList();
+    return modules;
+  }
 }

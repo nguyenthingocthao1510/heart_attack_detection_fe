@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/pages/Search/index.dart';
+import 'package:heart_attack_detection_fe/pages/admin/Account/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
         registerRoute: (context) => const Register(),
         moduleAuthorization: (context) => const ModuleAuthorization(),
         deviceRoute: (context) => const DevicePage(),
-        dashboard: (context) => const Dashboard(),
+        dashboard: (context) => const DashboardPage(),
         diagnosisRoute: (context) => const Prediction(),
         historyRoute: (context) => const DiagnosisHistory(),
         patientProfileRoute: (context) => const PatientProfile(),
@@ -73,6 +75,8 @@ class MyApp extends StatelessWidget {
         notFoundRoute: (context) => const Error404Screen(),
         patientRecordRoute: (context) => _getPatientRecordPage(context),
         healthInsuranceRoute: (context) => const HealthInsurancePage(),
+        searchRoute: (context) => const SearchPage(),
+        accountRoute: (context) => const AccountPage(),
       },
     );
   }

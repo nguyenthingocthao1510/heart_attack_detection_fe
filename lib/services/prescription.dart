@@ -155,4 +155,21 @@ class PrescriptionAPI {
 
     return medicinePrescriptions;
   }
+
+  static Future<List<Prescription>> filterPrescription(
+      int? account_id, String? patient_name) async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/prescription/list-prescriptions';
+    final payload = {
+      'account_id': account_id,
+      'patient_name': patient_name,
+    };
+    final response = await dio.post(url, data: payload);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final modules = result.map((e) {
+      return Prescription.fromMap(e);
+    }).toList();
+    return modules;
+  }
 }

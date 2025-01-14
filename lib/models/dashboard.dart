@@ -1,19 +1,33 @@
-class Dashboard {
-  double? AvgBPM;
-  double? BPM;
-  double? ECG;
-  double? IR;
-  String? timestamp;
+import 'package:intl/intl.dart';
 
-  Dashboard({this.AvgBPM, this.BPM, this.ECG, this.IR, this.timestamp});
+class Dashboard {
+  int? id;
+  String? device_id;
+  double? thalachh;
+  double? restecg;
+  double? avg_bpm;
+  DateTime? timestamp;
+
+  Dashboard({
+    this.id,
+    this.device_id,
+    this.thalachh,
+    this.restecg,
+    this.avg_bpm,
+    this.timestamp,
+  });
 
   factory Dashboard.fromMap(Map<String, dynamic> e) {
     return Dashboard(
-      AvgBPM: e['AvgBPM'],
-      BPM: e['BPM'],
-      ECG: e['ECG'],
-      IR: e['IR'],
-      timestamp: e['timestamp'],
+      id: e['id'],
+      device_id: e['device_id'],
+      thalachh: e['thalachh'],
+      restecg: e['restecg'],
+      avg_bpm: e['avg_bpm'],
+      timestamp: e['timestamp'] != null
+          ? DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'")
+              .parse(e['timestamp'], true)
+          : null,
     );
   }
 }

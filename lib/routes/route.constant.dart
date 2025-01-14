@@ -15,6 +15,7 @@ const String moduleRoute = '/module';
 const String moduleAuthorization = '/module-authorization';
 const String registerRoute = '/create-account';
 const String deviceRoute = '/device';
+const String accountRoute = '/account';
 
 ///*********************************************************
 ///*********************************************************
@@ -43,3 +44,7 @@ const String medicineRoute = '/medicine';
 
 ///*********************************************************
 ///*********************************************************
+
+//TEST
+
+const String searchRoute = '/search';

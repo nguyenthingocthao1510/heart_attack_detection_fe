@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heart_attack_detection_fe/assets/components/SearchButton/index.dart';
 import 'package:heart_attack_detection_fe/models/medicine.d.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/pages/category/Medicine/MedicineModal/index.dart';
@@ -13,6 +14,7 @@ class MedicinePage extends StatefulWidget {
 
 class _MedicinePageState extends State<MedicinePage> {
   List<Medicine> medicines = [];
+  String name = "";
 
   @override
   void initState() {
@@ -25,7 +27,7 @@ class _MedicinePageState extends State<MedicinePage> {
   }
 
   Future<void> getAllMedicine() async {
-    final response = await MedicineAPI.getAllMedicine();
+    final response = await MedicineAPI.filterMedicine(name);
     setState(() {
       medicines = response;
     });
@@ -56,6 +58,12 @@ class _MedicinePageState extends State<MedicinePage> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            SearchFunction(onSearch: (query) {
+              setState(() {
+                name = query;
+              });
+              fetchData();
+            }),
             Expanded(
                 child: ListView.builder(
                     itemCount: medicines.length,

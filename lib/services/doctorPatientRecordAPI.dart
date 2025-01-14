@@ -171,4 +171,21 @@ class DoctorPatientRecordAPI {
           'Failed to update patient record information due to an unexpected error');
     }
   }
+
+  static Future<List<doctorPatientRecord>> filterPatientRecord(
+      int? account_id, String? name) async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/patient-record/list-patient-records';
+    final payload = {
+      'account_id': account_id,
+      'name': name,
+    };
+    final response = await dio.post(url, data: payload);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final modules = result.map((e) {
+      return doctorPatientRecord.fromMap(e);
+    }).toList();
+    return modules;
+  }
 }

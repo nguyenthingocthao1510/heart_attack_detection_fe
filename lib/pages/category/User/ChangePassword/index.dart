@@ -17,6 +17,7 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword> {
   String? password;
   String? confirmPassword;
+  String accountStatus = 'Active'; // Default account status
   bool passwordVisible = false;
   bool confirmPasswordVisible = false;
   Timer? _debounce;
@@ -55,6 +56,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               },
               isConfirmPassword: true,
             ),
+            _buildStatusDropdown(),
             const SizedBox(height: 20),
             SizedBox(
               width: 300,
@@ -138,6 +140,46 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
+  Widget _buildStatusDropdown() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Status'),
+          DropdownButtonFormField<String>(
+            value: accountStatus,
+            items: ['Active', 'Inactive']
+                .map((status) => DropdownMenuItem(
+                      value: status,
+                      child: Text(status),
+                    ))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                accountStatus = value!;
+              });
+            },
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.blueGrey),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _startDebounce() {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(seconds: 2), _validatePasswords);
@@ -198,8 +240,11 @@ class _ChangePasswordState extends State<ChangePassword> {
     }
 
     try {
-      final response =
-          await AccountAPI.changePassword(password!, int.parse(accountId!));
+      final response = await AccountAPI.changePassword(
+        password!,
+        accountStatus,
+        int.parse(accountId!),
+      );
 
       if (response != null) {
         QuickAlert.show(

@@ -143,7 +143,7 @@ class _UserFooterSectionState extends State<UserFooterSection> {
       bottomNavigationBar: SizedBox(
         height: 50,
         width: MediaQuery.of(context).size.width,
-        child: FooterSection(route: userInformation,),
+        child: FooterSection(),
       ),
     );
   }

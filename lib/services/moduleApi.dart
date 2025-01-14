@@ -101,4 +101,17 @@ class ModuleAPI {
           'Failed to update module information due to an unexpected error');
     }
   }
+
+  Future<List<Module>> filterModule(String? name) async {
+    final dio = Dio();
+    final url = 'http://127.0.0.1:5000/api/list-module';
+    final payload = {'name': name};
+    final response = await dio.post(url, data: payload);
+    final resData = response.data['data'];
+    final result = resData as List<dynamic>;
+    final modules = result.map((e) {
+      return Module.fromMap(e);
+    }).toList();
+    return modules;
+  }
 }

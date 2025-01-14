@@ -90,26 +90,14 @@ class _FooterSectionState extends State<FooterSection> {
   Object changeNavigator(int roleId, int index) {
     switch (roleId) {
       case 1:
-        if (index == 1) {
-          return {};
-        }
-        if (index == 2) {
-          return Navigator.pushNamed(context, deviceRoute);
-        }
+        if (index == 1) {return Navigator.pushNamed(context, adminPageRoute);}
+        if (index == 2) {return Navigator.pushNamed(context, deviceRoute);}
       case 2:
-        if (index == 1) {
-          return {};
-        }
-        if (index == 2) {
-          return Navigator.pushNamed(context, prescription);
-        }
+        if (index == 1) {return {};}
+        if (index == 2) {return Navigator.pushNamed(context, prescription);}
       case 3:
-        if (index == 1) {
-          return Navigator.pushNamed(context, dashboard);
-        }
-        if (index == 2) {
-          return Navigator.pushNamed(context, diagnosisRoute);
-        }
+        if (index == 1) {return Navigator.pushNamed(context, dashboard);}
+        if (index == 2) {return Navigator.pushNamed(context, diagnosisRoute);}
       default:
         break;
     }
@@ -128,9 +116,7 @@ class _FooterSectionState extends State<FooterSection> {
         body: PageView(
           controller: _pageController,
           onPageChanged: (index) {
-            setState(() {
-              selected = index;
-            });
+            setState(() => (selected = index));
           },
           children: const [
             Center(child: Text('Page 1')),
