@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/models/patientRecord.d.dart';
+import 'package:heart_attack_detection_fe/models/PatientRecord/patientRecord.d.dart';
 import 'package:heart_attack_detection_fe/pages/doctor/PatientRecord/PatientHistoryRecord/index.dart';
 import 'package:heart_attack_detection_fe/pages/doctor/PatientRecord/PatientModal/index.dart';
 import 'package:heart_attack_detection_fe/services/doctorPatientRecordAPI.dart';

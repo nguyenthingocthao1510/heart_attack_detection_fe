@@ -10,11 +10,12 @@ import 'DisplayResult/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Diagnosis/History/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
+import 'package:heart_attack_detection_fe/assets/icon/index.dart';
+import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/Prediction/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/Prediction/receiveUserInputApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/History/diagnosisHistoryApi.dart';
-import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
-import 'package:heart_attack_detection_fe/assets/icon/index.dart';
+import 'package:heart_attack_detection_fe/services/patientPatientRecordAPI.dart';
 
 class Prediction extends StatefulWidget {
   const Prediction({super.key});
@@ -27,18 +28,23 @@ class _PredictionState extends State<Prediction> {
   DiagnosisResult? predictionResult;
   bool isPredicting = false;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void startPrediction(Map<String, dynamic> inputData) async {
     setState(() {
       isPredicting = true;
     });
-    
+
   try {
     Diagnosis diagnosis = Diagnosis(
-      age: Provider.of<PatientProvider>(context, listen: false).patient!.age,
+      age: inputData['age'],
       trtbps: inputData['trtbps'],
       chol: inputData['chol'],
       oldpeak: inputData['oldpeak'],
-      sex: Provider.of<PatientProvider>(context, listen: false).patient!.gender,
+      sex: inputData['sex'],
       exng: inputData['exng'],
       caa: inputData['caa'],
       cp: inputData['cp'],

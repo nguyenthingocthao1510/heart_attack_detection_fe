@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:heart_attack_detection_fe/models/patientRecord.d.dart';
+import 'package:heart_attack_detection_fe/models/PatientRecord/patientRecord.d.dart';
 
 class DoctorPatientRecordAPI {
   static Future<List<doctorPatientRecord>> getAllPatientRecord(
