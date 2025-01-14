@@ -2,15 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import 'package:heart_attack_detection_fe/assets/color/index.dart';
-import 'package:heart_attack_detection_fe/main.dart';
 import 'package:provider/provider.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
 
+import '../../Dashboard/index.dart';
+
 class FooterSection extends StatefulWidget {
-  FooterSection({super.key});
+  final String route;
+  FooterSection({super.key, required this.route});
 
   @override
   State<FooterSection> createState() => _FooterSectionState();
@@ -19,7 +20,6 @@ class FooterSection extends StatefulWidget {
 class _FooterSectionState extends State<FooterSection> {
   int selected = 0;
   late PageController _pageController;
-  MaterialColor color = Colors.grey;
 
   @override
   void initState() {
@@ -39,6 +39,7 @@ class _FooterSectionState extends State<FooterSection> {
         return {
           'icon': const Icon(CupertinoIcons.chart_bar_alt_fill),
           'title': const Text('Dashboard'),
+          'color': Colors.grey
         };
       case 2:
         return {
@@ -49,6 +50,7 @@ class _FooterSectionState extends State<FooterSection> {
         return {
           'icon': const Icon(Icons.show_chart),
           'title': const Text('Dashboard'),
+          'color': (widget.route == dashboard) ? mainColor : Colors.grey
         };
       default:
         break;
@@ -61,7 +63,8 @@ class _FooterSectionState extends State<FooterSection> {
       case 1:
         return {
           'icon': const Icon(CupertinoIcons.waveform),
-          'title': const Text('Device')
+          'title': const Text('Device'),
+          'color': (widget.route == deviceRoute) ? mainColor : Colors.grey
         };
       case 2:
         return {
@@ -69,8 +72,10 @@ class _FooterSectionState extends State<FooterSection> {
             prescriptionIcon,
             width: 25,
             height: 25,
+            color: (widget.route == prescription) ? mainColor : Colors.grey,
           ),
           'title': const Text('Prescription'),
+          'color': (widget.route == prescription) ? mainColor : Colors.grey
         };
       case 3:
         return {
@@ -78,8 +83,10 @@ class _FooterSectionState extends State<FooterSection> {
             diagnosisIcon,
             width: 25,
             height: 25,
+            color: (widget.route == diagnosisRoute || widget.route == historyRoute) ? mainColor : Colors.grey
           ),
           'title': const Text('Diagnosis'),
+          'color': (widget.route == diagnosisRoute || widget.route == historyRoute) ? mainColor : Colors.grey
         };
       default:
         break;
@@ -90,7 +97,12 @@ class _FooterSectionState extends State<FooterSection> {
   Object changeNavigator(int roleId, int index) {
     switch (roleId) {
       case 1:
-        if (index == 1) {return Navigator.pushNamed(context, adminPageRoute);}
+        if (index == 1) {
+          return Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AdminDashboardPage()),
+          );
+        }
         if (index == 2) {return Navigator.pushNamed(context, deviceRoute);}
       case 2:
         if (index == 1) {return {};}
@@ -133,27 +145,27 @@ class _FooterSectionState extends State<FooterSection> {
             BottomBarItem(
               icon: const Icon(Icons.home),
               title: const Text('Home'),
-              selectedColor: mainColor
+              backgroundColor: (widget.route == homePage) ? mainColor : Colors.grey
             ),
             BottomBarItem(
               icon: item2['icon'] ?? const Icon(Icons.error),
               title: item2['title'] ?? const Text('Error'),
-              selectedColor: mainColor
+              backgroundColor: item2['color']
             ),
             BottomBarItem(
               icon: item3['icon'] ?? const Icon(Icons.error),
               title: item3['title'] ?? const Text('Error'),
-              selectedColor: mainColor
+              backgroundColor: item3['color']
             ),
             BottomBarItem(
               icon: const Icon(Icons.settings),
               title: const Text('Setting'),
-              selectedColor: mainColor
+              backgroundColor: Colors.grey
             ),
             BottomBarItem(
               icon: const Icon(Icons.person),
               title: const Text('User'),
-              selectedColor: mainColor
+              backgroundColor: (widget.route == userInformation) ? mainColor : Colors.grey
             ),
           ],
           hasNotch: true,

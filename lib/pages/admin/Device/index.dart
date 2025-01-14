@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/Device/device.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Device/assignPatient.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Device/updateWifi.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/Device/device.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 
@@ -112,8 +114,8 @@ class _DevicePageState extends State<DevicePage> {
               }
             },
           ),
-        )
-
+        ),
+      bottomNavigationBar: FooterSection(route: deviceRoute),
     );
   }
 

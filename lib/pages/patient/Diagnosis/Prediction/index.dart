@@ -121,7 +121,7 @@ class _PredictionState extends State<Prediction> {
       bottomNavigationBar: SizedBox(
         height: 50,
         width: MediaQuery.of(context).size.width,
-        child: FooterSection(),
+        child: FooterSection(route: diagnosisRoute),
       ),
     );
   }

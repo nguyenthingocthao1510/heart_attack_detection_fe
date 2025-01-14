@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage>
         bottomNavigationBar: SizedBox(
           height: 50,
           width: MediaQuery.of(context).size.width,
-          child: FooterSection(),
+          child: FooterSection(route: homePage),
         ),
       ),
     );

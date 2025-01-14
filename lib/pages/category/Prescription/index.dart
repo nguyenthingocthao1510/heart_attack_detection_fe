@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/assets/components/SearchButton/index.dart';
 import 'package:heart_attack_detection_fe/models/doctor.d.dart';
 import 'package:heart_attack_detection_fe/models/prescription.d.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/HomePage/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
@@ -145,6 +146,7 @@ class _PrescriptionPageState extends State<PrescriptionPage> {
             iconColor: WidgetStatePropertyAll(Colors.white),
             iconSize: WidgetStatePropertyAll(35.0)),
       ),
+      bottomNavigationBar: FooterSection(route: prescription),
     );
   }
 }

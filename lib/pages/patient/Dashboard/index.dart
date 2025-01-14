@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/models/dashboard.dart';
+import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/BarChart/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/LineChart/index.dart';
 import 'package:heart_attack_detection_fe/pages/patient/Dashboard/PieChart/index.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/dashboard.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -174,6 +176,11 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
       ),
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        width: MediaQuery.of(context).size.width,
+        child: FooterSection(route: dashboard)
+    ),
     );
   }
 }
