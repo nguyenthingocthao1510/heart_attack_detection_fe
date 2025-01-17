@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:heart_attack_detection_fe/assets/icon/index.dart';
 import 'package:heart_attack_detection_fe/assets/color/index.dart';
-import 'package:provider/provider.dart';
-import 'package:heart_attack_detection_fe/routes/route.constant.dart';
-import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+import 'package:heart_attack_detection_fe/assets/icon/index.dart';
+import 'package:heart_attack_detection_fe/pages/admin/Setting/index.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
+import 'package:heart_attack_detection_fe/routes/route.constant.dart';
+import 'package:provider/provider.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 import '../../Dashboard/index.dart';
 
 class FooterSection extends StatefulWidget {
   final String route;
+
   FooterSection({super.key, required this.route});
 
   @override
@@ -79,14 +81,18 @@ class _FooterSectionState extends State<FooterSection> {
         };
       case 3:
         return {
-          'icon': Image.asset(
-            diagnosisIcon,
-            width: 25,
-            height: 25,
-            color: (widget.route == diagnosisRoute || widget.route == historyRoute) ? mainColor : Colors.grey
-          ),
+          'icon': Image.asset(diagnosisIcon,
+              width: 25,
+              height: 25,
+              color: (widget.route == diagnosisRoute ||
+                      widget.route == historyRoute)
+                  ? mainColor
+                  : Colors.grey),
           'title': const Text('Diagnosis'),
-          'color': (widget.route == diagnosisRoute || widget.route == historyRoute) ? mainColor : Colors.grey
+          'color':
+              (widget.route == diagnosisRoute || widget.route == historyRoute)
+                  ? mainColor
+                  : Colors.grey
         };
       default:
         break;
@@ -103,13 +109,23 @@ class _FooterSectionState extends State<FooterSection> {
             MaterialPageRoute(builder: (context) => const AdminDashboardPage()),
           );
         }
-        if (index == 2) {return Navigator.pushNamed(context, deviceRoute);}
+        if (index == 2) {
+          return Navigator.pushNamed(context, deviceRoute);
+        }
       case 2:
-        if (index == 1) {return {};}
-        if (index == 2) {return Navigator.pushNamed(context, prescription);}
+        if (index == 1) {
+          return {};
+        }
+        if (index == 2) {
+          return Navigator.pushNamed(context, prescription);
+        }
       case 3:
-        if (index == 1) {return Navigator.pushNamed(context, dashboard);}
-        if (index == 2) {return Navigator.pushNamed(context, diagnosisRoute);}
+        if (index == 1) {
+          return Navigator.pushNamed(context, dashboard);
+        }
+        if (index == 2) {
+          return Navigator.pushNamed(context, diagnosisRoute);
+        }
       default:
         break;
     }
@@ -119,7 +135,7 @@ class _FooterSectionState extends State<FooterSection> {
   @override
   Widget build(BuildContext context) {
     final roleId =
-    int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
+        int.parse(Provider.of<RoleProvider>(context, listen: false).roleId!);
     final item2 = change2ndIcon(roleId);
     final item3 = change3rdIcon(roleId);
     return SizedBox(
@@ -143,30 +159,28 @@ class _FooterSectionState extends State<FooterSection> {
           ),
           items: [
             BottomBarItem(
-              icon: const Icon(Icons.home),
-              title: const Text('Home'),
-              backgroundColor: (widget.route == homePage) ? mainColor : Colors.grey
-            ),
+                icon: const Icon(Icons.home),
+                title: const Text('Home'),
+                backgroundColor:
+                    (widget.route == homePage) ? mainColor : Colors.grey),
             BottomBarItem(
-              icon: item2['icon'] ?? const Icon(Icons.error),
-              title: item2['title'] ?? const Text('Error'),
-              backgroundColor: item2['color']
-            ),
+                icon: item2['icon'] ?? const Icon(Icons.error),
+                title: item2['title'] ?? const Text('Error'),
+                backgroundColor: item2['color']),
             BottomBarItem(
-              icon: item3['icon'] ?? const Icon(Icons.error),
-              title: item3['title'] ?? const Text('Error'),
-              backgroundColor: item3['color']
-            ),
+                icon: item3['icon'] ?? const Icon(Icons.error),
+                title: item3['title'] ?? const Text('Error'),
+                backgroundColor: item3['color']),
             BottomBarItem(
-              icon: const Icon(Icons.settings),
-              title: const Text('Setting'),
-              backgroundColor: Colors.grey
-            ),
+                icon: const Icon(Icons.settings),
+                title: const Text('Setting'),
+                backgroundColor: Colors.grey),
             BottomBarItem(
-              icon: const Icon(Icons.person),
-              title: const Text('User'),
-              backgroundColor: (widget.route == userInformation) ? mainColor : Colors.grey
-            ),
+                icon: const Icon(Icons.person),
+                title: const Text('User'),
+                backgroundColor: (widget.route == userInformation)
+                    ? mainColor
+                    : Colors.grey),
           ],
           hasNotch: true,
           currentIndex: selected,
@@ -180,6 +194,9 @@ class _FooterSectionState extends State<FooterSection> {
               changeNavigator(roleId, index);
             } else if (index == 2) {
               changeNavigator(roleId, index);
+            } else if (index == 3) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const SettingPage()));
             } else if (index == 4) {
               Navigator.pushNamed(context, userInformation);
             } else {

@@ -177,10 +177,9 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
       ),
       bottomNavigationBar: SizedBox(
-        height: 50,
-        width: MediaQuery.of(context).size.width,
-        child: FooterSection(route: dashboard)
-    ),
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          child: FooterSection(route: dashboard)),
     );
   }
 }
