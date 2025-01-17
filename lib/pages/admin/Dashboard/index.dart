@@ -85,7 +85,7 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
                     colors: [Colors.blueAccent, Colors.white],
                   ).createShader(bounds),
                   child: const Text(
-                    'Medicine:',
+                    'Dashboard overview:',
                     style: TextStyle(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,

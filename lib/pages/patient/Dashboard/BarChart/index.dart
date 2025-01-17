@@ -75,6 +75,7 @@ class _BarChartDashboardState extends State<BarChartDashboard> {
           ),
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
+              reservedSize: 30,
               showTitles: true,
               getTitlesWidget: (value, TitleMeta meta) {
                 return SideTitleWidget(
@@ -117,7 +118,7 @@ class _BarChartDashboardState extends State<BarChartDashboard> {
         }).toList(),
         gridData: const FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
-        maxY: 200,
+        maxY: 1024,
       ),
     );
   }

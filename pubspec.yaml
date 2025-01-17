@@ -55,6 +55,8 @@ dependencies:
   logging: ^1.3.0
   flutter_switch: ^0.3.2
   json_annotation: ^4.9.0
+  direct_caller_sim_choice: ^1.0.4
+  permission_handler: ^10.4.0
 
 dev_dependencies:
   flutter_test:

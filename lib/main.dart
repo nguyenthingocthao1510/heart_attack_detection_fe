@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heart_attack_detection_fe/pages/Search/index.dart';
 import 'package:heart_attack_detection_fe/pages/admin/Account/index.dart';
 import 'package:heart_attack_detection_fe/providers/accountProvider.dart';
+import 'package:heart_attack_detection_fe/providers/heartBeatProvider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/providers/permissionProvider.dart';
 import 'package:heart_attack_detection_fe/providers/roleProvider.dart';
@@ -28,14 +29,15 @@ Future<Doctor?> getDoctorById(BuildContext context) async {
 }
 
 void main() {
-  ChangePrefixURL.setApiPrefix(1);
+  ChangePrefixURL.setApiPrefix(5);
 
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => RoleProvider()),
       ChangeNotifierProvider(create: (context) => PermissionProvider()),
       ChangeNotifierProvider(create: (context) => AccountProvider()),
-      ChangeNotifierProvider(create: (context) => PatientProvider())
+      ChangeNotifierProvider(create: (context) => PatientProvider()),
+      ChangeNotifierProvider(create: (context) => HeartbeatProvider())
     ],
     child: const MyApp(),
   ));
