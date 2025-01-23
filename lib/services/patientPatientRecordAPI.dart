@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:heart_attack_detection_fe/models/patientRecord.d.dart';
+import 'package:heart_attack_detection_fe/models/PatientRecord/patientRecord.d.dart';
 
 class PatientPatientRecordAPI {
   static Future<patientPatientRecord> fetchOnePatientRecord(
@@ -12,6 +12,25 @@ class PatientPatientRecordAPI {
       final response = await dio.get(url);
       if (response.statusCode == 200) {
         return patientPatientRecord.fromMap(response.data['data']);
+      } else {
+        throw Exception('Failed to load doctor');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Error fetching doctor');
+    }
+  }
+
+  static Future<historyPatientPatientRecord> fetchLatestPatientRecord(
+      int accountId) async {
+    final dio = Dio();
+    final url =
+        'http://127.0.0.1:5000/api/latest-patient-record2/accountId=$accountId';
+
+    try {
+      final response = await dio.get(url);
+      if (response.statusCode == 200) {
+        return historyPatientPatientRecord.fromMap(response.data['data']);
       } else {
         throw Exception('Failed to load doctor');
       }

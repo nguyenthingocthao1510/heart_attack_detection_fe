@@ -49,10 +49,16 @@ class DeviceApi extends BaseApi {
     }
   }
 
-  Future<AssignDevice> updateDeviceAssignment(String device_id, AssignDevice patient_id) async {
+  Future<AssignDevice> updateDeviceAssignment(String device_id, AssignDevice? patient_id) async {
     try {
-      final jsonData = patient_id.toJson();
-      final response = await dio.put(getEndpoint('/update-device-assignment/device_id=$device_id'), data: jsonData);
+      final jsonData = patient_id?.toJson() ?? {"patient_id": null};
+      final response = await dio.put(
+        getEndpoint('/update-device-assignment/device_id=$device_id'),
+        data: jsonData,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+        }),
+      );
       if (response.statusCode == 200 && response.data != null) {
         return AssignDevice.fromJson(response.data);
       } else {

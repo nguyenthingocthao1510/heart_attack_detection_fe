@@ -1,10 +1,10 @@
 class Diagnosis {
-  final int age;
+  final int? age;
   final int trtbps;
   final int chol;
   double oldpeak;
   final int fbs;
-  final String sex;
+  final String? sex;
   final String exng;
   final int caa;
   final String cp;

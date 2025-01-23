@@ -7,6 +7,7 @@ import 'package:heart_attack_detection_fe/pages/admin/HomePage/Footer/index.dart
 import 'package:heart_attack_detection_fe/routes/route.constant.dart';
 import 'package:heart_attack_detection_fe/services/Device/device.dart';
 import 'package:heart_attack_detection_fe/themes/textStyle.dart';
+import 'package:heart_attack_detection_fe/assets/components/SnackBar/index.dart';
 
 class DevicePage extends StatefulWidget {
   const DevicePage({super.key});
@@ -284,7 +285,7 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
                           : Icons.person_remove,
                       color: Colors.white,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (type == 'Available') {
                         showModalBottomSheet(
                           context: context,
@@ -299,6 +300,18 @@ Widget _buildRowOfChangeStateButton(List<Map<String, dynamic>> devices) {
                             );
                           }
                         );
+                      }
+                      if (type == 'Assigned') {
+                        await deviceApi.updateDeviceAssignment(device['device_id'], null);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBarComponent.createSnackBar(
+                            content: 'Successfully un-assigned device',
+                            type: "success",
+                          ),
+                        );
+                        setState(() {
+                          deviceFuture = fetchDevices();
+                        });
                       }
                     },
                   ),
