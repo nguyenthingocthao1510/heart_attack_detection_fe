@@ -15,7 +15,6 @@ import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/Prediction/predictApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/Prediction/receiveUserInputApi.dart';
 import 'package:heart_attack_detection_fe/services/Diagnosis/History/diagnosisHistoryApi.dart';
-import 'package:heart_attack_detection_fe/services/patientPatientRecordAPI.dart';
 
 class Prediction extends StatefulWidget {
   const Prediction({super.key});

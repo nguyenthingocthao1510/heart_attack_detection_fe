@@ -6,6 +6,7 @@ import 'package:heart_attack_detection_fe/themes/textStyle.dart';
 import 'package:heart_attack_detection_fe/themes/divider.dart';
 import 'package:heart_attack_detection_fe/providers/patientProvider.dart';
 import 'package:provider/provider.dart';
+import '../index.dart';
 
 class DisplayResult extends StatefulWidget {
   final DiagnosisResult result;
@@ -74,7 +75,37 @@ class _DisplayResultState extends State<DisplayResult> with SingleTickerProvider
                 curve: Curves.easeOut,
                 duration: 800.ms
               ),
-
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            Center(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Prediction()),
+                  );
+                },
+                child: Text(
+                  "Try again",
+                  style: TextStyle(
+                      color: backgroundColor
+                  ),
+                )
+              )
+            ).animate()
+              .fadeIn(
+                delay: 600.ms,
+                duration: 800.ms,
+                begin: 0.1
+              )
+              .move(
+                delay: 600.ms,
+                begin: const Offset(0, 100),
+                curve: Curves.easeOut,
+                duration: 800.ms
+              ),
           ],
         )
       )
